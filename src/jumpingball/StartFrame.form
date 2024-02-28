@@ -110,7 +110,7 @@
             <Component class="javax.swing.JTextArea" name="areaPunteggi">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="columns" type="int" value="8"/>
+                <Property name="columns" type="int" value="9"/>
                 <Property name="rows" type="int" value="17"/>
               </Properties>
             </Component>
@@ -126,7 +126,7 @@
             <Component class="javax.swing.JTextArea" name="areaGiocatori">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="columns" type="int" value="8"/>
+                <Property name="columns" type="int" value="9"/>
                 <Property name="rows" type="int" value="17"/>
               </Properties>
             </Component>
