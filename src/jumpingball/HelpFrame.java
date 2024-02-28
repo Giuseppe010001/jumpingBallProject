@@ -20,6 +20,7 @@ public class HelpFrame extends javax.swing.JFrame {
         
         // Settare il colore di sfondo del pannello principale contenuto nel frame di aiuto
         getContentPane().setBackground(new Color(0,102,255));
+        int a;
     }
 
     /**
