@@ -5,9 +5,17 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.File; // Importare la classe File
+import java.io.IOException; // Importare la classe IOException 
+import static java.lang.Thread.sleep; // Importare il metodo statico sleep dalla classe Thread
+import java.util.logging.Level; // Importare la classe Level
+import java.util.logging.Logger; // Importare la classe Logger
+import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
+import javax.sound.sampled.AudioInputStream; // Importare la classe AudioInputStream
+import javax.sound.sampled.AudioSystem; // Importare la classe AudioSystem
+import javax.sound.sampled.Clip; // Importare la classe Clip
+import javax.sound.sampled.LineUnavailableException; // Importare la classe LineUnavailableException
+import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe UnsupportedAudioFileException
 
 /**
  *
@@ -121,9 +129,18 @@ public class StartFrame extends javax.swing.JFrame {
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
         
-        // Dichiarazione e inizializzazione di un oggetto framePrincipale della classe MainFrame e sola dichiarazione di tre oggetti threadClick, threadPartenza e threadMusica appartenenti alla classe NewThread
+        /* 
+        Dichiarazione e inizializzazione di un oggetto framePrincipale della classe MainFrame e di un oggetto srcPartenza della classe AudioInputStream 
+        e sola dichiarazione di un oggetto formatoPartenza della classe AudioFormat, di un oggetto partenza della classe Clip e di due oggetti threadClick e threadMusica appartenenti alla classe NewThread
+        */
         MainFrame framePrincipale = new MainFrame();
-        NewThread threadClick, threadPartenza, threadMusica;
+        AudioInputStream srcPartenza = null;
+        AudioFormat formatoPartenza;
+        Clip partenza;
+        NewThread threadClick, threadMusica;
+        
+        // Dichiarazione variabili
+        long durataPartenza;
         
         // Avviare un file audio per segnalare il click del pulsante start
         // Inizializzazione di threadClick
@@ -132,19 +149,55 @@ public class StartFrame extends javax.swing.JFrame {
         threadClick.setName("Click");
         // Avvio di threadClick
         threadClick.start();
-        
-        // Avviare un file audio per segnalare la preparazione al gioco
-        // Inizializzazione di threadPartenza
-        threadPartenza = new NewThread();
-        // Risettaggio del nome di threadPartenza
-        threadPartenza.setName("Partenza");
-        // Avvio di threadPartenza
-        threadPartenza.start();
-        
+
         try {
-            sleep(3000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
+
+            // Assegnazione del file audio "Partenza.wav" a srcSalto
+            srcPartenza = AudioSystem.getAudioInputStream(new File("Partenza.wav"));
+
+            try {
+
+                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                partenza = AudioSystem.getClip();
+                // Apertura del file assegnato a srcPartenza
+                partenza.open(srcPartenza);
+                // Inizio dell'esecuzione di tale file
+                partenza.start();
+                // Esecuzione di tale file fino alla sua terminazione
+                partenza.drain();
+
+                try {
+
+                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                    formatoPartenza = srcPartenza.getFormat();
+                    durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
+
+                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                    sleep(durataPartenza);
+
+                // Eccezione nel caso di errori nell'esecuzione di sleep
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            // Eccezione nel caso di assenza del file audio indicato
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+
+                // Chiusura del file utilizzato
+                srcPartenza.close();
+
+            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         // Avviare una musica di background mentre si sta giocando

@@ -84,65 +84,6 @@ public class NewThread extends Thread {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            } case "Partenza" -> {
-                
-                // Dichiarazione degli oggetti srcPartenza, formatoPartenza, e partenza appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcPartenza
-                AudioInputStream srcPartenza = null;
-                AudioFormat formatoPartenza;
-                Clip partenza;
-
-                // Dichiarazione variabili
-                long durataPartenza;
-
-                try {
-
-                    // Assegnazione del file audio "Partenza.wav" a srcSalto
-                    srcPartenza = AudioSystem.getAudioInputStream(new File("Partenza.wav"));
-
-                    try {
-
-                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                        partenza = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcPartenza
-                        partenza.open(srcPartenza);
-                        // Inizio dell'esecuzione di tale file
-                        partenza.start();
-                        // Esecuzione di tale file fino alla sua terminazione
-                        partenza.drain();
-
-                        try {
-
-                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                            formatoPartenza = srcPartenza.getFormat();
-                            durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
-
-                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                            sleep(durataPartenza);
-
-                        // Eccezione nel caso di errori nell'esecuzione di sleep
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    // Eccezione nel caso di assenza del file audio indicato
-                    } catch (LineUnavailableException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-
-                        // Chiusura del file utilizzato
-                        srcPartenza.close();
-
-                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
             } case "Musica" -> {
                 
                 // Dichiarazione degli oggetti srcCanzone, formato, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
