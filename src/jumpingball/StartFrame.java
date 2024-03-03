@@ -7,7 +7,6 @@ package jumpingball;
 import java.awt.Color; // Importare la classe Color
 import java.io.File; // Importare la classe File
 import java.io.IOException; // Importare la classe IOException 
-import static java.lang.Thread.sleep;
 import java.util.logging.Level; // Importare la classe Level
 import java.util.logging.Logger; // Importare la classe Logger
 import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
@@ -230,18 +229,15 @@ public class StartFrame extends javax.swing.JFrame {
         // Chiudere l'oggetto StartFrame creato
         dispose();
         
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                framePrincipale.getPunteggio().setText("Punti: " + (framePrincipale.getNPunti() + 50));
-                try {
-                    sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                run();
-            }
-        });
+        // Avviare un contatore di punti
+        // Inizializzazione di runnableMusica
+        runnablePunti = new NewRunnable();
+        // Risettaggio del nome di runnableMusica
+        runnablePunti.setName("Punti");
+        // Inizializzazione di threadMusica
+        threadPunti = new Thread(runnablePunti);
+        // Avvio di threadMusica
+        threadPunti.start();
     }//GEN-LAST:event_startActionPerformed
 
     private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
