@@ -15,7 +15,7 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
-    protected int nPunti, nVite, puntiRecord;
+    private int nPunti, nVite, puntiRecord;
     
     // Metodo costruttore di default
     public MainFrame() {
@@ -25,9 +25,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     // Metodi getters
-    public JLabel getPallina() {
-        return pallina;
-    }
     public int getNPunti() {
         return nPunti;
     }
@@ -55,6 +52,15 @@ public class MainFrame extends javax.swing.JFrame {
     public JButton getConfirm() {
         return confirm;
     }
+    
+    // Metodi setters
+    public void IncrementoNPunti() {
+        nPunti += 10;
+    }
+    public void IncrementoNVite() {
+        nVite++;
+    }
+    
 
     // Altri metodi
     @SuppressWarnings("unchecked")
@@ -87,7 +93,7 @@ public class MainFrame extends javax.swing.JFrame {
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         recordMassimo.setForeground(new java.awt.Color(0, 153, 255));
         recordMassimo.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 370, 200, 20));
+        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 370, 210, 20));
 
         punteggio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         punteggio.setForeground(new java.awt.Color(0, 153, 255));
@@ -97,7 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
         vite.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         vite.setForeground(new java.awt.Color(0, 153, 255));
         vite.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 170, 20));
+        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 180, 20));
 
         terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Terreno di gioco.jpg"))); // NOI18N
         getContentPane().add(terrenoGioco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
@@ -129,17 +135,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         
-        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto runnableInizio della classe NewRunnable e dell'oggetto threadInizio della classe Thread
+        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto threadInizio della classe NewThread
         StartFrame frameInizio = new StartFrame();
-        NewRunnable runnableInizio;
         Thread threadInizio;
         
-        // Inizializzazione di runnableInizio
-        runnableInizio = new NewRunnable();
-        // Risettaggio del nome di threadInizio
-        runnableInizio.setName("Inizio");
+        // Avviare un file audio di benvenuto al gioco
         // Inizializzazione di threadInizio
-        threadInizio = new Thread(runnableInizio);
+        threadInizio = new NewThread();
+        // Risettaggio del nome di threadInizio
+        threadInizio.setName("inizio");
         // Avvio di threadInizio
         threadInizio.start();
 
@@ -153,13 +157,13 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;
     private javax.swing.JLabel etichettaInserimento;
-    private javax.swing.JLabel granchio;
+    public javax.swing.JLabel granchio;
     private javax.swing.JTextField nomeGiocatore;
-    private javax.swing.JLabel pallina;
-    private javax.swing.JLabel punteggio;
-    private javax.swing.JLabel recordMassimo;
+    public javax.swing.JLabel pallina;
+    public javax.swing.JLabel punteggio;
+    public javax.swing.JLabel recordMassimo;
     private javax.swing.JLabel sfondoMain;
     private javax.swing.JLabel terrenoGioco;
-    private javax.swing.JLabel vite;
+    public javax.swing.JLabel vite;
     // End of variables declaration//GEN-END:variables
 }

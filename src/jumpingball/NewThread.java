@@ -6,7 +6,6 @@ package jumpingball;
 
 import java.io.File; // Importare la classe File
 import java.io.IOException; // Importare la classe IOException
-import static java.lang.Thread.sleep; // Importare il metodo statico sleep dalla classe Thread
 import java.util.logging.Level; // Importare la classe Level
 import java.util.logging.Logger; // Importare la classe Logger
 import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
@@ -21,12 +20,22 @@ import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe
  *
  * @author 39327
  */
-public class NewRunnable extends MainFrame implements Runnable {
+public class NewThread extends Thread {
+    
+    private MainFrame frameP;
+    
+    public NewThread() {
+        super();
+    }
+    public NewThread(MainFrame frameP) {
+        super();
+        this.frameP = frameP;
+    }
     
     @Override
     public void run() {
         switch (this.getName()) {
-            case "Inizio" -> {
+            case "inizio" -> {
                 
                 // Dichiarazione degli oggetti srcInizio, formatoInizio, e inizio appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcInizio
                 AudioInputStream srcInizio = null;
@@ -63,7 +72,7 @@ public class NewRunnable extends MainFrame implements Runnable {
 
                         // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(NewRunnable.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     // Eccezione nel caso di assenza del file audio indicato
@@ -85,7 +94,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            } case "Musica" -> {
+            } case "musica" -> {
                 
                 // Dichiarazione degli oggetti srcCanzone, formato, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
                 AudioInputStream srcCanzone = null;
@@ -136,7 +145,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                             
                             // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(NewRunnable.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                         // Eccezione nel caso di assenza del file audio indicato
@@ -161,17 +170,89 @@ public class NewRunnable extends MainFrame implements Runnable {
                 
                 // Esecuzione ricorsiva del metodo run
                 run();
-            } case "Punti" -> {
-                getPunteggio().setText("Punti: " + (nPunti + 50));
+            } case "incrementoPunti" -> {
                 
-                try {
-                    sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
+                frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
+                
+                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 5000 == 0) {
+                    frameP.IncrementoNVite();
+                    frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                    this.setName("incrementoVita");
+                } else {
+                    try {
+                        sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 
+                frameP.IncrementoNPunti();
+                
                 run();
-            } case "Salto" -> {
+            } case "incrementoVita" -> {
+                
+                // Dichiarazione degli oggetti srcIncremento, formatoIncremento, e incremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcIncremento
+                AudioInputStream srcIncremento = null;
+                AudioFormat formatoIncremento;
+                Clip incremento;
+                
+                // Dichiarazione variabili
+                long durataIncremento;
+                
+                try {
+                    
+                    // Assegnazione del file audio "Salto.wav" a srcSalto
+                    srcIncremento = AudioSystem.getAudioInputStream(new File("incrementoVita.wav"));
+                    
+                    try {
+                        
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        incremento = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcSalto
+                        incremento.open(srcIncremento);
+                        // Inizio dell'esecuzione di tale file
+                        incremento.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        incremento.drain();
+                        
+                        try {
+                            
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoIncremento = srcIncremento.getFormat();
+                            durataIncremento = (long) (incremento.getFrameLength() / formatoIncremento.getFrameRate() * 1000);
+                            
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            sleep(durataIncremento);
+                            
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        
+                        // Chiusura del file utilizzato
+                        srcIncremento.close();
+                        
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                this.setName("incrementoPunti");
+                
+                run();
+            } case "salto" -> {
                 
                 // Dichiarazione degli oggetti srcSalto, formato, e salto appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
                 AudioInputStream srcSalto = null;
@@ -184,7 +265,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                 try {
                     
                     // Assegnazione del file audio "Salto.wav" a srcSalto
-                    srcSalto = AudioSystem.getAudioInputStream(new File("Salto.wav"));
+                    srcSalto = AudioSystem.getAudioInputStream(new File("salto.wav"));
                     
                     try {
                         
@@ -208,7 +289,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                             
                         // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(NewRunnable.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                     // Eccezione nel caso di assenza del file audio indicato
@@ -230,7 +311,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-            } case "Click" -> {
+            } case "click" -> {
                 
                 // Dichiarazione degli oggetti srcClick, formatoClick, e click appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
                 AudioInputStream srcClick = null;
@@ -243,7 +324,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                 try {
                     
                     // Assegnazione del file audio "Click.wav" a srcClick
-                    srcClick = AudioSystem.getAudioInputStream(new File("Click.wav"));
+                    srcClick = AudioSystem.getAudioInputStream(new File("click.wav"));
                     
                     try {
                         
@@ -267,7 +348,7 @@ public class NewRunnable extends MainFrame implements Runnable {
                             
                         // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(NewRunnable.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
                     // Eccezione nel caso di assenza del file audio indicato
