@@ -143,12 +143,12 @@ public class NewThread extends Thread {
                             // Mettere in pausa il thread per un tempo pari a quello della canzone riprodotta
                             sleep(durataCanzone);
                             
-                            // Eccezione nel caso di errori nell'esecuzione di sleep
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
                             Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        // Eccezione nel caso di assenza del file audio indicato
+                    // Eccezione nel caso di assenza del file audio indicato
                     } catch (LineUnavailableException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -172,22 +172,34 @@ public class NewThread extends Thread {
                 run();
             } case "incrementoPunti" -> {
                 
+                // Mostrare graficamente il punteggio in tempo reale
                 frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
                 
-                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 5000 == 0) {
+                // Incrementare il numero di vite ad intervalli di 2000 punti
+                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
+                    
+                    // Incrementare il numero di vite
                     frameP.IncrementoNVite();
                     frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                    
+                    // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch
                     this.setName("incrementoVita");
                 } else {
                     try {
+                        
+                        // Mettere in pausa il thread per un tempo pari a un secondo
                         sleep(1000);
+                        
+                    // Eccezione nel caso di errori nell'esecuzione di sleep   
                     } catch (InterruptedException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 
+                // Incrementare il numero di punti
                 frameP.IncrementoNPunti();
                 
+                // Esecuzione ricorsiva del metodo run
                 run();
             } case "incrementoVita" -> {
                 
