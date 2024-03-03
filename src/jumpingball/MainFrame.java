@@ -55,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Metodi setters
     public void IncrementoNPunti() {
-        nPunti += 10;
+        nPunti += 20;
     }
     public void IncrementoNVite() {
         nVite++;
