@@ -7,7 +7,7 @@ package jumpingball;
 import java.awt.Color; // Importare la classe Color
 import java.io.File; // Importare la classe File
 import java.io.IOException; // Importare la classe IOException 
-import static java.lang.Thread.sleep; // Importare il metodo statico sleep dalla classe Thread
+import static java.lang.Thread.sleep;
 import java.util.logging.Level; // Importare la classe Level
 import java.util.logging.Logger; // Importare la classe Logger
 import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
@@ -131,22 +131,26 @@ public class StartFrame extends javax.swing.JFrame {
         
         /* 
         Dichiarazione e inizializzazione di un oggetto framePrincipale della classe MainFrame e di un oggetto srcPartenza della classe AudioInputStream 
-        e sola dichiarazione di un oggetto formatoPartenza della classe AudioFormat, di un oggetto partenza della classe Clip e di due oggetti threadClick e threadMusica appartenenti alla classe NewThread
+        e sola dichiarazione di un oggetto formatoPartenza della classe AudioFormat, di un oggetto partenza della classe Clip, di due oggetti runnableClick e runnableMusica della classe NewRunnable e
+        di due oggetti threadClick e threadMusica appartenenti alla classe Thread
         */
         MainFrame framePrincipale = new MainFrame();
         AudioInputStream srcPartenza = null;
         AudioFormat formatoPartenza;
         Clip partenza;
-        NewThread threadClick, threadMusica;
+        NewRunnable runnableClick, runnableMusica, runnablePunti;
+        Thread threadClick, threadMusica, threadPunti;
         
         // Dichiarazione variabili
         long durataPartenza;
         
         // Avviare un file audio per segnalare il click del pulsante start
+        // Inizializzazione di runnableClick
+        runnableClick = new NewRunnable();
+        // Risettaggio del nome di runnableClick
+        runnableClick.setName("Click");
         // Inizializzazione di threadClick
-        threadClick = new NewThread();
-        // Risettaggio del nome di threadClick
-        threadClick.setName("Click");
+        threadClick = new Thread(runnableClick);
         // Avvio di threadClick
         threadClick.start();
 
@@ -173,11 +177,11 @@ public class StartFrame extends javax.swing.JFrame {
                     durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
 
                     // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                    sleep(durataPartenza);
+                    Thread.sleep(durataPartenza);
 
                 // Eccezione nel caso di errori nell'esecuzione di sleep
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(NewRunnable.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             // Eccezione nel caso di assenza del file audio indicato
@@ -201,11 +205,13 @@ public class StartFrame extends javax.swing.JFrame {
         }
         
         // Avviare una musica di background mentre si sta giocando
-        // Inizializzazione di threadPartenza
-        threadMusica = new NewThread();
-        // Risettaggio del nome di threadPartenza
-        threadMusica.setName("Musica");
-        // Avvio di threadPartenza
+        // Inizializzazione di runnableMusica
+        runnableMusica = new NewRunnable();
+        // Risettaggio del nome di runnableMusica
+        runnableMusica.setName("Musica");
+        // Inizializzazione di threadMusica
+        threadMusica = new Thread(runnableMusica);
+        // Avvio di threadMusica
         threadMusica.start();
         
         // Settaggio iniziale dei valori delle etichette del punteggio, delle vite e del record massimo
@@ -218,38 +224,48 @@ public class StartFrame extends javax.swing.JFrame {
         framePrincipale.getNomeGiocatore().setVisible(false);
         framePrincipale.getConfirm().setVisible(false);
         
-        // Eseguire framePrincipale e chiudere il frame iniziale
+        // Rendere visibile framePrincipale
+        framePrincipale.setVisible(true);
+        
+        // Chiudere l'oggetto StartFrame creato
+        dispose();
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                framePrincipale.setVisible(true);
-                dispose();
+                framePrincipale.getPunteggio().setText("Punti: " + (framePrincipale.getNPunti() + 50));
+                try {
+                    sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(StartFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                run();
             }
         });
     }//GEN-LAST:event_startActionPerformed
 
     private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
         
-        // Dichiarazione e inizializzazione dell'oggetto frameAiuto della classe HelpFrame e sola dichiarazione dell'oggetto threadClick della classe NewThread
+        // Dichiarazione e inizializzazione dell'oggetto frameAiuto della classe HelpFrame e sola dichiarazione dell'oggetto runnableClick della classe NewRunnable e dell'oggetto threadClick della classe Thread
         HelpFrame frameAiuto = new HelpFrame();
-        NewThread threadClick;
+        NewRunnable runnableClick;
+        Thread threadClick;
         
         // Avviare un file audio per segnalare il click del pulsante help
+        // Inizializzazione di runnableClick
+        runnableClick = new NewRunnable();
+        // Risettaggio del nome di runnableClick
+        runnableClick.setName("Click");
         // Inizializzazione di threadClick
-        threadClick = new NewThread();
-        // Risettaggio del nome di threadClick
-        threadClick.setName("Click");
+        threadClick = new Thread(runnableClick);
         // Avvio di threadClick
         threadClick.start();
         
         // Settare il colore di sfondo del pannello principale contenuto in frameAiuto
         frameAiuto.getContentPane().setBackground(new Color(0, 102, 255));
         
-        // Eseguire frameAiuto
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                frameAiuto.setVisible(true);
-            }
-        });
+        // Rendere visibile frameAiuto
+        frameAiuto.setVisible(true);
     }//GEN-LAST:event_helpActionPerformed
 
     /**
@@ -279,22 +295,22 @@ public class StartFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        // Dichiarazione dell'oggetto threadInizio della classe NewThread
-        NewThread threadInizio;
+        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto runnableInizio della classe NewRunnable e dell'oggetto threadInizio della classe Thread
+        StartFrame frameInizio = new StartFrame();
+        NewRunnable runnableInizio;
+        Thread threadInizio;
         
-        // Inizializzazione di threadInizio
-        threadInizio = new NewThread();
+        // Inizializzazione di runnableInizio
+        runnableInizio = new NewRunnable();
         // Risettaggio del nome di threadInizio
-        threadInizio.setName("Inizio");
+        runnableInizio.setName("Inizio");
+        // Inizializzazione di threadInizio
+        threadInizio = new Thread(runnableInizio);
         // Avvio di threadInizio
         threadInizio.start();
 
-        // Eseguire il frame iniziale
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StartFrame().setVisible(true);
-            }
-        });
+        // Rendere visibile frameInizio
+        frameInizio.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

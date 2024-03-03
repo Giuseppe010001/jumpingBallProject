@@ -15,7 +15,7 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
-    private int nPunti, nVite, puntiRecord;
+    protected int nPunti, nVite, puntiRecord;
     
     // Metodo costruttore di default
     public MainFrame() {
@@ -25,6 +25,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     // Metodi getters
+    public JLabel getPallina() {
+        return pallina;
+    }
     public int getNPunti() {
         return nPunti;
     }
@@ -126,23 +129,25 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         
-        // Dichiarazione dell'oggetto threadInizio della classe NewThread
-        NewThread threadInizio;
+        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto runnableInizio della classe NewRunnable e dell'oggetto threadInizio della classe Thread
+        StartFrame frameInizio = new StartFrame();
+        NewRunnable runnableInizio;
+        Thread threadInizio;
         
-        // Inizializzazione di threadInizio
-        threadInizio = new NewThread();
+        // Inizializzazione di runnableInizio
+        runnableInizio = new NewRunnable();
         // Risettaggio del nome di threadInizio
-        threadInizio.setName("Inizio");
+        runnableInizio.setName("Inizio");
+        // Inizializzazione di threadInizio
+        threadInizio = new Thread(runnableInizio);
         // Avvio di threadInizio
         threadInizio.start();
+
+        // Rendere visibile frameInizio
+        frameInizio.setVisible(true);
         
-        // Rieseguire il frame iniziale
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StartFrame().setVisible(true);
-                dispose();
-            }
-        });
+        // Chiudere un oggetto di tipo MainFrame
+        dispose();
     }//GEN-LAST:event_confirmActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
