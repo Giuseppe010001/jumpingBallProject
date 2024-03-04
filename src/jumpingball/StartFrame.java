@@ -63,12 +63,12 @@ public class StartFrame extends javax.swing.JFrame {
         classifica.setBackground(new java.awt.Color(153, 255, 255));
 
         areaPunteggi.setEditable(false);
-        areaPunteggi.setColumns(9);
+        areaPunteggi.setColumns(8);
         areaPunteggi.setRows(17);
         scorrimentoPunteggi.setViewportView(areaPunteggi);
 
         areaGiocatori.setEditable(false);
-        areaGiocatori.setColumns(9);
+        areaGiocatori.setColumns(8);
         areaGiocatori.setRows(17);
         scorrimentoGiocatori.setViewportView(areaGiocatori);
 
