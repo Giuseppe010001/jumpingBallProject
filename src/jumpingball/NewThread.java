@@ -176,7 +176,7 @@ public class NewThread extends Thread {
                 frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
                 
                 // Incrementare il numero di vite ad intervalli di 2000 punti
-                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
+                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 200 == 0) {
                     
                     // Incrementare il numero di vite
                     frameP.incrementoNVite();
@@ -261,12 +261,46 @@ public class NewThread extends Thread {
                     }
                 }
                 
-                if (frameP.getVelocitaGranchioGabbiano() > 4)
-                    frameP.decrementoVelocitaGranchioGabbiano();
+                if (frameP.getVelocitaMovimento() > 5)
+                    frameP.decrementoVelocitaMovimento();
                 
                 this.setName("incrementoPunti");
                 
                 run();
+            } case "pallina" -> {
+                int G = 4;
+                
+                while (frameP.getYPallina() >= 216) {
+                    try {
+                        sleep(frameP.getVelocitaMovimento());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    frameP.getPallina().setLocation(frameP.getPallina().getX(), frameP.getYPallina());
+                    
+                    if ((280 - frameP.getYPallina()) % 16 == 0)
+                        G--;
+                    
+                    frameP.decrementoYPallina(G);
+                }
+                
+                G = 1;
+                
+                while (frameP.getYPallina() <= 280) {
+                    try {
+                        sleep(frameP.getVelocitaMovimento());
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                   frameP.getPallina().setLocation(frameP.getPallina().getX(), frameP.getYPallina());
+                   
+                   if ((frameP.getYPallina() - 216) % 16 == 0)
+                        G++;
+                   
+                   frameP.incrementoYPallina(G);
+                }    
             } case "salto" -> {
                 
                 // Dichiarazione degli oggetti srcSalto, formato, e salto appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
@@ -332,48 +366,48 @@ public class NewThread extends Thread {
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
                         while (true) {
-                            if (frameP.getXGranchioGabbiano() >= 600) {
+                            if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
-                                        frameP.ripristinaXGranchioGabbianoAvanti();
-                                        frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), 280);
+                                        frameP.ripristinoXOstacoliAvanti();
+                                        frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
                                     } case 1 -> {
                                         this.setName("gabbiano");
                                         run();
                                     }
                                 }
                             }
+                            
+                            frameP.incrementoXOstacoli();
 
-                            frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), frameP.getGranchio().getY());
-
-                            frameP.incrementoXGranchioGabbiano();
-
+                            frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
+                            
                             try {
-                                sleep(frameP.getVelocitaGranchioGabbiano());
+                                sleep(frameP.getVelocitaMovimento());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     } case 1 -> {
                         while (true) {
-                            if (frameP.getXGranchioGabbiano() <= -64) {
+                            if (frameP.getXOstacoli() <= -64) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
-                                        frameP.ripristinaXGranchioGabbianoIndietro();
-                                        frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), 280);
+                                        frameP.ripristinoXOstacoliIndietro();
+                                        frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
                                     } case 1 -> {
                                         this.setName("gabbiano");
                                         run();
                                     }
                                 }
                             }
+                            
+                            frameP.decrementoXOstacoli();
 
-                            frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), frameP.getGranchio().getY());
-
-                            frameP.decrementoXGranchioGabbiano();
-
+                            frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
+                            
                             try {
-                                sleep(frameP.getVelocitaGranchioGabbiano());
+                                sleep(frameP.getVelocitaMovimento());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -386,52 +420,52 @@ public class NewThread extends Thread {
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
                         while (true) {
-                            if (frameP.getXGranchioGabbiano() >= 600) {
+                            if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
-                                        frameP.ripristinaXGranchioGabbianoAvanti();
-                                        frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), 216);
+                                        frameP.ripristinoXOstacoliAvanti();
+                                        frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
                                     } case 1 -> {
                                         this.setName("granchio");
                                         run();
                                     }
                                 }
                             }
+                            
+                            frameP.incrementoXOstacoli();
 
-                            frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), frameP.getGabbiano().getY());
-
-                            frameP.incrementoXGranchioGabbiano();
+                            frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocitaGranchioGabbiano());
+                                sleep(frameP.getVelocitaMovimento());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        }
+                        }    
                     } case 1 -> {
                         while (true) {
-                            if (frameP.getXGranchioGabbiano() <= -64) {
+                            if (frameP.getXOstacoli() <= -64) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
-                                        frameP.ripristinaXGranchioGabbianoIndietro();
-                                        frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), 216);
+                                        frameP.ripristinoXOstacoliIndietro();
+                                        frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
                                     } case 1 -> {
                                         this.setName("granchio");
                                         run();
                                     }
                                 }
                             }
+                            
+                            frameP.decrementoXOstacoli();
 
-                            frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), frameP.getGabbiano().getY());
-
-                            frameP.decrementoXGranchioGabbiano();
+                            frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocitaGranchioGabbiano());
+                                sleep(frameP.getVelocitaMovimento());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        }
+                        }    
                     }
                 }
             } case "click" -> {

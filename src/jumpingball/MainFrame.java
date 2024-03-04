@@ -4,8 +4,7 @@
  */
 package jumpingball;
 
-import java.util.logging.Level; // Importare la classe Level
-import java.util.logging.Logger; // Importare la classe Logger
+import java.awt.event.KeyEvent;
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JTextField; // Importare la classe JTextField
@@ -17,16 +16,17 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
-    private int xGranchioGabbiano, nPunti, nVite, puntiRecord;
-    private long velocitaPallina, velocitaGranchioGabbiano;
+    private int yPallina, xOstacoli, nPunti, nVite, puntiRecord;
+    private long velocitaMovimento;
     
     // Metodo costruttore di default
     public MainFrame() {
         initComponents();
-        xGranchioGabbiano = granchio.getX();
+        yPallina = pallina.getY();
+        xOstacoli = granchio.getX();
         nPunti = puntiRecord = 0;
         nVite = 3;
-        velocitaGranchioGabbiano = 10;
+        velocitaMovimento = 10;
     }
     
     // Metodi getters
@@ -51,8 +51,11 @@ public class MainFrame extends javax.swing.JFrame {
     public JLabel getEtichettaInserimento() {
         return etichettaInserimento;
     }
-    public int getXGranchioGabbiano() {
-        return xGranchioGabbiano;
+    public int getYPallina() {
+        return yPallina;
+    }
+    public int getXOstacoli() {
+        return xOstacoli;
     }
     public int getNPunti() {
         return nPunti;
@@ -63,11 +66,8 @@ public class MainFrame extends javax.swing.JFrame {
     public int getPuntiRecord() {
         return puntiRecord;
     }
-    public long getVelocitaPallina() {
-        return velocitaPallina;
-    }
-    public long getVelocitaGranchioGabbiano() {
-        return velocitaGranchioGabbiano;
+    public long getVelocitaMovimento() {
+        return velocitaMovimento;
     }
     public JTextField getNomeGiocatore() {
         return nomeGiocatore;
@@ -77,26 +77,32 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     // Metodi setters
+    public void incrementoYPallina(int gravita) {
+        yPallina += gravita;
+    }
+    public void decrementoYPallina(int gravita) {
+        yPallina -= gravita;
+    }
+    public void incrementoXOstacoli() {
+        xOstacoli += 4;
+    }
+    public void decrementoXOstacoli() {
+        xOstacoli -= 4;
+    }
+    public void ripristinoXOstacoliAvanti() {
+        xOstacoli = -64;
+    }
+    public void ripristinoXOstacoliIndietro() {
+        xOstacoli = 600;
+    }
     public void incrementoNPunti() {
         nPunti += 20;
     }
     public void incrementoNVite() {
         nVite++;
     }
-    public void incrementoXGranchioGabbiano() {
-        xGranchioGabbiano += 4;
-    }
-    public void decrementoXGranchioGabbiano() {
-        xGranchioGabbiano -= 4;
-    }
-    public void decrementoVelocitaGranchioGabbiano() {
-        velocitaGranchioGabbiano--;
-    }
-    public void ripristinaXGranchioGabbianoAvanti() {
-        xGranchioGabbiano = -64;
-    }
-    public void ripristinaXGranchioGabbianoIndietro() {
-        xGranchioGabbiano = 600;
+    public void decrementoVelocitaMovimento() {
+        velocitaMovimento--;
     }
 
     // Altri metodi
@@ -123,6 +129,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pallina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Pallina.png"))); // NOI18N
+        pallina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pallinaMouseClicked(evt);
+            }
+        });
         getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
         granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Granchio.gif"))); // NOI18N
@@ -195,6 +206,20 @@ public class MainFrame extends javax.swing.JFrame {
         // Chiudere un oggetto di tipo MainFrame
         dispose();
     }//GEN-LAST:event_confirmActionPerformed
+
+    private void pallinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pallinaMouseClicked
+        if (pallina.getY() == 280) {
+            NewThread threadPallina, threadSalto;
+
+            threadPallina = new NewThread(this);
+            threadPallina.setName("pallina");
+            threadPallina.start();
+
+            threadSalto = new NewThread();
+            threadSalto.setName("salto");
+            threadSalto.start();
+        }
+    }//GEN-LAST:event_pallinaMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;
