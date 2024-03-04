@@ -176,7 +176,7 @@ public class NewThread extends Thread {
                 frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
                 
                 // Incrementare il numero di vite ad intervalli di 2000 punti
-                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 200 == 0) {
+                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
                     
                     // Incrementare il numero di vite
                     frameP.incrementoNVite();
