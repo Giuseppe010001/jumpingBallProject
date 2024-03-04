@@ -47,8 +47,8 @@ public class NewThread extends Thread {
 
                 try {
 
-                    // Assegnazione del file audio "Salto.wav" a srcSalto
-                    srcInizio = AudioSystem.getAudioInputStream(new File("Inizio.wav"));
+                    // Assegnazione del file audio "inizio.wav" a srcInizio
+                    srcInizio = AudioSystem.getAudioInputStream(new File("inizio.wav"));
 
                     try {
 
@@ -96,7 +96,7 @@ public class NewThread extends Thread {
                 }
             } case "musica" -> {
                 
-                // Dichiarazione degli oggetti srcCanzone, formato, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
+                // Dichiarazione degli oggetti srcCanzone, formatoMusica, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
                 AudioInputStream srcCanzone = null;
                 AudioFormat formatoMusica;
                 Clip canzone;
@@ -179,7 +179,7 @@ public class NewThread extends Thread {
                 if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
                     
                     // Incrementare il numero di vite
-                    frameP.IncrementoNVite();
+                    frameP.incrementoNVite();
                     frameP.getVite().setText("Vite: " + (frameP.getNVite()));
                     
                     // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch
@@ -197,7 +197,7 @@ public class NewThread extends Thread {
                 }
                 
                 // Incrementare il numero di punti
-                frameP.IncrementoNPunti();
+                frameP.incrementoNPunti();
                 
                 // Esecuzione ricorsiva del metodo run
                 run();
@@ -213,7 +213,7 @@ public class NewThread extends Thread {
                 
                 try {
                     
-                    // Assegnazione del file audio "Salto.wav" a srcSalto
+                    // Assegnazione del file audio "incrementoVita.wav" a srcIncremento
                     srcIncremento = AudioSystem.getAudioInputStream(new File("incrementoVita.wav"));
                     
                     try {
@@ -261,6 +261,9 @@ public class NewThread extends Thread {
                     }
                 }
                 
+                if (frameP.getVelocitaGranchioGabbiano() > 4)
+                    frameP.decrementoVelocitaGranchioGabbiano();
+                
                 this.setName("incrementoPunti");
                 
                 run();
@@ -276,7 +279,7 @@ public class NewThread extends Thread {
                 
                 try {
                     
-                    // Assegnazione del file audio "Salto.wav" a srcSalto
+                    // Assegnazione del file audio "salto.wav" a srcSalto
                     srcSalto = AudioSystem.getAudioInputStream(new File("salto.wav"));
                     
                     try {
@@ -323,6 +326,114 @@ public class NewThread extends Thread {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+            } case "granchio" -> {
+                Random genRand = new Random();
+                
+                switch (genRand.nextInt(2)) {
+                    case 0 -> {
+                        while (true) {
+                            if (frameP.getXGranchioGabbiano() >= 600) {
+                                switch (genRand.nextInt(2)) {
+                                    case 0 -> {
+                                        frameP.ripristinaXGranchioGabbianoAvanti();
+                                        frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), 280);
+                                    } case 1 -> {
+                                        this.setName("gabbiano");
+                                        run();
+                                    }
+                                }
+                            }
+
+                            frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), frameP.getGranchio().getY());
+
+                            frameP.incrementoXGranchioGabbiano();
+
+                            try {
+                                sleep(frameP.getVelocitaGranchioGabbiano());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } case 1 -> {
+                        while (true) {
+                            if (frameP.getXGranchioGabbiano() <= -64) {
+                                switch (genRand.nextInt(2)) {
+                                    case 0 -> {
+                                        frameP.ripristinaXGranchioGabbianoIndietro();
+                                        frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), 280);
+                                    } case 1 -> {
+                                        this.setName("gabbiano");
+                                        run();
+                                    }
+                                }
+                            }
+
+                            frameP.getGranchio().setLocation(frameP.getXGranchioGabbiano(), frameP.getGranchio().getY());
+
+                            frameP.decrementoXGranchioGabbiano();
+
+                            try {
+                                sleep(frameP.getVelocitaGranchioGabbiano());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+            } case "gabbiano" -> {
+                Random genRand = new Random();
+                
+                switch (genRand.nextInt(2)) {
+                    case 0 -> {
+                        while (true) {
+                            if (frameP.getXGranchioGabbiano() >= 600) {
+                                switch (genRand.nextInt(2)) {
+                                    case 0 -> {
+                                        frameP.ripristinaXGranchioGabbianoAvanti();
+                                        frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), 216);
+                                    } case 1 -> {
+                                        this.setName("granchio");
+                                        run();
+                                    }
+                                }
+                            }
+
+                            frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), frameP.getGabbiano().getY());
+
+                            frameP.incrementoXGranchioGabbiano();
+
+                            try {
+                                sleep(frameP.getVelocitaGranchioGabbiano());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } case 1 -> {
+                        while (true) {
+                            if (frameP.getXGranchioGabbiano() <= -64) {
+                                switch (genRand.nextInt(2)) {
+                                    case 0 -> {
+                                        frameP.ripristinaXGranchioGabbianoIndietro();
+                                        frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), 216);
+                                    } case 1 -> {
+                                        this.setName("granchio");
+                                        run();
+                                    }
+                                }
+                            }
+
+                            frameP.getGabbiano().setLocation(frameP.getXGranchioGabbiano(), frameP.getGabbiano().getY());
+
+                            frameP.decrementoXGranchioGabbiano();
+
+                            try {
+                                sleep(frameP.getVelocitaGranchioGabbiano());
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
             } case "click" -> {
                 
                 // Dichiarazione degli oggetti srcClick, formatoClick, e click appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
@@ -335,7 +446,7 @@ public class NewThread extends Thread {
                 
                 try {
                     
-                    // Assegnazione del file audio "Click.wav" a srcClick
+                    // Assegnazione del file audio "click.wav" a srcClick
                     srcClick = AudioSystem.getAudioInputStream(new File("click.wav"));
                     
                     try {

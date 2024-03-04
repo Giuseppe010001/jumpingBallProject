@@ -4,6 +4,8 @@
  */
 package jumpingball;
 
+import java.util.logging.Level; // Importare la classe Level
+import java.util.logging.Logger; // Importare la classe Logger
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JTextField; // Importare la classe JTextField
@@ -15,24 +17,27 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
-    private int nPunti, nVite, puntiRecord;
+    private int xGranchioGabbiano, nPunti, nVite, puntiRecord;
+    private long velocitaPallina, velocitaGranchioGabbiano;
     
     // Metodo costruttore di default
     public MainFrame() {
         initComponents();
+        xGranchioGabbiano = granchio.getX();
         nPunti = puntiRecord = 0;
         nVite = 3;
+        velocitaGranchioGabbiano = 10;
     }
     
     // Metodi getters
-    public int getNPunti() {
-        return nPunti;
+    public JLabel getPallina() {
+        return pallina;
     }
-    public int getNVite() {
-        return nVite;
+    public JLabel getGranchio() {
+        return granchio;
     }
-    public int getPuntiRecord() {
-        return puntiRecord;
+    public JLabel getGabbiano() {
+        return gabbiano;
     }
     public JLabel getPunteggio() {
         return punteggio;
@@ -46,6 +51,24 @@ public class MainFrame extends javax.swing.JFrame {
     public JLabel getEtichettaInserimento() {
         return etichettaInserimento;
     }
+    public int getXGranchioGabbiano() {
+        return xGranchioGabbiano;
+    }
+    public int getNPunti() {
+        return nPunti;
+    }
+    public int getNVite() {
+        return nVite;
+    }
+    public int getPuntiRecord() {
+        return puntiRecord;
+    }
+    public long getVelocitaPallina() {
+        return velocitaPallina;
+    }
+    public long getVelocitaGranchioGabbiano() {
+        return velocitaGranchioGabbiano;
+    }
     public JTextField getNomeGiocatore() {
         return nomeGiocatore;
     }
@@ -54,13 +77,27 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     // Metodi setters
-    public void IncrementoNPunti() {
+    public void incrementoNPunti() {
         nPunti += 20;
     }
-    public void IncrementoNVite() {
+    public void incrementoNVite() {
         nVite++;
     }
-    
+    public void incrementoXGranchioGabbiano() {
+        xGranchioGabbiano += 4;
+    }
+    public void decrementoXGranchioGabbiano() {
+        xGranchioGabbiano -= 4;
+    }
+    public void decrementoVelocitaGranchioGabbiano() {
+        velocitaGranchioGabbiano--;
+    }
+    public void ripristinaXGranchioGabbianoAvanti() {
+        xGranchioGabbiano = -64;
+    }
+    public void ripristinaXGranchioGabbianoIndietro() {
+        xGranchioGabbiano = 600;
+    }
 
     // Altri metodi
     @SuppressWarnings("unchecked")
@@ -76,6 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
         nomeGiocatore = new javax.swing.JTextField();
         confirm = new javax.swing.JButton();
         etichettaInserimento = new javax.swing.JLabel();
+        gabbiano = new javax.swing.JLabel();
         sfondoMain = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
         granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Granchio.gif"))); // NOI18N
-        getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, -1, -1));
+        getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 280, -1, -1));
 
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         recordMassimo.setForeground(new java.awt.Color(0, 153, 255));
@@ -126,6 +164,10 @@ public class MainFrame extends javax.swing.JFrame {
         etichettaInserimento.setText("Inserisci nome");
         getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
+        gabbiano.setText("AAAA");
+        gabbiano.setPreferredSize(new java.awt.Dimension(64, 64));
+        getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 216, -1, -1));
+
         sfondoMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Sfondo Principale.jpg"))); // NOI18N
         getContentPane().add(sfondoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -157,6 +199,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;
     private javax.swing.JLabel etichettaInserimento;
+    private javax.swing.JLabel gabbiano;
     public javax.swing.JLabel granchio;
     private javax.swing.JTextField nomeGiocatore;
     public javax.swing.JLabel pallina;

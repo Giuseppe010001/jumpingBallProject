@@ -5,6 +5,7 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
+import java.util.Random; // Importare la classe Random
 import java.io.File; // Importare la classe File
 import java.io.IOException; // Importare la classe IOException 
 import java.util.logging.Level; // Importare la classe Level
@@ -133,11 +134,12 @@ public class StartFrame extends javax.swing.JFrame {
         e sola dichiarazione di un oggetto formatoPartenza della classe AudioFormat, di un oggetto partenza della classe Clip e
         di due oggetti threadClick e threadMusica appartenenti alla classe NewThread
         */
+        Random genRand = new Random();
         MainFrame framePrincipale = new MainFrame();
         AudioInputStream srcPartenza = null;
         AudioFormat formatoPartenza;
         Clip partenza;
-        NewThread threadClick, threadMusica, threadPunti;
+        NewThread threadClick, threadMusica, threadPunti, threadGranchioGabbiano;
         
         // Dichiarazione variabili
         long durataPartenza;
@@ -232,6 +234,17 @@ public class StartFrame extends javax.swing.JFrame {
         threadPunti.setName("incrementoPunti");
         // Avvio di threadMusica
         threadPunti.start();
+        
+        // Avviare il movimento del granchio
+        // Inizializzazione di threadGranchio
+        threadGranchioGabbiano = new NewThread(framePrincipale);
+        // Risettaggio del nome di threadGranchioGabbiano, a seconda del valore assunto da threadGranchioGabbiano
+        switch (genRand.nextInt(2)) {
+            case 0 -> threadGranchioGabbiano.setName("granchio");
+            case 1 -> threadGranchioGabbiano.setName("gabbiano");
+        }
+        // Avvio di threadGranchio
+        threadGranchioGabbiano.start();
     }//GEN-LAST:event_startActionPerformed
 
     private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
