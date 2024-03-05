@@ -310,6 +310,12 @@ public class StartFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         
+        // Dichiarazione variabili
+        String nomeGiocatore, riga, punteggio, nomeFile = "../JumpingBall/Classifica.csv";
+        
+        // Dichiarazione array
+        String[] statoGiocatore;
+        
         // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto threadInizio della classe NewThread
         StartFrame frameInizio = new StartFrame();
         Thread threadInizio;
@@ -325,9 +331,6 @@ public class StartFrame extends javax.swing.JFrame {
         // Rendere visibile frameInizio
         frameInizio.setVisible(true);
         
-        String nomeGiocatore, riga, punteggio;
-        String[] statoGiocatore;
-        String nomeFile = "C:\\Users\\eliag\\OneDrive\\Documenti\\NetBeansProjects\\jumpingBallProject\\src\\jumpingball\\Classifica.csv";
         try {
             BufferedReader Lettore = new BufferedReader(new FileReader(nomeFile));
             //readLine() metodo della classe che consent di leggere una riga
@@ -339,8 +342,8 @@ public class StartFrame extends javax.swing.JFrame {
                 nomeGiocatore = statoGiocatore[0];
                 punteggio = statoGiocatore[1];
                 
-                frameInizio.getAreaGiocatori().setText(nomeGiocatore + '\n');
-                frameInizio.getAreaPunteggi().setText(punteggio + '\n');
+                frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
+                frameInizio.getAreaPunteggi().append(punteggio + '\n');
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Impossibile trovare il file " + nomeFile);
