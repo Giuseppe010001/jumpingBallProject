@@ -7,6 +7,9 @@ package jumpingball;
 import java.awt.Color; // Importare la classe Color
 import java.util.Random; // Importare la classe Random
 import java.io.File; // Importare la classe File
+import java.io.FileNotFoundException; // Importare la classe FileNotFoundException 
+import java.io.FileReader; // Importare la classe FileReader
+import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.IOException; // Importare la classe IOException 
 import java.util.logging.Level; // Importare la classe Level
 import java.util.logging.Logger; // Importare la classe Logger
@@ -16,6 +19,7 @@ import javax.sound.sampled.AudioSystem; // Importare la classe AudioSystem
 import javax.sound.sampled.Clip; // Importare la classe Clip
 import javax.sound.sampled.LineUnavailableException; // Importare la classe LineUnavailableException
 import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe UnsupportedAudioFileException
+import javax.swing.JTextArea;
 
 /**
  *
@@ -27,7 +31,18 @@ public class StartFrame extends javax.swing.JFrame {
     public StartFrame() {
         initComponents();
     }
-
+    
+    // Metodi Getters
+    public JTextArea getAreaGiocatori(){
+        return areaGiocatori; 
+    }
+    
+    public JTextArea getAreaPunteggi(){  
+        return areaPunteggi; 
+    }
+    
+    
+    
     // Altri metodi
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -309,6 +324,30 @@ public class StartFrame extends javax.swing.JFrame {
 
         // Rendere visibile frameInizio
         frameInizio.setVisible(true);
+        
+        String nomeGiocatore, riga, punteggio;
+        String[] statoGiocatore;
+        String nomeFile = "C:\\Users\\eliag\\OneDrive\\Documenti\\NetBeansProjects\\jumpingBallProject\\src\\jumpingball\\Classifica.csv";
+        try {
+            BufferedReader Lettore = new BufferedReader(new FileReader(nomeFile));
+            //readLine() metodo della classe che consent di leggere una riga
+            Lettore.readLine();
+            while((riga = Lettore.readLine())!=null)
+            {
+                statoGiocatore = riga.split(";");
+                //estrae ogni elemento in una variabile opportuna
+                nomeGiocatore = statoGiocatore[0];
+                punteggio = statoGiocatore[1];
+                
+                frameInizio.getAreaGiocatori().setText(nomeGiocatore + '\n');
+                frameInizio.getAreaPunteggi().setText(punteggio + '\n');
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Impossibile trovare il file " + nomeFile);
+        } catch (IOException ex) {
+            System.out.println("Errore nella lettura del file " + nomeFile);
+        }
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
