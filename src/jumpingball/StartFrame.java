@@ -77,13 +77,16 @@ public class StartFrame extends javax.swing.JFrame {
 
         classifica.setBackground(new java.awt.Color(153, 255, 255));
 
-        areaPunteggi.setEditable(false);
+        areaPunteggi.setBackground(new java.awt.Color(204, 153, 255));
         areaPunteggi.setColumns(8);
+        areaPunteggi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         areaPunteggi.setRows(17);
         scorrimentoPunteggi.setViewportView(areaPunteggi);
 
         areaGiocatori.setEditable(false);
+        areaGiocatori.setBackground(new java.awt.Color(204, 153, 255));
         areaGiocatori.setColumns(8);
+        areaGiocatori.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         areaGiocatori.setRows(17);
         scorrimentoGiocatori.setViewportView(areaGiocatori);
 

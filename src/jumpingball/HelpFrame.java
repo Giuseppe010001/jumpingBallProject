@@ -27,7 +27,9 @@ public class HelpFrame extends javax.swing.JFrame {
         setTitle("Jumping Ball");
 
         areaGuida.setEditable(false);
+        areaGuida.setBackground(new java.awt.Color(204, 153, 255));
         areaGuida.setColumns(22);
+        areaGuida.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         areaGuida.setRows(100);
         scorrimentoGuida.setViewportView(areaGuida);
 
