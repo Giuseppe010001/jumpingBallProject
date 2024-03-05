@@ -226,7 +226,8 @@ public class StartFrame extends javax.swing.JFrame {
         // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
         framePrincipale.getEtichettaInserimento().setVisible(false);
         framePrincipale.getNomeGiocatore().setVisible(false);
-        framePrincipale.getConfirm().setVisible(false);
+        framePrincipale.getConfirm().setVisible(true);
+        
         
         // Rendere visibile framePrincipale
         framePrincipale.setVisible(true);
@@ -311,7 +312,7 @@ public class StartFrame extends javax.swing.JFrame {
         //</editor-fold>
         
         // Dichiarazione variabili
-        String nomeGiocatore, riga, punteggio, nomeFile = "../JumpingBall/Classifica.csv";
+        String nomeGiocatore, riga, punteggio, nomeFile = "Classifica.csv";
         
         // Dichiarazione array
         String[] statoGiocatore;
@@ -349,8 +350,7 @@ public class StartFrame extends javax.swing.JFrame {
             System.out.println("Impossibile trovare il file " + nomeFile);
         } catch (IOException ex) {
             System.out.println("Errore nella lettura del file " + nomeFile);
-        }
-        
+        } 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

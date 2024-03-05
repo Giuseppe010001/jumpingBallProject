@@ -5,6 +5,12 @@
 package jumpingball;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JTextField; // Importare la classe JTextField
@@ -191,6 +197,64 @@ public class MainFrame extends javax.swing.JFrame {
         // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto threadInizio della classe NewThread
         StartFrame frameInizio = new StartFrame();
         Thread threadInizio;
+        
+        // Dichiarazione variabili
+        String nomeGiocatore, riga, punteggio, nomeFile = "Classifica.csv";
+        
+        // Dichiarazione array
+        String[] statoGiocatore;
+        /*
+        try{
+
+            PrintWriter writer = new PrintWriter(new File(nomeFile));
+            
+            writer.write("ciao");
+            
+            StringBuilder sb = new StringBuilder();
+            sb.append("id");
+            sb.append(',');
+            sb.append("Name");
+            sb.append(',');
+            sb.append("Address");
+            sb.append('\n');
+
+            sb.append("101");
+            sb.append(',');
+            sb.append("John Doe");
+            sb.append(',');
+            sb.append("Las Vegas");
+            sb.append('\n');
+
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("done!");
+
+        }catch (FileNotFoundException e){
+            
+            System.out.println(e.getMessage());
+         } */
+        
+        try {
+            BufferedReader Lettore = new BufferedReader(new FileReader(nomeFile));
+            //readLine() metodo della classe che consent di leggere una riga
+            Lettore.readLine();
+            while((riga = Lettore.readLine())!=null)
+            {
+                statoGiocatore = riga.split(";");
+                //estrae ogni elemento in una variabile opportuna
+                nomeGiocatore = statoGiocatore[0];
+                punteggio = statoGiocatore[1];
+                
+                frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
+                frameInizio.getAreaPunteggi().append(punteggio + '\n');
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Impossibile trovare il file " + nomeFile);
+        } catch (IOException ex) {
+            System.out.println("Errore nella lettura del file " + nomeFile);
+        }
+        
+        
         
         // Avviare un file audio di benvenuto al gioco
         // Inizializzazione di threadInizio
