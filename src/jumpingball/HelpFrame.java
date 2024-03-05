@@ -15,8 +15,6 @@ public class HelpFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    private int ciaoCome;
-    // ciao
     // Altri metodi
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
