@@ -15,6 +15,7 @@ public class HelpFrame extends javax.swing.JFrame {
         initComponents();
     }
 
+    private int ciaoCome;
     // ciao
     // Altri metodi
     @SuppressWarnings("unchecked")
