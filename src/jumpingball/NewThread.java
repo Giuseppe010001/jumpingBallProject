@@ -35,172 +35,111 @@ public class NewThread extends Thread {
     @Override
     public void run() {
         switch (this.getName()) {
-            case "inizio" -> {
+            case "musica" -> {
                 
-                // Dichiarazione degli oggetti srcInizio, formatoInizio, e inizio appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcInizio
-                AudioInputStream srcInizio = null;
-                AudioFormat formatoInizio;
-                Clip inizio;
+                while (true) {
+                    
+                    // Dichiarazione degli oggetti srcCanzone, formatoMusica, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
+                    AudioInputStream srcCanzone = null;
+                    AudioFormat formatoMusica;
+                    Clip canzone;
+                    Random genRand = new Random();
 
-                // Dichiarazione variabili
-                long durataInizio;
-
-                try {
-
-                    // Assegnazione del file audio "inizio.wav" a srcInizio
-                    srcInizio = AudioSystem.getAudioInputStream(new File("inizio.wav"));
+                    // Dichiarazione variabili
+                    long durataCanzone;
 
                     try {
 
-                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                        inizio = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcInizio
-                        inizio.open(srcInizio);
-                        // Inizio dell'esecuzione di tale file
-                        inizio.start();
-                        // Esecuzione di tale file fino alla sua terminazione
-                        inizio.drain();
+                        // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati
+                        switch (genRand.nextInt(12)) {
+                            case 0 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang – Casablanca (feat. Morad ) [Official Video].wav"));
+                            case 1 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang - Que Lo Ke [Official Lyric Video].wav"));
+                            case 2 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Fred De Palma feat. Ana Mena – D'estate non vale (feat. Ana Mena).wav"));
+                            case 3 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Giuni Russo – Unestate al mare.wav"));
+                            case 4 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Il Pagante - @NewMusicItaly – Portofino - @NewMusicItaly.wav"));
+                            case 5 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Kaoma – Lambada.wav"));
+                            case 6 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Bizarrap & Quevedo – Quevedo_ Bzrp Music Sessions, Vol. 52.wav"));
+                            case 7 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Cappella U Got 2 Let The Music.wav"));
+                            case 8 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Enrique Iglesias - Bailando ft. Descemer Bueno, Gente De Zona (Letra).wav"));
+                            case 9 -> srcCanzone = AudioSystem.getAudioInputStream(new File("GIGI DAGOSTINO - LAMOUR TOUJOURS (ORIGINAL VERSION).wav"));
+                            case 10 -> srcCanzone = AudioSystem.getAudioInputStream(new File("MORAD, ELGRANDETOTO - OJOS SIN VER [LYRIC VIDEO]  REINSERTADO.wav"));
+                            case 11 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Gigi D'Alessio – Mon amour.wav"));
+                        }
 
                         try {
 
-                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                            formatoInizio = srcInizio.getFormat();
-                            durataInizio = (long) (inizio.getFrameLength() / formatoInizio.getFrameRate() * 1000);
+                            // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                            canzone = AudioSystem.getClip();
+                            // Apertura del file assegnato a srcCanzone
+                            canzone.open(srcCanzone);
+                            // Inizio dell'esecuzione di tale file
+                            canzone.start();
+                            // Esecuzione di tale file fino alla sua terminazione
+                            canzone.drain();
 
-                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                            sleep(durataInizio);
+                            try {
 
-                        // Eccezione nel caso di errori nell'esecuzione di sleep
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                                // Calcolare la durata di ascolto della canzone riprodotta in millisecondi
+                                formatoMusica = srcCanzone.getFormat();
+                                durataCanzone = (long) (canzone.getFrameLength() / formatoMusica.getFrameRate() * 1000);
+
+                                // Mettere in pausa il thread per un tempo pari a quello della canzone riprodotta
+                                sleep(durataCanzone);
+
+                            // Eccezione nel caso di errori nell'esecuzione di sleep
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        // Eccezione nel caso di assenza del file audio indicato
+                        } catch (LineUnavailableException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                    // Eccezione nel caso di assenza del file audio indicato
-                    } catch (LineUnavailableException ex) {
+                    // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (UnsupportedAudioFileException | IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-
-                        // Chiusura del file utilizzato
-                        srcInizio.close();
-
-                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            } case "musica" -> {
-                
-                // Dichiarazione degli oggetti srcCanzone, formatoMusica, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
-                AudioInputStream srcCanzone = null;
-                AudioFormat formatoMusica;
-                Clip canzone;
-                Random genRand = new Random();
-                
-                // Dichiarazione variabili
-                long durataCanzone;
-                
-                try {
-                    
-                    // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati
-                    switch (genRand.nextInt(12)) {
-                        case 0 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang – Casablanca (feat. Morad ) [Official Video].wav"));
-                        case 1 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang - Que Lo Ke [Official Lyric Video].wav"));
-                        case 2 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Fred De Palma feat. Ana Mena – D'estate non vale (feat. Ana Mena).wav"));
-                        case 3 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Giuni Russo – Unestate al mare.wav"));
-                        case 4 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Il Pagante - @NewMusicItaly – Portofino - @NewMusicItaly.wav"));
-                        case 5 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Kaoma – Lambada.wav"));
-                        case 6 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Bizarrap & Quevedo – Quevedo_ Bzrp Music Sessions, Vol. 52.wav"));
-                        case 7 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Cappella U Got 2 Let The Music.wav"));
-                        case 8 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Enrique Iglesias - Bailando ft. Descemer Bueno, Gente De Zona (Letra).wav"));
-                        case 9 -> srcCanzone = AudioSystem.getAudioInputStream(new File("GIGI DAGOSTINO - LAMOUR TOUJOURS (ORIGINAL VERSION).wav"));
-                        case 10 -> srcCanzone = AudioSystem.getAudioInputStream(new File("MORAD, ELGRANDETOTO - OJOS SIN VER [LYRIC VIDEO]  REINSERTADO.wav"));
-                        case 11 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Gigi D'Alessio – Mon amour.wav"));
-                    }
-                    
-                    try {
-                        
-                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                        canzone = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcCanzone
-                        canzone.open(srcCanzone);
-                        // Inizio dell'esecuzione di tale file
-                        canzone.start();
-                        // Esecuzione di tale file fino alla sua terminazione
-                        canzone.drain();
-                        
+                    } finally {
                         try {
-                            
-                            // Calcolare la durata di ascolto della canzone riprodotta in millisecondi
-                            formatoMusica = srcCanzone.getFormat();
-                            durataCanzone = (long) (canzone.getFrameLength() / formatoMusica.getFrameRate() * 1000);
-                            
-                            // Mettere in pausa il thread per un tempo pari a quello della canzone riprodotta
-                            sleep(durataCanzone);
-                            
-                        // Eccezione nel caso di errori nell'esecuzione di sleep
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+
+                            // Chiusura del file utilizzato
+                            srcCanzone.close();
+
+                        // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                    // Eccezione nel caso di assenza del file audio indicato
-                    } catch (LineUnavailableException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        
-                        // Chiusura del file utilizzato
-                        srcCanzone.close();
-                        
-                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                
-                // Esecuzione ricorsiva del metodo run
-                run();
             } case "incrementoPunti" -> {
                 
-                // Mostrare graficamente il punteggio in tempo reale
-                frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
-                
-                // Incrementare il numero di vite ad intervalli di 2000 punti
-                if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
+                while (true) {
                     
-                    // Incrementare il numero di vite
-                    frameP.incrementoNVite();
-                    frameP.getVite().setText("Vite: " + (frameP.getNVite()));
-                    
-                    // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch
-                    this.setName("incrementoVita");
-                } else {
-                    try {
-                        
-                        // Mettere in pausa il thread per un tempo pari a un secondo
-                        sleep(1000);
-                        
-                    // Eccezione nel caso di errori nell'esecuzione di sleep   
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    // Mostrare graficamente il punteggio in tempo reale
+                    frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
+
+                    // Incrementare il numero di vite ad intervalli di 2000 punti
+                    if (frameP.getNPunti() != 0 && frameP.getNPunti() % 2000 == 0) {
+
+                        // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch
+                        this.setName("incrementoVita");
+                        // Incrementare il numero di punti
+                        frameP.incrementoNPunti();
+                        run();
+                    } else {
+                        try {
+
+                            // Mettere in pausa il thread per un tempo pari a un secondo
+                            sleep(1000);
+                            // Incrementare il numero di punti
+                            frameP.incrementoNPunti();
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep   
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                }
-                
-                // Incrementare il numero di punti
-                frameP.incrementoNPunti();
-                
-                // Esecuzione ricorsiva del metodo run
-                run();
+                }    
             } case "incrementoVita" -> {
                 
                 // Dichiarazione degli oggetti srcIncremento, formatoIncremento, e incremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcIncremento
@@ -211,6 +150,10 @@ public class NewThread extends Thread {
                 // Dichiarazione variabili
                 long durataIncremento;
                 
+                // Incrementare il numero di vite
+                frameP.incrementoNVite();
+                frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                
                 try {
                     
                     // Assegnazione del file audio "incrementoVita.wav" a srcIncremento
@@ -220,7 +163,7 @@ public class NewThread extends Thread {
                         
                         // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
                         incremento = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcSalto
+                        // Apertura del file assegnato a srcIncremento
                         incremento.open(srcIncremento);
                         // Inizio dell'esecuzione di tale file
                         incremento.start();
@@ -267,6 +210,84 @@ public class NewThread extends Thread {
                 this.setName("incrementoPunti");
                 
                 run();
+            } case "conflitto" -> {
+                while (true) {
+                    
+                    if ((frameP.getGranchio().getX() >= frameP.getPallina().getX() - 35 && frameP.getGranchio().getX() <= frameP.getPallina().getX() + 35 && frameP.getGranchio().getY() == frameP.getYPallina()) || 
+                        (frameP.getGabbiano().getX() >= frameP.getPallina().getX() - 35 && frameP.getGabbiano().getX() <= frameP.getPallina().getX() + 35 && frameP.getGabbiano().getY() == frameP.getYPallina())) {
+                        this.setName("decrementoVita");
+                        run();
+                    } else {
+                        try {
+                            sleep(frameP.getVelocitaMovimento());
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }    
+                }
+            } case "decrementoVita" -> {
+                
+                // Dichiarazione degli oggetti srcDecremento, formatoDecremento, e decremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcDecremento
+                AudioInputStream srcDecremento = null;
+                AudioFormat formatoDecremento;
+                Clip decremento;
+                
+                // Dichiarazione variabili
+                long durataDecremento;
+                
+                // Decrementare il numero di vite
+                frameP.decrementoNVite();
+                frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                
+                try {
+                    
+                    // Assegnazione del file audio "decrementoVita.wav" a srcDecremento
+                    srcDecremento = AudioSystem.getAudioInputStream(new File("decrementoVita.wav"));
+                    
+                    try {
+                        
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        decremento = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcDecremento
+                        decremento.open(srcDecremento);
+                        // Inizio dell'esecuzione di tale file
+                        decremento.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        decremento.drain();
+                        
+                        try {
+                            
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoDecremento = srcDecremento.getFormat();
+                            durataDecremento = (long) (decremento.getFrameLength() / formatoDecremento.getFrameRate() * 1000);
+                            
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            sleep(durataDecremento);
+                            
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        
+                        // Chiusura del file utilizzato
+                        srcDecremento.close();
+                        
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             } case "pallina" -> {
                 int G = 4;
                 
@@ -300,7 +321,12 @@ public class NewThread extends Thread {
                         G++;
                    
                    frameP.incrementoYPallina(G);
-                }    
+                }
+                
+                frameP.decrementoYPallina(G);
+                
+                System.out.println(frameP.getYPallina());
+                
             } case "salto" -> {
                 
                 // Dichiarazione degli oggetti srcSalto, formato, e salto appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto

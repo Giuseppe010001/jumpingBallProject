@@ -19,7 +19,8 @@ import javax.sound.sampled.AudioSystem; // Importare la classe AudioSystem
 import javax.sound.sampled.Clip; // Importare la classe Clip
 import javax.sound.sampled.LineUnavailableException; // Importare la classe LineUnavailableException
 import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe UnsupportedAudioFileException
-import javax.swing.JTextArea;
+import javax.swing.JTextArea; // Importare la classe JTextArea
+import javax.swing.JOptionPane; // Importare la classe JOptionPane
 
 /**
  *
@@ -33,15 +34,13 @@ public class StartFrame extends javax.swing.JFrame {
     }
     
     // Metodi Getters
-    public JTextArea getAreaGiocatori(){
+    public JTextArea getAreaGiocatori() {
         return areaGiocatori; 
     }
     
-    public JTextArea getAreaPunteggi(){  
+    public JTextArea getAreaPunteggi() {  
         return areaPunteggi; 
     }
-    
-    
     
     // Altri metodi
     @SuppressWarnings("unchecked")
@@ -150,14 +149,14 @@ public class StartFrame extends javax.swing.JFrame {
         /* 
         Dichiarazione e inizializzazione di un oggetto framePrincipale della classe MainFrame e di un oggetto srcPartenza della classe AudioInputStream 
         e sola dichiarazione di un oggetto formatoPartenza della classe AudioFormat, di un oggetto partenza della classe Clip e
-        di due oggetti threadClick e threadMusica appartenenti alla classe NewThread
+        di cinque oggetti threadClick, threadMusica, threadPunti, threadConflitto e threadOstacoli appartenenti alla classe NewThread
         */
         Random genRand = new Random();
         MainFrame framePrincipale = new MainFrame();
-        AudioInputStream srcPartenza = null;
+        AudioInputStream srcPartenza1 = null, srcPartenza2 = null, srcPartenza3 = null, srcPartenza4 = null;
         AudioFormat formatoPartenza;
         Clip partenza;
-        NewThread threadClick, threadMusica, threadPunti, threadGranchioGabbiano;
+        NewThread threadClick, threadMusica, threadPunti, threadConflitto, threadOstacoli;
         
         // Dichiarazione variabili
         long durataPartenza;
@@ -174,14 +173,14 @@ public class StartFrame extends javax.swing.JFrame {
         try {
 
             // Assegnazione del file audio "Partenza.wav" a srcSalto
-            srcPartenza = AudioSystem.getAudioInputStream(new File("Partenza.wav"));
+            srcPartenza1 = AudioSystem.getAudioInputStream(new File("partenza.wav"));
 
             try {
 
                 // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
                 partenza = AudioSystem.getClip();
                 // Apertura del file assegnato a srcPartenza
-                partenza.open(srcPartenza);
+                partenza.open(srcPartenza1);
                 // Inizio dell'esecuzione di tale file
                 partenza.start();
                 // Esecuzione di tale file fino alla sua terminazione
@@ -190,7 +189,7 @@ public class StartFrame extends javax.swing.JFrame {
                 try {
 
                     // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                    formatoPartenza = srcPartenza.getFormat();
+                    formatoPartenza = srcPartenza1.getFormat();
                     durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
 
                     // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
@@ -213,13 +212,160 @@ public class StartFrame extends javax.swing.JFrame {
             try {
 
                 // Chiusura del file utilizzato
-                srcPartenza.close();
+                srcPartenza1.close();
 
             // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
             } catch (IOException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        /*try {
+
+            // Assegnazione del file audio "Partenza.wav" a srcSalto
+            srcPartenza2 = AudioSystem.getAudioInputStream(new File("partenza.wav"));
+
+            try {
+
+                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                partenza = AudioSystem.getClip();
+                // Apertura del file assegnato a srcPartenza
+                partenza.open(srcPartenza2);
+                // Inizio dell'esecuzione di tale file
+                partenza.start();
+                // Esecuzione di tale file fino alla sua terminazione
+                partenza.drain();
+
+                try {
+
+                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                    formatoPartenza = srcPartenza2.getFormat();
+                    durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
+
+                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                    Thread.sleep(durataPartenza);
+
+                // Eccezione nel caso di errori nell'esecuzione di sleep
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            // Eccezione nel caso di assenza del file audio indicato
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+
+                // Chiusura del file utilizzato
+                srcPartenza2.close();
+
+            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+
+            // Assegnazione del file audio "Partenza.wav" a srcSalto
+            srcPartenza3 = AudioSystem.getAudioInputStream(new File("partenza.wav"));
+
+            try {
+
+                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                partenza = AudioSystem.getClip();
+                // Apertura del file assegnato a srcPartenza
+                partenza.open(srcPartenza3);
+                // Inizio dell'esecuzione di tale file
+                partenza.start();
+                // Esecuzione di tale file fino alla sua terminazione
+                partenza.drain();
+
+                try {
+
+                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                    formatoPartenza = srcPartenza3.getFormat();
+                    durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
+
+                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                    Thread.sleep(durataPartenza);
+
+                // Eccezione nel caso di errori nell'esecuzione di sleep
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            // Eccezione nel caso di assenza del file audio indicato
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+
+                // Chiusura del file utilizzato
+                srcPartenza3.close();
+
+            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+
+            // Assegnazione del file audio "Partenza.wav" a srcSalto
+            srcPartenza4 = AudioSystem.getAudioInputStream(new File("partenza.wav"));
+
+            try {
+
+                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                partenza = AudioSystem.getClip();
+                // Apertura del file assegnato a srcPartenza
+                partenza.open(srcPartenza4);
+                // Inizio dell'esecuzione di tale file
+                partenza.start();
+                // Esecuzione di tale file fino alla sua terminazione
+                partenza.drain();
+
+                try {
+
+                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                    formatoPartenza = srcPartenza4.getFormat();
+                    durataPartenza = (long) (partenza.getFrameLength() / formatoPartenza.getFrameRate() * 1000);
+
+                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                    Thread.sleep(durataPartenza);
+
+                // Eccezione nel caso di errori nell'esecuzione di sleep
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            // Eccezione nel caso di assenza del file audio indicato
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+        } catch (UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+
+                // Chiusura del file utilizzato
+                srcPartenza4.close();
+
+            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }*/
         
         // Settaggio iniziale dei valori delle etichette del punteggio, delle vite e del record massimo
         framePrincipale.getPunteggio().setText("Punti: " + framePrincipale.getNPunti());
@@ -229,8 +375,8 @@ public class StartFrame extends javax.swing.JFrame {
         // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
         framePrincipale.getEtichettaInserimento().setVisible(false);
         framePrincipale.getNomeGiocatore().setVisible(false);
-        framePrincipale.getConfirm().setVisible(true);
-        
+        // framePrincipale.getConfirm().setVisible(true);
+        framePrincipale.getConfirm().setVisible(false);
         
         // Rendere visibile framePrincipale
         framePrincipale.setVisible(true);
@@ -246,24 +392,32 @@ public class StartFrame extends javax.swing.JFrame {
         // Avvio di threadMusica
         threadMusica.start();
         
+        // Avviare un controllore di conflitto pallina-granchio o pallina-gabbiano
+        // Inizializzazione di threadConflitto
+        threadConflitto = new NewThread(framePrincipale);
+        // Risettaggio del nome di threadConflitto
+        threadConflitto.setName("conflitto");
+        // Avvio di threadConflitto
+        threadConflitto.start();
+        
         // Avviare un contatore di punti
         // Inizializzazione di threadPunti
         threadPunti = new NewThread(framePrincipale);
         // Risettaggio del nome di threadPunti
         threadPunti.setName("incrementoPunti");
-        // Avvio di threadMusica
+        // Avvio di threadPunti
         threadPunti.start();
         
         // Avviare il movimento del granchio
-        // Inizializzazione di threadGranchio
-        threadGranchioGabbiano = new NewThread(framePrincipale);
-        // Risettaggio del nome di threadGranchioGabbiano, a seconda del valore assunto da threadGranchioGabbiano
+        // Inizializzazione di threadOstacoli
+        threadOstacoli = new NewThread(framePrincipale);
+        // Risettaggio del nome di threadOstacoli, a seconda del valore assunto da threadOstacoli
         switch (genRand.nextInt(2)) {
-            case 0 -> threadGranchioGabbiano.setName("granchio");
-            case 1 -> threadGranchioGabbiano.setName("gabbiano");
+            case 0 -> threadOstacoli.setName("granchio");
+            case 1 -> threadOstacoli.setName("gabbiano");
         }
-        // Avvio di threadGranchio
-        threadGranchioGabbiano.start();
+        // Avvio di threadOstacoli
+        threadOstacoli.start();
     }//GEN-LAST:event_startActionPerformed
 
     private void helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpActionPerformed
@@ -315,44 +469,50 @@ public class StartFrame extends javax.swing.JFrame {
         //</editor-fold>
         
         // Dichiarazione variabili
-        String nomeGiocatore, riga, punteggio, nomeFile = "Classifica.csv";
+        String nomeGiocatore, punteggio, nomeFile = "Classifica.csv", riga;
         
         // Dichiarazione array
         String[] statoGiocatore;
         
-        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto threadInizio della classe NewThread
+        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto lettore della classe BufferedReader
         StartFrame frameInizio = new StartFrame();
-        Thread threadInizio;
-        
-        // Avviare un file audio di benvenuto al gioco
-        // Inizializzazione di threadInizio
-        threadInizio = new NewThread();
-        // Risettaggio del nome di threadInizio
-        threadInizio.setName("inizio");
-        // Avvio di threadInizio
-        threadInizio.start();
+        BufferedReader lettore;
 
         // Rendere visibile frameInizio
         frameInizio.setVisible(true);
         
         try {
-            BufferedReader Lettore = new BufferedReader(new FileReader(nomeFile));
-            //readLine() metodo della classe che consent di leggere una riga
-            Lettore.readLine();
-            while((riga = Lettore.readLine())!=null)
-            {
+            
+            // Inizializzare l'oggetto Lettore
+            lettore = new BufferedReader(new FileReader(nomeFile));
+            
+            // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
+            lettore.readLine();
+            
+            // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
+            while((riga = lettore.readLine()) != null) {
+                
+                // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
                 statoGiocatore = riga.split(";");
-                //estrae ogni elemento in una variabile opportuna
+                
+                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
                 nomeGiocatore = statoGiocatore[0];
+                
+                // Assegnare l'elemento contenuto nel secondo campo a punteggio
                 punteggio = statoGiocatore[1];
                 
+                // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
                 frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
                 frameInizio.getAreaPunteggi().append(punteggio + '\n');
             }
+        
+        // Gestire l'assenza del file richiamato    
         } catch (FileNotFoundException ex) {
-            System.out.println("Impossibile trovare il file " + nomeFile);
+            JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+            
+        // Gestire l'errore di lettura/scrittura del file richiamato    
         } catch (IOException ex) {
-            System.out.println("Errore nella lettura del file " + nomeFile);
+            JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
         } 
     }
 

@@ -4,15 +4,15 @@
  */
 package jumpingball;
 
-import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.BufferedReader; // Importare la classe BufferedReader
+import java.io.File; // Importare la classe File
+import java.io.FileNotFoundException; // Importare la classe FileNotFoundException
+import java.io.FileReader; // Importare la classe FileReader
+import java.io.IOException; // Importare la classe IOException
+import java.io.PrintWriter; // Importare la classe PrintWriter
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
+import javax.swing.JOptionPane; // Importare la classe JOptionPane
 import javax.swing.JTextField; // Importare la classe JTextField
 
 /**
@@ -107,6 +107,9 @@ public class MainFrame extends javax.swing.JFrame {
     public void incrementoNVite() {
         nVite++;
     }
+    public void decrementoNVite() {
+        nVite--;
+    }
     public void decrementoVelocitaMovimento() {
         velocitaMovimento--;
     }
@@ -140,7 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
                 pallinaMouseClicked(evt);
             }
         });
-        getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
+        getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 280, -1, -1));
 
         granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Granchio.gif"))); // NOI18N
         getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 280, -1, -1));
@@ -194,15 +197,16 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         
-        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto threadInizio della classe NewThread
-        StartFrame frameInizio = new StartFrame();
-        Thread threadInizio;
-        
         // Dichiarazione variabili
         String nomeGiocatore, riga, punteggio, nomeFile = "Classifica.csv";
         
         // Dichiarazione array
         String[] statoGiocatore;
+        
+        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto lettore della classe BufferedReader
+        StartFrame frameInizio = new StartFrame();
+        BufferedReader lettore;
+
         /*
         try{
 
@@ -235,34 +239,38 @@ public class MainFrame extends javax.swing.JFrame {
          } */
         
         try {
-            BufferedReader Lettore = new BufferedReader(new FileReader(nomeFile));
-            //readLine() metodo della classe che consent di leggere una riga
-            Lettore.readLine();
-            while((riga = Lettore.readLine())!=null)
-            {
+            
+            // Inizializzare l'oggetto Lettore
+            lettore = new BufferedReader(new FileReader(nomeFile));
+            
+            // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
+            lettore.readLine();
+            
+            // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
+            while((riga = lettore.readLine()) != null) {
+                
+                // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
                 statoGiocatore = riga.split(";");
-                //estrae ogni elemento in una variabile opportuna
+                
+                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
                 nomeGiocatore = statoGiocatore[0];
+                
+                // Assegnare l'elemento contenuto nel secondo campo a punteggio
                 punteggio = statoGiocatore[1];
                 
+                // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
                 frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
                 frameInizio.getAreaPunteggi().append(punteggio + '\n');
             }
+        
+        // Gestire l'assenza del file richiamato    
         } catch (FileNotFoundException ex) {
-            System.out.println("Impossibile trovare il file " + nomeFile);
+            JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+            
+        // Gestire l'errore di lettura/scrittura del file richiamato    
         } catch (IOException ex) {
-            System.out.println("Errore nella lettura del file " + nomeFile);
-        }
-        
-        
-        
-        // Avviare un file audio di benvenuto al gioco
-        // Inizializzazione di threadInizio
-        threadInizio = new NewThread();
-        // Risettaggio del nome di threadInizio
-        threadInizio.setName("inizio");
-        // Avvio di threadInizio
-        threadInizio.start();
+            JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
+        } 
 
         // Rendere visibile frameInizio
         frameInizio.setVisible(true);
@@ -289,13 +297,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton confirm;
     private javax.swing.JLabel etichettaInserimento;
     private javax.swing.JLabel gabbiano;
-    public javax.swing.JLabel granchio;
+    private javax.swing.JLabel granchio;
     private javax.swing.JTextField nomeGiocatore;
-    public javax.swing.JLabel pallina;
-    public javax.swing.JLabel punteggio;
-    public javax.swing.JLabel recordMassimo;
+    private javax.swing.JLabel pallina;
+    private javax.swing.JLabel punteggio;
+    private javax.swing.JLabel recordMassimo;
     private javax.swing.JLabel sfondoMain;
     private javax.swing.JLabel terrenoGioco;
-    public javax.swing.JLabel vite;
+    private javax.swing.JLabel vite;
     // End of variables declaration//GEN-END:variables
 }
