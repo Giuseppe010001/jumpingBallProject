@@ -11,6 +11,7 @@ import java.io.FileNotFoundException; // Importare la classe FileNotFoundExcepti
 import java.io.FileReader; // Importare la classe FileReader
 import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.IOException; // Importare la classe IOException 
+import java.io.PrintWriter;
 import java.util.logging.Level; // Importare la classe Level
 import java.util.logging.Logger; // Importare la classe Logger
 import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
@@ -55,6 +56,7 @@ public class StartFrame extends javax.swing.JFrame {
         areaGiocatori = new javax.swing.JTextArea();
         etichettaGiocatori = new javax.swing.JLabel();
         etichettaPunteggi = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         help = new javax.swing.JButton();
         sfondoStart = new javax.swing.JLabel();
 
@@ -125,6 +127,16 @@ public class StartFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, 280));
+
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Resetta.png"))); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(38, 38));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 387, -1, -1));
 
         help.setBackground(new java.awt.Color(0, 153, 255));
         help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Help.png"))); // NOI18N
@@ -440,6 +452,74 @@ public class StartFrame extends javax.swing.JFrame {
         // Rendere visibile frameAiuto
         frameAiuto.setVisible(true);
     }//GEN-LAST:event_helpActionPerformed
+                                 
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        String nomeFile = "Classifica.csv", nomeGiocatore, punteggio, riga;
+        String[] statoGiocatore;
+        BufferedReader lettore;
+        int i;
+        int confermaReset = JOptionPane.showConfirmDialog(null, "Vuoi confermare il reset della classifica?", "Conferma", JOptionPane.YES_NO_OPTION);
+        if(confermaReset == JOptionPane.YES_OPTION) {
+            try{
+                PrintWriter writer = new PrintWriter(new File(nomeFile));
+
+                StringBuilder sb = new StringBuilder(); // ti permette di costruire una stringa
+                sb.append("Giocatore");
+                sb.append(';');
+                sb.append("Punteggio");
+                sb.append('\n');
+                for(i=0; i<17; i++){
+                    sb.append("AAA");
+                    sb.append(';');
+                    sb.append("0");
+                    if(i < 17)  
+                        sb.append('\n');
+                }
+                
+                writer.write(sb.toString());
+                writer.close();
+
+            }
+            catch (FileNotFoundException e){
+                JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+            areaGiocatori.setText("");
+            areaPunteggi.setText("");
+            try {
+            
+                // Inizializzare l'oggetto Lettore
+                lettore = new BufferedReader(new FileReader(nomeFile));
+
+                // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
+                lettore.readLine();
+
+                // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
+                while((riga = lettore.readLine()) != null) {
+
+                    // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
+                    statoGiocatore = riga.split(";");
+
+                    // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
+                    nomeGiocatore = statoGiocatore[0];
+
+                    // Assegnare l'elemento contenuto nel secondo campo a punteggio
+                    punteggio = statoGiocatore[1];
+
+                    // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
+                    areaGiocatori.append(nomeGiocatore + '\n');
+                    areaPunteggi.append(punteggio + '\n');
+                }
+                // Gestire l'assenza del file richiamato    
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+
+                // Gestire l'errore di lettura/scrittura del file richiamato    
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
+            } 
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -523,6 +603,7 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JLabel etichettaGiocatori;
     private javax.swing.JLabel etichettaPunteggi;
     private javax.swing.JButton help;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane scorrimentoGiocatori;
     private javax.swing.JScrollPane scorrimentoPunteggi;
     private javax.swing.JLabel sfondoStart;
