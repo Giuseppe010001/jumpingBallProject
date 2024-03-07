@@ -25,6 +25,7 @@ public class HelpFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jumping Ball");
+        setResizable(false);
 
         areaGuida.setEditable(false);
         areaGuida.setBackground(new java.awt.Color(204, 153, 255));

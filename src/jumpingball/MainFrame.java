@@ -23,7 +23,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
     private int yPallina, xOstacoli, nPunti, nVite, puntiRecord;
-    private long velocitaMovimento;
+    private long velocita;
     
     // Metodo costruttore di default
     public MainFrame() {
@@ -32,7 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
         xOstacoli = granchio.getX();
         nPunti = puntiRecord = 0;
         nVite = 3;
-        velocitaMovimento = 10;
+        velocita = 10;
     }
     
     // Metodi getters
@@ -72,8 +72,8 @@ public class MainFrame extends javax.swing.JFrame {
     public int getPuntiRecord() {
         return puntiRecord;
     }
-    public long getVelocitaMovimento() {
-        return velocitaMovimento;
+    public long getVelocita() {
+        return velocita;
     }
     public JTextField getNomeGiocatore() {
         return nomeGiocatore;
@@ -110,8 +110,8 @@ public class MainFrame extends javax.swing.JFrame {
     public void decrementoNVite() {
         nVite--;
     }
-    public void decrementoVelocitaMovimento() {
-        velocitaMovimento--;
+    public void decrementoVelocita() {
+        velocita--;
     }
 
     // Altri metodi
@@ -184,7 +184,6 @@ public class MainFrame extends javax.swing.JFrame {
         etichettaInserimento.setText("Inserisci nome");
         getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
-        gabbiano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Gabbiano.gif"))); // NOI18N
         gabbiano.setPreferredSize(new java.awt.Dimension(98, 32));
         getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-98, 216, -1, -1));
 

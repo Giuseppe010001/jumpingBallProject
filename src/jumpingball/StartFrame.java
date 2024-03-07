@@ -34,11 +34,10 @@ public class StartFrame extends javax.swing.JFrame {
         initComponents();
     }
     
-    // Metodi Getters
+    // Metodi getters
     public JTextArea getAreaGiocatori() {
         return areaGiocatori; 
     }
-    
     public JTextArea getAreaPunteggi() {  
         return areaPunteggi; 
     }
@@ -56,13 +55,14 @@ public class StartFrame extends javax.swing.JFrame {
         areaGiocatori = new javax.swing.JTextArea();
         etichettaGiocatori = new javax.swing.JLabel();
         etichettaPunteggi = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
         help = new javax.swing.JButton();
         sfondoStart = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jumping Ball");
         setMinimumSize(new java.awt.Dimension(600, 425));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         start.setBackground(new java.awt.Color(0, 153, 255));
@@ -78,6 +78,7 @@ public class StartFrame extends javax.swing.JFrame {
 
         classifica.setBackground(new java.awt.Color(153, 255, 255));
 
+        areaPunteggi.setEditable(false);
         areaPunteggi.setBackground(new java.awt.Color(204, 153, 255));
         areaPunteggi.setColumns(8);
         areaPunteggi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
@@ -128,16 +129,16 @@ public class StartFrame extends javax.swing.JFrame {
 
         getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, 280));
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Reset.png"))); // NOI18N
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setPreferredSize(new java.awt.Dimension(38, 38));
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        reset.setBackground(new java.awt.Color(0, 153, 255));
+        reset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Reset.png"))); // NOI18N
+        reset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reset.setPreferredSize(new java.awt.Dimension(38, 38));
+        reset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                resetMouseClicked(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 387, -1, -1));
+        getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 387, -1, -1));
 
         help.setBackground(new java.awt.Color(0, 153, 255));
         help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Help.png"))); // NOI18N
@@ -455,12 +456,24 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_helpActionPerformed
                                  
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
+        
+        int i, confermaReset = JOptionPane.showConfirmDialog(null, "Vuoi confermare il reset della classifica?", "Conferma", JOptionPane.YES_NO_OPTION);
         String nomeFile = "Classifica.csv", nomeGiocatore, punteggio, riga;
+
         String[] statoGiocatore;
+        
         BufferedReader lettore;
-        int i;
-        int confermaReset = JOptionPane.showConfirmDialog(null, "Vuoi confermare il reset della classifica?", "Conferma", JOptionPane.YES_NO_OPTION);
+        Thread threadClick;
+        
+        // Avviare un file audio per segnalare il click del pulsante help
+        // Inizializzazione di threadClick
+        threadClick = new NewThread();
+        // Risettaggio del nome di threadClick
+        threadClick.setName("click");
+        // Avvio di threadClick
+        threadClick.start();
+        
         if(confermaReset == JOptionPane.YES_OPTION) {
             try{
                 PrintWriter writer = new PrintWriter(new File(nomeFile));
@@ -520,7 +533,7 @@ public class StartFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
             } 
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_resetMouseClicked
 
     /**
      * @param args the command line arguments
@@ -604,7 +617,7 @@ public class StartFrame extends javax.swing.JFrame {
     private javax.swing.JLabel etichettaGiocatori;
     private javax.swing.JLabel etichettaPunteggi;
     private javax.swing.JButton help;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton reset;
     private javax.swing.JScrollPane scorrimentoGiocatori;
     private javax.swing.JScrollPane scorrimentoPunteggi;
     private javax.swing.JLabel sfondoStart;

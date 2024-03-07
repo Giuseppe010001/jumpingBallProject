@@ -22,8 +22,10 @@ import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe
  */
 public class NewThread extends Thread {
     
+    // Dichiarazione attributi
     private MainFrame frameP;
     
+    // Metodi costruttori
     public NewThread() {
         super();
     }
@@ -32,6 +34,7 @@ public class NewThread extends Thread {
         this.frameP = frameP;
     }
     
+    // Altri metodi
     @Override
     public void run() {
         switch (this.getName()) {
@@ -134,7 +137,9 @@ public class NewThread extends Thread {
                             durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
 
                             // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            this.interrupt();
                             Thread.sleep(durataSconfitta);
+                            
 
                         // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
@@ -253,8 +258,8 @@ public class NewThread extends Thread {
                     }
                 }
                 
-                if (frameP.getVelocitaMovimento() > 5)
-                    frameP.decrementoVelocitaMovimento();
+                if (frameP.getVelocita() > 5)
+                    frameP.decrementoVelocita();
                 
                 this.setName("incrementoPunti");
                 
@@ -268,7 +273,7 @@ public class NewThread extends Thread {
                         run();
                     } else {
                         try {
-                            sleep(frameP.getVelocitaMovimento());
+                            sleep(frameP.getVelocita());
                         } catch (InterruptedException ex) {
                             Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -291,58 +296,63 @@ public class NewThread extends Thread {
                 if (frameP.getNVite() == 0) {
                     frameP.getPallina().setVisible(false);
                     frameP.getGranchio().setVisible(false);
-                    frameP.getGranchio().setVisible(false);
+                    frameP.getGabbiano().setVisible(false);
+                    // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
+                    frameP.getEtichettaInserimento().setVisible(true);
+                    frameP.getNomeGiocatore().setVisible(true);
+                    // framePrincipale.getConfirm().setVisible(true);
+                    frameP.getConfirm().setVisible(true);
                     this.setName("musica");
                     run();
-                }
-                
-                try {
-                    
-                    // Assegnazione del file audio "decrementoVita.wav" a srcDecremento
-                    srcDecremento = AudioSystem.getAudioInputStream(new File("decrementoVita.wav"));
-                    
+                } else {
                     try {
-                        
-                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                        decremento = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcDecremento
-                        decremento.open(srcDecremento);
-                        // Inizio dell'esecuzione di tale file
-                        decremento.start();
-                        // Esecuzione di tale file fino alla sua terminazione
-                        decremento.drain();
-                        
+                    
+                        // Assegnazione del file audio "decrementoVita.wav" a srcDecremento
+                        srcDecremento = AudioSystem.getAudioInputStream(new File("decrementoVita.wav"));
+
                         try {
-                            
-                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                            formatoDecremento = srcDecremento.getFormat();
-                            durataDecremento = (long) (decremento.getFrameLength() / formatoDecremento.getFrameRate() * 1000);
-                            
-                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                            sleep(durataDecremento);
-                            
-                        // Eccezione nel caso di errori nell'esecuzione di sleep
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+
+                            // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                            decremento = AudioSystem.getClip();
+                            // Apertura del file assegnato a srcDecremento
+                            decremento.open(srcDecremento);
+                            // Inizio dell'esecuzione di tale file
+                            decremento.start();
+                            // Esecuzione di tale file fino alla sua terminazione
+                            decremento.drain();
+
+                            try {
+
+                                // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                                formatoDecremento = srcDecremento.getFormat();
+                                durataDecremento = (long) (decremento.getFrameLength() / formatoDecremento.getFrameRate() * 1000);
+
+                                // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                                sleep(durataDecremento);
+
+                            // Eccezione nel caso di errori nell'esecuzione di sleep
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        // Eccezione nel caso di assenza del file audio indicato
+                        } catch (LineUnavailableException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                    // Eccezione nel caso di assenza del file audio indicato
-                    } catch (LineUnavailableException ex) {
+
+                    // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (UnsupportedAudioFileException | IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        
-                        // Chiusura del file utilizzato
-                        srcDecremento.close();
-                        
-                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+
+                            // Chiusura del file utilizzato
+                            srcDecremento.close();
+
+                        // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
             } case "pallina" -> {
@@ -350,7 +360,7 @@ public class NewThread extends Thread {
                 
                 while (frameP.getYPallina() >= 216) {
                     try {
-                        sleep(frameP.getVelocitaMovimento());
+                        sleep(frameP.getVelocita());
                     } catch (InterruptedException ex) {
                         Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -367,7 +377,7 @@ public class NewThread extends Thread {
                 
                 while (frameP.getYPallina() <= 280) {
                     try {
-                        sleep(frameP.getVelocitaMovimento());
+                        sleep(frameP.getVelocita());
                     } catch (InterruptedException ex) {
                         Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -463,7 +473,7 @@ public class NewThread extends Thread {
                             frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
                             
                             try {
-                                sleep(frameP.getVelocitaMovimento());
+                                sleep(frameP.getVelocita());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -487,7 +497,7 @@ public class NewThread extends Thread {
                             frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
                             
                             try {
-                                sleep(frameP.getVelocitaMovimento());
+                                sleep(frameP.getVelocita());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -500,6 +510,7 @@ public class NewThread extends Thread {
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
                         while (frameP.getNVite() > 0) {
+                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/GabbianoDestra.gif"))));
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -517,13 +528,14 @@ public class NewThread extends Thread {
                             frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocitaMovimento());
+                                sleep(frameP.getVelocita());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }    
                     } case 1 -> {
                         while (frameP.getNVite() > 0) {
+                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/GabbianoSinistra.gif"))));
                             if (frameP.getXOstacoli() <= -98) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -541,7 +553,7 @@ public class NewThread extends Thread {
                             frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocitaMovimento());
+                                sleep(frameP.getVelocita());
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
