@@ -129,7 +129,8 @@ public class StartFrame extends javax.swing.JFrame {
         getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, 280));
 
         jButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Resetta.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Reset.png"))); // NOI18N
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setPreferredSize(new java.awt.Dimension(38, 38));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

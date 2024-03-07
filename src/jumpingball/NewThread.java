@@ -274,10 +274,6 @@ public class NewThread extends Thread {
                         }
                     }    
                 }
-                
-                frameP.getPallina().setVisible(false);
-                this.setName("musica");
-                run();
             } case "decrementoVita" -> {
                 
                 // Dichiarazione degli oggetti srcDecremento, formatoDecremento, e decremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcDecremento
@@ -291,6 +287,14 @@ public class NewThread extends Thread {
                 // Decrementare il numero di vite
                 frameP.decrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                
+                if (frameP.getNVite() == 0) {
+                    frameP.getPallina().setVisible(false);
+                    frameP.getGranchio().setVisible(false);
+                    frameP.getGranchio().setVisible(false);
+                    this.setName("musica");
+                    run();
+                }
                 
                 try {
                     
@@ -490,8 +494,6 @@ public class NewThread extends Thread {
                         }
                     }
                 }
-                
-                frameP.getGranchio().setVisible(false);
             } case "gabbiano" -> {
                 Random genRand = new Random();
                 
@@ -522,7 +524,7 @@ public class NewThread extends Thread {
                         }    
                     } case 1 -> {
                         while (frameP.getNVite() > 0) {
-                            if (frameP.getXOstacoli() <= -64) {
+                            if (frameP.getXOstacoli() <= -98) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
                                         frameP.ripristinoXOstacoliIndietro();
@@ -546,8 +548,6 @@ public class NewThread extends Thread {
                         }    
                     }
                 }
-                
-                frameP.getGabbiano().setVisible(false);
             } case "click" -> {
                 
                 // Dichiarazione degli oggetti srcClick, formatoClick, e click appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto

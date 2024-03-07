@@ -184,9 +184,9 @@ public class MainFrame extends javax.swing.JFrame {
         etichettaInserimento.setText("Inserisci nome");
         getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
 
-        gabbiano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbiano.gif"))); // NOI18N
-        gabbiano.setPreferredSize(new java.awt.Dimension(64, 64));
-        getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 270, 110));
+        gabbiano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Gabbiano.gif"))); // NOI18N
+        gabbiano.setPreferredSize(new java.awt.Dimension(98, 32));
+        getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-98, 216, -1, -1));
 
         sfondoMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Sfondo Principale.jpg"))); // NOI18N
         getContentPane().add(sfondoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
