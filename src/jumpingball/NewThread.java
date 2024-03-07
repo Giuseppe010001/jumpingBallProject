@@ -37,17 +37,16 @@ public class NewThread extends Thread {
         switch (this.getName()) {
             case "musica" -> {
                 
-                while (true) {
-                    
-                    // Dichiarazione degli oggetti srcCanzone, formatoMusica, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
-                    AudioInputStream srcCanzone = null;
-                    AudioFormat formatoMusica;
-                    Clip canzone;
-                    Random genRand = new Random();
-
-                    // Dichiarazione variabili
-                    long durataCanzone;
-
+                // Dichiarazione degli oggetti srcCanzone, srcSconfitta, formatoMusica, formatoSconfitta, canzone, sconfitta e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone, srcSconfitta e genRand
+                AudioInputStream srcCanzone = null, srcSconfitta = null;
+                AudioFormat formatoMusica, formatoSconfitta;
+                Clip canzone, sconfitta;
+                Random genRand = new Random();
+                
+                // Dichiarazione variabili
+                long durataCanzone, durataSconfitta;
+                
+                while (frameP.getNVite() > 0) {
                     try {
 
                         // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati
@@ -111,9 +110,59 @@ public class NewThread extends Thread {
                         }
                     }
                 }
+                
+                try {
+
+                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    srcSconfitta = AudioSystem.getAudioInputStream(new File("sconfitta.wav"));
+
+                    try {
+
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        sconfitta = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcPartenza
+                        sconfitta.open(srcSconfitta);
+                        // Inizio dell'esecuzione di tale file
+                        sconfitta.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        sconfitta.drain();
+
+                        try {
+
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoSconfitta = srcSconfitta.getFormat();
+                            durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
+
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            Thread.sleep(durataSconfitta);
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+
+                        // Chiusura del file utilizzato
+                        srcSconfitta.close();
+
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             } case "incrementoPunti" -> {
                 
-                while (true) {
+                while (frameP.getNVite() > 0) {
                     
                     // Mostrare graficamente il punteggio in tempo reale
                     frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
@@ -211,10 +260,10 @@ public class NewThread extends Thread {
                 
                 run();
             } case "conflitto" -> {
-                while (true) {
+                while (frameP.getNVite() > 0) {
                     
-                    if ((frameP.getGranchio().getX() >= frameP.getPallina().getX() - 35 && frameP.getGranchio().getX() <= frameP.getPallina().getX() + 35 && frameP.getGranchio().getY() == frameP.getYPallina()) || 
-                        (frameP.getGabbiano().getX() >= frameP.getPallina().getX() - 35 && frameP.getGabbiano().getX() <= frameP.getPallina().getX() + 35 && frameP.getGabbiano().getY() == frameP.getYPallina())) {
+                    if ((frameP.getGranchio().getX() >= frameP.getPallina().getX() - 32 && frameP.getGranchio().getX() <= frameP.getPallina().getX() + 32 && frameP.getGranchio().getY() == frameP.getYPallina()) || 
+                        (frameP.getGabbiano().getX() >= frameP.getPallina().getX() - 32 && frameP.getGabbiano().getX() <= frameP.getPallina().getX() + 32 && frameP.getGabbiano().getY() == frameP.getYPallina())) {
                         this.setName("decrementoVita");
                         run();
                     } else {
@@ -225,6 +274,10 @@ public class NewThread extends Thread {
                         }
                     }    
                 }
+                
+                frameP.getPallina().setVisible(false);
+                this.setName("musica");
+                run();
             } case "decrementoVita" -> {
                 
                 // Dichiarazione degli oggetti srcDecremento, formatoDecremento, e decremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcDecremento
@@ -323,10 +376,7 @@ public class NewThread extends Thread {
                    frameP.incrementoYPallina(G);
                 }
                 
-                frameP.decrementoYPallina(G);
-                
-                System.out.println(frameP.getYPallina());
-                
+                frameP.decrementoYPallina(G);                
             } case "salto" -> {
                 
                 // Dichiarazione degli oggetti srcSalto, formato, e salto appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
@@ -391,7 +441,7 @@ public class NewThread extends Thread {
                 
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
-                        while (true) {
+                        while (frameP.getNVite() > 0) {
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -415,7 +465,7 @@ public class NewThread extends Thread {
                             }
                         }
                     } case 1 -> {
-                        while (true) {
+                        while (frameP.getNVite() > 0) {
                             if (frameP.getXOstacoli() <= -64) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -440,12 +490,14 @@ public class NewThread extends Thread {
                         }
                     }
                 }
+                
+                frameP.getGranchio().setVisible(false);
             } case "gabbiano" -> {
                 Random genRand = new Random();
                 
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
-                        while (true) {
+                        while (frameP.getNVite() > 0) {
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -469,7 +521,7 @@ public class NewThread extends Thread {
                             }
                         }    
                     } case 1 -> {
-                        while (true) {
+                        while (frameP.getNVite() > 0) {
                             if (frameP.getXOstacoli() <= -64) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -494,6 +546,8 @@ public class NewThread extends Thread {
                         }    
                     }
                 }
+                
+                frameP.getGabbiano().setVisible(false);
             } case "click" -> {
                 
                 // Dichiarazione degli oggetti srcClick, formatoClick, e click appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto

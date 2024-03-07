@@ -146,7 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 280, -1, -1));
 
         granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Granchio.gif"))); // NOI18N
-        getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
+        getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 280, -1, -1));
 
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         recordMassimo.setForeground(new java.awt.Color(0, 153, 255));
@@ -186,10 +186,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         gabbiano.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbiano.gif"))); // NOI18N
         gabbiano.setPreferredSize(new java.awt.Dimension(64, 64));
-        getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 164, 270, 110));
+        getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 270, 110));
 
         sfondoMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Sfondo Principale.jpg"))); // NOI18N
-        getContentPane().add(sfondoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, -10, -1, -1));
+        getContentPane().add(sfondoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);

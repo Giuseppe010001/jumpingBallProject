@@ -386,7 +386,7 @@ public class StartFrame extends javax.swing.JFrame {
         
         // Avviare una musica di background mentre si sta giocando
         // Inizializzazione di threadMusica
-        threadMusica = new NewThread();
+        threadMusica = new NewThread(framePrincipale);
         // Risettaggio del nome di threadMusica
         threadMusica.setName("musica");
         // Avvio di threadMusica
