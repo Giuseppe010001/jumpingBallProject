@@ -30,7 +30,6 @@ public class NewThread extends Thread {
         super();
     }
     public NewThread(MainFrame frameP) {
-        super();
         this.frameP = frameP;
     }
     
