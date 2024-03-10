@@ -170,7 +170,7 @@
           <Color blue="ff" green="99" red="0" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Reset.png"/>
+          <Image iconType="3" name="/jumpingball/reset.png"/>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>
@@ -194,7 +194,7 @@
           <Color blue="ff" green="99" red="0" type="rgb"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Help.png"/>
+          <Image iconType="3" name="/jumpingball/help.png"/>
         </Property>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>
@@ -215,7 +215,7 @@
     <Component class="javax.swing.JLabel" name="sfondoStart">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Sfondo Inizio.jpg"/>
+          <Image iconType="3" name="/jumpingball/sfondoInizio.jpg"/>
         </Property>
       </Properties>
       <Constraints>

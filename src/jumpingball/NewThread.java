@@ -157,7 +157,7 @@ public class NewThread extends Thread {
                 // Incrementare il numero di vite
                 frameP.incrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
-                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Vita+1.png"))));
+                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita+1.png"))));
                 
                 try {
                     
@@ -209,7 +209,7 @@ public class NewThread extends Thread {
                     }
                 }
                 
-                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Pallina.png"))));
+                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
                 
                 if (frameP.getVelocita() > 5)
                     frameP.decrementoVelocita();
@@ -306,7 +306,7 @@ public class NewThread extends Thread {
                         }
                     }
                 } else {
-                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Vita-1.png"))));
+                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita-1.png"))));
                     
                     try {
                     
@@ -358,7 +358,7 @@ public class NewThread extends Thread {
                         }
                     }
                     
-                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Pallina.png"))));
+                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
                 }
             } case "pallina" -> {
                 int G = 4;
@@ -515,7 +515,7 @@ public class NewThread extends Thread {
                 switch (genRand.nextInt(2)) {
                     case 0 -> {
                         while (frameP.getNVite() > 0) {
-                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/GabbianoDestra.gif"))));
+                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbianoDestra.gif"))));
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -540,7 +540,7 @@ public class NewThread extends Thread {
                         }    
                     } case 1 -> {
                         while (frameP.getNVite() > 0) {
-                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/GabbianoSinistra.gif"))));
+                            frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbianoSinistra.gif"))));
                             if (frameP.getXOstacoli() <= -98) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {

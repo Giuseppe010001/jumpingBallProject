@@ -33,7 +33,7 @@
     <Component class="javax.swing.JLabel" name="pallina">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Pallina.png"/>
+          <Image iconType="3" name="/jumpingball/pallina.png"/>
         </Property>
       </Properties>
       <Events>
@@ -48,7 +48,7 @@
     <Component class="javax.swing.JLabel" name="granchio">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Granchio.gif"/>
+          <Image iconType="3" name="/jumpingball/granchio.gif"/>
         </Property>
       </Properties>
       <Constraints>
@@ -114,7 +114,7 @@
     <Component class="javax.swing.JLabel" name="terrenoGioco">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Terreno di gioco.jpg"/>
+          <Image iconType="3" name="/jumpingball/terrenoDiGioco.jpg"/>
         </Property>
       </Properties>
       <Constraints>
@@ -183,7 +183,7 @@
     <Component class="javax.swing.JLabel" name="sfondoMain">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/jumpingball/Sfondo Principale.jpg"/>
+          <Image iconType="3" name="/jumpingball/sfondoPrincipale.jpg"/>
         </Property>
       </Properties>
       <Constraints>

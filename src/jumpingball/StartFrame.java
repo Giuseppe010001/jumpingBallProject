@@ -132,7 +132,7 @@ public class StartFrame extends javax.swing.JFrame {
         getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, 280));
 
         reset.setBackground(new java.awt.Color(0, 153, 255));
-        reset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Reset.png"))); // NOI18N
+        reset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/reset.png"))); // NOI18N
         reset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reset.setPreferredSize(new java.awt.Dimension(38, 38));
         reset.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,7 +143,7 @@ public class StartFrame extends javax.swing.JFrame {
         getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 387, -1, -1));
 
         help.setBackground(new java.awt.Color(0, 153, 255));
-        help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Help.png"))); // NOI18N
+        help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/help.png"))); // NOI18N
         help.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         help.setPreferredSize(new java.awt.Dimension(38, 38));
         help.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +153,7 @@ public class StartFrame extends javax.swing.JFrame {
         });
         getContentPane().add(help, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 387, -1, -1));
 
-        sfondoStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Sfondo Inizio.jpg"))); // NOI18N
+        sfondoStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/sfondoInizio.jpg"))); // NOI18N
         getContentPane().add(sfondoStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

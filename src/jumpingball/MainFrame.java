@@ -138,7 +138,7 @@ public class MainFrame extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pallina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Pallina.png"))); // NOI18N
+        pallina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))); // NOI18N
         pallina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pallinaMouseClicked(evt);
@@ -146,7 +146,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         getContentPane().add(pallina, new org.netbeans.lib.awtextra.AbsoluteConstraints(268, 280, -1, -1));
 
-        granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Granchio.gif"))); // NOI18N
+        granchio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/granchio.gif"))); // NOI18N
         getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 280, -1, -1));
 
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
@@ -164,7 +164,7 @@ public class MainFrame extends javax.swing.JFrame {
         vite.setPreferredSize(new java.awt.Dimension(120, 50));
         getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 180, 20));
 
-        terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Terreno di gioco.jpg"))); // NOI18N
+        terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/terrenoDiGioco.jpg"))); // NOI18N
         getContentPane().add(terrenoGioco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
 
         nomeGiocatore.setText("AAA");
@@ -188,7 +188,7 @@ public class MainFrame extends javax.swing.JFrame {
         gabbiano.setPreferredSize(new java.awt.Dimension(98, 32));
         getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-98, 216, -1, -1));
 
-        sfondoMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Sfondo Principale.jpg"))); // NOI18N
+        sfondoMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/sfondoPrincipale.jpg"))); // NOI18N
         getContentPane().add(sfondoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
