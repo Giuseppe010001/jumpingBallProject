@@ -30,7 +30,8 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         yPallina = pallina.getY();
         xOstacoli = granchio.getX();
-        nPunti = puntiRecord = 0;
+        nPunti = 0;
+        puntiRecord = 0;
         nVite = 3;
         velocita = 10;
     }
