@@ -27,11 +27,44 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Metodo costruttore di default
     public MainFrame() {
+        
+        // Dichiarazione variabili
+        String riga, nomeFile = "Classifica.csv";
+        
+        // Dichiarazione array
+        String[] statoGiocatore;
+        
+        // Dichiarazione dell'oggetto lettura della classe BufferedReader
+        BufferedReader lettura;
+        
         initComponents();
+        
         yPallina = pallina.getY();
         xOstacoli = granchio.getX();
         nPunti = 0;
-        puntiRecord = 0;
+        try {
+            
+            // Inizializzare l'oggetto Lettore
+            lettura = new BufferedReader(new FileReader(nomeFile));
+            
+            // Saltare la prima riga della tabella in "Classifica.csv" ed effettuare la lettura della seconda, contenente i dati del primo classificato
+            lettura.readLine();
+            riga = lettura.readLine();
+            
+            // Dividere la riga nei campi corrispondenti separandoli rispettivamente con un punto e virgola
+            statoGiocatore = riga.split(";");
+                
+            // Assegnare l'elemento contenuto nel secondo campo della riga a puntiRecord
+            puntiRecord = Integer.parseInt(statoGiocatore[1]);
+            
+        // Gestire l'assenza del file richiamato    
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+            
+        // Gestire l'errore di lettura/scrittura del file richiamato    
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
+        } 
         nVite = 3;
         velocita = 10;
     }
@@ -67,11 +100,11 @@ public class MainFrame extends javax.swing.JFrame {
     public int getNPunti() {
         return nPunti;
     }
-    public int getNVite() {
-        return nVite;
-    }
     public int getPuntiRecord() {
         return puntiRecord;
+    }
+    public int getNVite() {
+        return nVite;
     }
     public long getVelocita() {
         return velocita;
@@ -198,69 +231,54 @@ public class MainFrame extends javax.swing.JFrame {
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         
         // Dichiarazione variabili
-        String nomeGiocatore, riga, punteggio, nomeFile = "Classifica.csv";
+        String nomeGiocatoreLetto, riga, punteggioLetto, punteggioCambio, nomeFile = "Classifica.csv";
+        int i = 0;
         
         // Dichiarazione array
         String[] statoGiocatore;
         
         // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto lettore della classe BufferedReader
         StartFrame frameInizio = new StartFrame();
-        BufferedReader lettore;
-
-        /*
-        try{
-
-            PrintWriter writer = new PrintWriter(new File(nomeFile));
-            
-            writer.write("ciao");
-            
-            StringBuilder sb = new StringBuilder();
-            sb.append("id");
-            sb.append(',');
-            sb.append("Name");
-            sb.append(',');
-            sb.append("Address");
-            sb.append('\n');
-
-            sb.append("101");
-            sb.append(',');
-            sb.append("John Doe");
-            sb.append(',');
-            sb.append("Las Vegas");
-            sb.append('\n');
-
-            writer.write(sb.toString());
-            writer.close();
-            System.out.println("done!");
-
-        }catch (FileNotFoundException e){
-            
-            System.out.println(e.getMessage());
-         } */
+        PrintWriter scrittura;
+        StringBuilder costruttoreStringa;
+        BufferedReader lettura;
         
         try {
             
             // Inizializzare l'oggetto Lettore
-            lettore = new BufferedReader(new FileReader(nomeFile));
+            lettura = new BufferedReader(new FileReader(nomeFile));
             
             // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
-            lettore.readLine();
+            lettura.readLine();
             
             // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
-            while((riga = lettore.readLine()) != null) {
+            while((riga = lettura.readLine()) != null) {
                 
                 // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
                 statoGiocatore = riga.split(";");
                 
                 // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
-                nomeGiocatore = statoGiocatore[0];
+                nomeGiocatoreLetto = statoGiocatore[0];
                 
                 // Assegnare l'elemento contenuto nel secondo campo a punteggio
-                punteggio = statoGiocatore[1];
+                punteggioLetto = statoGiocatore[1];
+                
+                if (nPunti > Integer.parseInt(punteggioLetto)) {
+                    punteggioCambio = punteggioLetto;
+                }
+                
+                i++;
+                
+                /*scrittura = new PrintWriter(new File(nomeFile));
+
+                costruttoreStringa = new StringBuilder();
+
+                scrittura.write(costruttoreStringa.toString());
+                scrittura.close();*/
                 
                 // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
-                frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
-                frameInizio.getAreaPunteggi().append(punteggio + '\n');
+                frameInizio.getAreaClassifica().append(nomeGiocatoreLetto + "\t   ");
+                frameInizio.getAreaClassifica().append(punteggioLetto + '\n');
             }
         
         // Gestire l'assenza del file richiamato    

@@ -35,11 +35,8 @@ public class StartFrame extends javax.swing.JFrame {
     }
     
     // Metodi getters
-    public JTextArea getAreaGiocatori() {
-        return areaGiocatori; 
-    }
-    public JTextArea getAreaPunteggi() {  
-        return areaPunteggi; 
+    public JTextArea getAreaClassifica() {
+        return areaClassifica; 
     }
     
     // Altri metodi
@@ -49,10 +46,8 @@ public class StartFrame extends javax.swing.JFrame {
 
         start = new javax.swing.JButton();
         classifica = new javax.swing.JPanel();
-        scorrimentoPunteggi = new javax.swing.JScrollPane();
-        areaPunteggi = new javax.swing.JTextArea();
         scorrimentoGiocatori = new javax.swing.JScrollPane();
-        areaGiocatori = new javax.swing.JTextArea();
+        areaClassifica = new javax.swing.JTextArea();
         etichettaGiocatori = new javax.swing.JLabel();
         etichettaPunteggi = new javax.swing.JLabel();
         reset = new javax.swing.JButton();
@@ -74,23 +69,16 @@ public class StartFrame extends javax.swing.JFrame {
                 startActionPerformed(evt);
             }
         });
-        getContentPane().add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 90, 30));
+        getContentPane().add(start, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, 80, 30));
 
         classifica.setBackground(new java.awt.Color(153, 255, 255));
 
-        areaPunteggi.setEditable(false);
-        areaPunteggi.setBackground(new java.awt.Color(204, 153, 255));
-        areaPunteggi.setColumns(8);
-        areaPunteggi.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        areaPunteggi.setRows(17);
-        scorrimentoPunteggi.setViewportView(areaPunteggi);
-
-        areaGiocatori.setEditable(false);
-        areaGiocatori.setBackground(new java.awt.Color(204, 153, 255));
-        areaGiocatori.setColumns(8);
-        areaGiocatori.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        areaGiocatori.setRows(17);
-        scorrimentoGiocatori.setViewportView(areaGiocatori);
+        areaClassifica.setEditable(false);
+        areaClassifica.setBackground(new java.awt.Color(204, 153, 255));
+        areaClassifica.setColumns(15);
+        areaClassifica.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        areaClassifica.setRows(17);
+        scorrimentoGiocatori.setViewportView(areaClassifica);
 
         etichettaGiocatori.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         etichettaGiocatori.setText("Giocatore");
@@ -101,35 +89,30 @@ public class StartFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout classificaLayout = new javax.swing.GroupLayout(classifica);
         classifica.setLayout(classificaLayout);
         classificaLayout.setHorizontalGroup(
-            classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, classificaLayout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
-                .addComponent(etichettaGiocatori)
-                .addGap(39, 39, 39)
-                .addComponent(etichettaPunteggi, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+            classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(classificaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scorrimentoGiocatori, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scorrimentoPunteggi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, classificaLayout.createSequentialGroup()
+                        .addComponent(etichettaGiocatori, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(etichettaPunteggi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scorrimentoGiocatori, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         classificaLayout.setVerticalGroup(
             classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, classificaLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(etichettaGiocatori)
                     .addComponent(etichettaPunteggi, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(classificaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(scorrimentoGiocatori, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scorrimentoPunteggi, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(scorrimentoGiocatori, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
-        getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 250, 280));
+        getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 180, 280));
 
         reset.setBackground(new java.awt.Color(0, 153, 255));
         reset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/reset.png"))); // NOI18N
@@ -465,7 +448,8 @@ public class StartFrame extends javax.swing.JFrame {
 
         String[] statoGiocatore;
         
-        BufferedReader lettore;
+        PrintWriter scrittura;
+        BufferedReader lettura;
         Thread threadClick;
         
         // Avviare un file audio per segnalare il click del pulsante help
@@ -476,16 +460,17 @@ public class StartFrame extends javax.swing.JFrame {
         // Avvio di threadClick
         threadClick.start();
         
-        if(confermaReset == JOptionPane.YES_OPTION) {
-            try{
-                PrintWriter writer = new PrintWriter(new File(nomeFile));
+        if (confermaReset == JOptionPane.YES_OPTION) {
+            try {
+                scrittura = new PrintWriter(new File(nomeFile));
 
                 StringBuilder sb = new StringBuilder(); // ti permette di costruire una stringa
                 sb.append("Giocatore");
                 sb.append(';');
                 sb.append("Punteggio");
                 sb.append('\n');
-                for(i=0; i<17; i++){
+                
+                for (i = 0; i < 17; i++){
                     sb.append("AAA");
                     sb.append(';');
                     sb.append("0");
@@ -493,27 +478,28 @@ public class StartFrame extends javax.swing.JFrame {
                         sb.append('\n');
                 }
                 
-                writer.write(sb.toString());
-                writer.close();
+                /*scrittura.write(sb.toString());
+                scrittura.close();*/
 
             }
             catch (FileNotFoundException e){
                 JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
-            areaGiocatori.setText("");
-            areaPunteggi.setText("");
+            
+            areaClassifica.setText("");
+            
             try {
             
                 // Inizializzare l'oggetto Lettore
-                lettore = new BufferedReader(new FileReader(nomeFile));
+                lettura = new BufferedReader(new FileReader(nomeFile));
 
                 // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
-                lettore.readLine();
+                lettura.readLine();
 
                 // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
-                while((riga = lettore.readLine()) != null) {
+                while((riga = lettura.readLine()) != null) {
 
-                    // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
+                    // Dividere la riga nei campi corrispondenti separandoli rispettivamente con un punto e virgola
                     statoGiocatore = riga.split(";");
 
                     // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
@@ -522,9 +508,9 @@ public class StartFrame extends javax.swing.JFrame {
                     // Assegnare l'elemento contenuto nel secondo campo a punteggio
                     punteggio = statoGiocatore[1];
 
-                    // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
-                    areaGiocatori.append(nomeGiocatore + '\n');
-                    areaPunteggi.append(punteggio + '\n');
+                    // Inserire i valori di nomeGiocatore e punteggio nell'area apposita della classifica
+                    areaClassifica.append(nomeGiocatore + "\t   ");
+                    areaClassifica.append(punteggio + '\n');
                 }
                 // Gestire l'assenza del file richiamato    
             } catch (FileNotFoundException ex) {
@@ -588,7 +574,7 @@ public class StartFrame extends javax.swing.JFrame {
             // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
             while((riga = lettore.readLine()) != null) {
                 
-                // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
+                // Dividere la riga nei campi corrispondenti separandoli rispettivamente con un punto e virgola
                 statoGiocatore = riga.split(";");
                 
                 // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
@@ -597,9 +583,9 @@ public class StartFrame extends javax.swing.JFrame {
                 // Assegnare l'elemento contenuto nel secondo campo a punteggio
                 punteggio = statoGiocatore[1];
                 
-                // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
-                frameInizio.getAreaGiocatori().append(nomeGiocatore + '\n');
-                frameInizio.getAreaPunteggi().append(punteggio + '\n');
+                // Inserire i valori di nomeGiocatore e punteggio nell'area apposita della classifica
+                frameInizio.getAreaClassifica().append(nomeGiocatore + "\t   ");
+                frameInizio.getAreaClassifica().append(punteggio + '\n');
             }
         
         // Gestire l'assenza del file richiamato    
@@ -613,15 +599,13 @@ public class StartFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea areaGiocatori;
-    private javax.swing.JTextArea areaPunteggi;
+    private javax.swing.JTextArea areaClassifica;
     private javax.swing.JPanel classifica;
     private javax.swing.JLabel etichettaGiocatori;
     private javax.swing.JLabel etichettaPunteggi;
     private javax.swing.JButton help;
     private javax.swing.JButton reset;
     private javax.swing.JScrollPane scorrimentoGiocatori;
-    private javax.swing.JScrollPane scorrimentoPunteggi;
     private javax.swing.JLabel sfondoStart;
     private javax.swing.JButton start;
     // End of variables declaration//GEN-END:variables
