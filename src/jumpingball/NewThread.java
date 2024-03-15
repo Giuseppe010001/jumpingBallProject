@@ -68,6 +68,8 @@ public class NewThread extends Thread {
                 threadClick = new NewThread();
                 // Risettaggio del nome di threadClick
                 threadClick.setName("click");
+                // Rendere Daemon threadClick
+                threadClick.setDaemon(true);
                 // Avvio di threadClick
                 threadClick.start();
                 // Attendere la fine dell'esecuzione di threadClick
@@ -94,7 +96,7 @@ public class NewThread extends Thread {
                 // Avviare 4 file audio di introduzione al gioco
                 try {
 
-                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    // Assegnazione del file audio "3.wav" a srcSalto
                     srcPartenza1 = AudioSystem.getAudioInputStream(new File("3.wav"));
 
                     try {
@@ -147,7 +149,7 @@ public class NewThread extends Thread {
 
                 try {
 
-                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    // Assegnazione del file audio "2.wav" a srcSalto
                     srcPartenza2 = AudioSystem.getAudioInputStream(new File("2.wav"));
 
                     try {
@@ -200,7 +202,7 @@ public class NewThread extends Thread {
 
                 try {
 
-                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    // Assegnazione del file audio "1.wav" a srcSalto
                     srcPartenza3 = AudioSystem.getAudioInputStream(new File("1.wav"));
 
                     try {
@@ -248,11 +250,12 @@ public class NewThread extends Thread {
                     }
                 }
                 
-                // Rendere visibile framePrincipale
-                framePrincipale.setVisible(true);
-
-                // Chiudere l'oggetto StartFrame creato
-                frameS.dispose();
+                // Scomparsa dei ringraziamenti da parte dello staff produttore
+                framePrincipale.getFotoRingraziamenti().setVisible(false);
+                framePrincipale.getEtichettaRingraziamenti().setVisible(false);
+                framePrincipale.getGiuseppe().setVisible(false);
+                framePrincipale.getElia().setVisible(false);
+                framePrincipale.getSousane().setVisible(false);
                 
                 // Settaggio iniziale dei valori delle etichette del punteggio, delle vite e del record massimo
                 framePrincipale.getPunteggio().setText("Punti: " + framePrincipale.getNPunti());
@@ -264,12 +267,20 @@ public class NewThread extends Thread {
                 framePrincipale.getNomeGiocatore().setVisible(false);
                 // framePrincipale.getConfirm().setVisible(true);
                 framePrincipale.getConfirm().setVisible(false);
+                
+                // Rendere visibile framePrincipale
+                framePrincipale.setVisible(true);
+
+                // Chiudere l'oggetto StartFrame creato
+                frameS.dispose();
 
                 // Avviare una musica di background mentre si sta giocando
                 // Inizializzazione di threadMusica
                 threadMusica = new NewThread(framePrincipale);
                 // Risettaggio del nome di threadMusica
                 threadMusica.setName("musica");
+                // Rendere Daemon threadMusica
+                threadMusica.setDaemon(true);
                 // Avvio di threadMusica
                 threadMusica.start();
 
@@ -278,6 +289,8 @@ public class NewThread extends Thread {
                 threadConflitto = new NewThread(framePrincipale);
                 // Risettaggio del nome di threadConflitto
                 threadConflitto.setName("conflitto");
+                // Rendere Daemon threadConflitto
+                threadConflitto.setDaemon(true);
                 // Avvio di threadConflitto
                 threadConflitto.start();
 
@@ -286,6 +299,8 @@ public class NewThread extends Thread {
                 threadPunti = new NewThread(framePrincipale);
                 // Risettaggio del nome di threadPunti
                 threadPunti.setName("incrementoPunti");
+                // Rendere Daemon threadPunti
+                threadPunti.setDaemon(true);
                 // Avvio di threadPunti
                 threadPunti.start();
 
@@ -297,12 +312,14 @@ public class NewThread extends Thread {
                     case 0 -> threadOstacoli.setName("granchio");
                     case 1 -> threadOstacoli.setName("gabbiano");
                 }
+                // Rendere Daemon threadOstacoli
+                threadOstacoli.setDaemon(true);
                 // Avvio di threadOstacoli
                 threadOstacoli.start();
 
                 try {
 
-                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    // Assegnazione del file audio "via!.wav" a srcSalto
                     srcPartenza4 = AudioSystem.getAudioInputStream(new File("via!.wav"));
 
                     try {
@@ -402,7 +419,7 @@ public class NewThread extends Thread {
                             controlloCanzone = 0;
                             
                             // Mettere in pausa il thread per un tempo pari a quello della canzone riprodotta
-                            while (frameP.getNVite() > 0 && controlloCanzone < durataCanzone){
+                            while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000 && controlloCanzone < durataCanzone){
                                 try {
                                     controlloCanzone += durataCanzone / 10000;
                                     sleep(durataCanzone / 10000);
@@ -447,8 +464,10 @@ public class NewThread extends Thread {
 
                         // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch
                         this.setName("incrementoVita");
+                        
                         // Incrementare il numero di punti
                         frameP.incrementoNPunti();
+                        
                         run();
                     } else {
                         try {
@@ -457,8 +476,19 @@ public class NewThread extends Thread {
                             sleep(1000);
                             // Incrementare il numero di punti
                             frameP.incrementoNPunti();
+                            
+                            // Se il numero di punti arriva a 100000
+                            if (frameP.getNPunti() == 100000) {
+                                
+                                // Mostrare graficamente il punteggio in tempo reale
+                                frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
+                                
+                                // Fare in modo che al prossimo richiamo di run venga eseguito un altro blocco di codice dello switch che permetta di mostrare la sorpresa finale
+                                this.setName("incrementoVita");
+                                run();
+                            }    
 
-                        // Eccezione nel caso di errori nell'esecuzione di sleep   
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
                         } catch (InterruptedException ex) {
                             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -478,73 +508,112 @@ public class NewThread extends Thread {
                 // Dichiarazione variabili
                 long durataIncremento;
                 
-                // Incrementare il numero di vite
-                frameP.incrementoNVite();
-                frameP.getVite().setText("Vite: " + (frameP.getNVite()));
-                
-                // Colorare di rosso la pallina per rappresentare in maniera più intuitiva il fatto di aver guadagnato una vita
-                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita+1.png"))));
-                
-                try {
+                // Se si arriva a 100000 punti... Sorpresa!!!
+                if (frameP.getNPunti() == 100000) {
                     
-                    // Assegnazione del file audio "incrementoVita.wav" a srcIncremento
-                    srcIncremento = AudioSystem.getAudioInputStream(new File("incrementoVita.wav"));
+                    // Settare come invisibili la pallina, il granchio e il gabbiano
+                    frameP.getPallina().setVisible(false);
+                    frameP.getGranchio().setVisible(false);
+                    frameP.getGabbiano().setVisible(false);
+                    // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
+                    frameP.getEtichettaInserimento().setVisible(true);
+                    frameP.getNomeGiocatore().setVisible(true);
+                    // framePrincipale.getConfirm().setVisible(true);
+                    frameP.getConfirm().setVisible(true);
                     
+                    // Comparsa dei ringraziamenti da parte dello staff produttore
+                    frameP.getFotoRingraziamenti().setVisible(true);
+                    frameP.getEtichettaRingraziamenti().setVisible(true);
+                    frameP.getGiuseppe().setVisible(true);
+                    frameP.getElia().setVisible(true);
+                    frameP.getSousane().setVisible(true);
+
                     try {
-                        
-                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                        incremento = AudioSystem.getClip();
-                        // Apertura del file assegnato a srcIncremento
-                        incremento.open(srcIncremento);
-                        // Inizio dell'esecuzione di tale file
-                        incremento.start();
-                        // Esecuzione di tale file fino alla sua terminazione
-                        incremento.drain();
-                        
+
+                        // Mettere in pausa il thread per un tempo pari a 5 secondi
+                        sleep(5000);
+
+                    // Eccezione nel caso di errori nell'esecuzione di sleep    
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    // Scomparsa dei ringraziamenti da parte dello staff produttore
+                    frameP.getFotoRingraziamenti().setVisible(false);
+                    frameP.getEtichettaRingraziamenti().setVisible(false);
+                    frameP.getGiuseppe().setVisible(false);
+                    frameP.getElia().setVisible(false);
+                    frameP.getSousane().setVisible(false);
+                } else {
+                    
+                    // Incrementare il numero di vite
+                    frameP.incrementoNVite();
+                    frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+
+                    // Colorare di rosso la pallina per rappresentare in maniera più intuitiva il fatto di aver guadagnato una vita
+                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita+1.png"))));
+
+                    try {
+
+                        // Assegnazione del file audio "incrementoVita.wav" a srcIncremento
+                        srcIncremento = AudioSystem.getAudioInputStream(new File("incrementoVita.wav"));
+
                         try {
-                            
-                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                            formatoIncremento = srcIncremento.getFormat();
-                            durataIncremento = (long) (incremento.getFrameLength() / formatoIncremento.getFrameRate() * 1000);
-                            
-                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                            sleep(durataIncremento);
-                            
-                        // Eccezione nel caso di errori nell'esecuzione di sleep
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+
+                            // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                            incremento = AudioSystem.getClip();
+                            // Apertura del file assegnato a srcIncremento
+                            incremento.open(srcIncremento);
+                            // Inizio dell'esecuzione di tale file
+                            incremento.start();
+                            // Esecuzione di tale file fino alla sua terminazione
+                            incremento.drain();
+
+                            try {
+
+                                // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                                formatoIncremento = srcIncremento.getFormat();
+                                durataIncremento = (long) (incremento.getFrameLength() / formatoIncremento.getFrameRate() * 1000);
+
+                                // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                                sleep(durataIncremento);
+
+                            // Eccezione nel caso di errori nell'esecuzione di sleep
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        // Eccezione nel caso di assenza del file audio indicato
+                        } catch (LineUnavailableException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                    // Eccezione nel caso di assenza del file audio indicato
-                    } catch (LineUnavailableException ex) {
+
+                    // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (UnsupportedAudioFileException | IOException ex) {
                         Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+
+                            // Chiusura del file utilizzato
+                            srcIncremento.close();
+
+                        // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                    
-                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    try {
-                        
-                        // Chiusura del file utilizzato
-                        srcIncremento.close();
-                        
-                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+
+                    // Ricolorare la pallina come in origine
+                    frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
+
+                    // Aumentare di 1 il livello di velocità
+                    if (frameP.getVelocita() > 5)
+                        frameP.decrementoVelocita();
+
+                    // Ritornare a incrementare il numero di punti
+                    this.setName("incrementoPunti");
+                    run();
                 }
-                
-                // Ricolorare la pallina come in origine
-                frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
-                
-                // Aumentare di 1 il livello di velocità
-                if (frameP.getVelocita() > 5)
-                    frameP.decrementoVelocita();
-                
-                // Riornare a incrementare il numero di punti
-                this.setName("incrementoPunti");
-                run();
             } case "conflitto" -> {
                 
                 // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
@@ -587,8 +656,8 @@ public class NewThread extends Thread {
                 frameP.decrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
                 
-                // Se il numero di vite è maggiore di 0 o il numero di punti è minore di 100000
-                if (frameP.getNVite() == 0 || frameP.getNPunti() < 100000) {
+                // Se il numero di vite è maggiore di 0 o il numero di punti è uguale a 100000
+                if (frameP.getNVite() == 0) {
                     
                     // Settare come invisibili la pallina, il granchio e il gabbiano
                     frameP.getPallina().setVisible(false);
@@ -600,59 +669,55 @@ public class NewThread extends Thread {
                     // framePrincipale.getConfirm().setVisible(true);
                     frameP.getConfirm().setVisible(true);
                     
-                    if (frameP.getNVite() == 0) {
+                    try {
+
+                        // Assegnazione del file audio "Partenza.wav" a srcSalto
+                        srcSconfitta = AudioSystem.getAudioInputStream(new File("sconfitta.wav"));
+
                         try {
 
-                            // Assegnazione del file audio "Partenza.wav" a srcSalto
-                            srcSconfitta = AudioSystem.getAudioInputStream(new File("sconfitta.wav"));
+                            // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                            sconfitta = AudioSystem.getClip();
+                            // Apertura del file assegnato a srcPartenza
+                            sconfitta.open(srcSconfitta);
+                            // Inizio dell'esecuzione di tale file
+                            sconfitta.start();
+                            // Esecuzione di tale file fino alla sua terminazione
+                            sconfitta.drain();
 
                             try {
 
-                                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                                sconfitta = AudioSystem.getClip();
-                                // Apertura del file assegnato a srcPartenza
-                                sconfitta.open(srcSconfitta);
-                                // Inizio dell'esecuzione di tale file
-                                sconfitta.start();
-                                // Esecuzione di tale file fino alla sua terminazione
-                                sconfitta.drain();
+                                // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                                formatoSconfitta = srcSconfitta.getFormat();
+                                durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
 
-                                try {
-
-                                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                                    formatoSconfitta = srcSconfitta.getFormat();
-                                    durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
-
-                                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                                    sleep(durataSconfitta);
+                                // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                                sleep(durataSconfitta);
 
 
-                                // Eccezione nel caso di errori nell'esecuzione di sleep
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-
-                            // Eccezione nel caso di assenza del file audio indicato
-                            } catch (LineUnavailableException ex) {
-                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            // Eccezione nel caso di errori nell'esecuzione di sleep
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-                        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                        } catch (UnsupportedAudioFileException | IOException ex) {
+                        // Eccezione nel caso di assenza del file audio indicato
+                        } catch (LineUnavailableException ex) {
                             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        } finally {
-                            try {
-
-                                // Chiusura del file utilizzato
-                                srcSconfitta.close();
-
-                            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                            } catch (IOException ex) {
-                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            }
                         }
-                    } else {
-                        
+
+                    // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (UnsupportedAudioFileException | IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+
+                            // Chiusura del file utilizzato
+                            srcSconfitta.close();
+
+                        // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 } else {
                     
@@ -713,8 +778,11 @@ public class NewThread extends Thread {
                     frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
                 }
             } case "pallina" -> {
+                
+                // Dichiarazione (e implementazione) variabili
                 int G = 4;
                 
+                // Ciclo di gestione della pallina in salita
                 while (frameP.getYPallina() >= 216) {
                     try {
                         sleep(frameP.getVelocita());
@@ -730,8 +798,10 @@ public class NewThread extends Thread {
                     frameP.decrementoYPallina(G);
                 }
                 
+                // Impostazione della gravità uguale a 1
                 G = 1;
                 
+                // Ciclo di gestione della pallina in discesa
                 while (frameP.getYPallina() <= 280) {
                     try {
                         sleep(frameP.getVelocita());
@@ -747,6 +817,7 @@ public class NewThread extends Thread {
                    frameP.incrementoYPallina(G);
                 }
                 
+                // Centrare la pallina sul terreno di gioco
                 frameP.decrementoYPallina(G);                
             } case "salto" -> {
                 
@@ -815,8 +886,12 @@ public class NewThread extends Thread {
                 Random genRand = new Random();
                 
                 switch (genRand.nextInt(2)) {
+                    
+                    // Movimento verso destra del granchio e probabile cambio con il gabbiano
                     case 0 -> {
-                        while (frameP.getNVite() > 0) {
+                        
+                        // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                        while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -839,8 +914,12 @@ public class NewThread extends Thread {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
+                    
+                    // Movimento verso sinistra del granchio e probabile cambio con il gabbiano    
                     } case 1 -> {
-                        while (frameP.getNVite() > 0) {
+                        
+                        // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                        while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                             if (frameP.getXOstacoli() <= -64) {
                                 switch (genRand.nextInt(2)) {
                                     case 0 -> {
@@ -869,8 +948,12 @@ public class NewThread extends Thread {
                 Random genRand = new Random();
                 
                 switch (genRand.nextInt(2)) {
+                    
+                    // Movimento verso destra del gabbiano e probabile cambio con il granchio
                     case 0 -> {
-                        while (frameP.getNVite() > 0) {
+                        
+                        // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                        while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                             frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbianoDestra.gif"))));
                             if (frameP.getXOstacoli() >= 600) {
                                 switch (genRand.nextInt(2)) {
@@ -893,9 +976,13 @@ public class NewThread extends Thread {
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        }    
+                        }
+                    
+                    // Movimento verso sinistra del gabbiano e probabile cambio con il granchio    
                     } case 1 -> {
-                        while (frameP.getNVite() > 0) {
+                        
+                        // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                        while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                             frameP.getGabbiano().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/gabbianoSinistra.gif"))));
                             if (frameP.getXOstacoli() <= -98) {
                                 switch (genRand.nextInt(2)) {

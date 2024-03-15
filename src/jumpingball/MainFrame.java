@@ -115,6 +115,21 @@ public class MainFrame extends javax.swing.JFrame {
     public JButton getConfirm() {
         return confirm;
     }
+    public JLabel getFotoRingraziamenti() {
+        return fotoRingraziamenti;
+    }
+    public JLabel getEtichettaRingraziamenti() {
+        return etichettaRingraziamenti;
+    }
+    public JLabel getGiuseppe() {
+        return giuseppe;
+    }
+    public JLabel getElia(){
+        return elia;
+    }
+    public JLabel getSousane() {
+        return sousane;
+    }
     
     // Metodi setters
     public void incrementoYPallina(int gravita) {
@@ -153,6 +168,11 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        etichettaRingraziamenti = new javax.swing.JLabel();
+        giuseppe = new javax.swing.JLabel();
+        elia = new javax.swing.JLabel();
+        sousane = new javax.swing.JLabel();
+        fotoRingraziamenti = new javax.swing.JLabel();
         pallina = new javax.swing.JLabel();
         granchio = new javax.swing.JLabel();
         recordMassimo = new javax.swing.JLabel();
@@ -170,6 +190,29 @@ public class MainFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        etichettaRingraziamenti.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
+        etichettaRingraziamenti.setForeground(new java.awt.Color(0, 153, 255));
+        etichettaRingraziamenti.setText("Da noi tre: grazie per aver giocato!!!");
+        getContentPane().add(etichettaRingraziamenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
+
+        giuseppe.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        giuseppe.setForeground(new java.awt.Color(0, 153, 255));
+        giuseppe.setText("Giuseppe Carlino");
+        getContentPane().add(giuseppe, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, -1, -1));
+
+        elia.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        elia.setForeground(new java.awt.Color(0, 153, 255));
+        elia.setText("Elia Grandi");
+        getContentPane().add(elia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 290, -1, -1));
+
+        sousane.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        sousane.setForeground(new java.awt.Color(0, 153, 255));
+        sousane.setText("Sousane Souhaib");
+        getContentPane().add(sousane, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, -1, -1));
+
+        fotoRingraziamenti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Ringraziamenti.jpg"))); // NOI18N
+        getContentPane().add(fotoRingraziamenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
 
         pallina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))); // NOI18N
         pallina.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -347,14 +390,19 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;
+    private javax.swing.JLabel elia;
     private javax.swing.JLabel etichettaInserimento;
+    private javax.swing.JLabel etichettaRingraziamenti;
+    private javax.swing.JLabel fotoRingraziamenti;
     private javax.swing.JLabel gabbiano;
+    private javax.swing.JLabel giuseppe;
     private javax.swing.JLabel granchio;
     private javax.swing.JTextField nomeGiocatore;
     private javax.swing.JLabel pallina;
     private javax.swing.JLabel punteggio;
     private javax.swing.JLabel recordMassimo;
     private javax.swing.JLabel sfondoMain;
+    private javax.swing.JLabel sousane;
     private javax.swing.JLabel terrenoGioco;
     private javax.swing.JLabel vite;
     // End of variables declaration//GEN-END:variables
