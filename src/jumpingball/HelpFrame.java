@@ -4,6 +4,12 @@
  */
 package jumpingball;
 
+import java.awt.Desktop; // Importare la classe Desktop
+import java.io.IOException; // Importare la classe IOException
+import java.net.URI; // Importare la classe URI
+import java.net.URISyntaxException; // Importare la classe URISyntaxException
+import javax.swing.JOptionPane; // Importare la classe JOptionPane
+
 /**
  *
  * @author 39327
@@ -23,7 +29,8 @@ public class HelpFrame extends javax.swing.JFrame {
         guida = new javax.swing.JPanel();
         scorrimentoGuida = new javax.swing.JScrollPane();
         areaGuida = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        etichettaGuida = new javax.swing.JLabel();
+        collegamentoGuida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jumping Ball");
@@ -33,14 +40,14 @@ public class HelpFrame extends javax.swing.JFrame {
 
         areaGuida.setEditable(false);
         areaGuida.setBackground(new java.awt.Color(204, 153, 255));
-        areaGuida.setColumns(22);
+        areaGuida.setColumns(24);
         areaGuida.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        areaGuida.setRows(100);
-        areaGuida.setText("Non appena si avvia il gioco, \nquest’ultimo si presenta in tale modo, \ncon una finestra rappresentante \nuna classifica in posizione centrale \nche contiene i migliori 17 giocatori. \nSotto questa classifica \ngiace il tasto Start che, una volta cliccato,\npermette di avviare il gioco.\n\nTramite la pressione del pulsante \nche raffigura il cestino in basso a destra, \nè possibile resettare la classifica generale\ndel gioco dopo aver cliccato su “Yes”.\n\nInvece premendo il pulsante raffigurante\nil punto interrogativo, sempre in basso \na destra ma stavolta a destra del cestino, \nè possibile visualizzare la finestra \ndella guida che spiega le istruzioni d’uso \ndel videogioco.\n\nUna volta premuto il pulsante Start\nnella finestra iniziale, \nil gioco incomincia dopo un countdown \ndella durata di circa tre secondi. \nSubito dopo il conto alla rovescia, \nviene visualizzata la schermata di gioco.\n\nNel caso il giocatore fosse così scarso \nda perdere in tempi relativamente brevi, \nsarebbe costretto a inserire un nickname \nper registrare il suo punteggio in classifica.\nDopo tale inserimento e una volta cliccato\nsu Conferma, si ritorna nella schermata\niniziale.");
+        areaGuida.setRows(47);
+        areaGuida.setText("Non appena si avvia il gioco, \nquest’ultimo si presenta in tale modo, \ncon una finestra rappresentante \nuna classifica in posizione centrale \nche contiene i migliori 17 giocatori. \nSotto questa classifica \ngiace il tasto \"Start\" che,\nuna volta cliccato,\npermette di avviare il gioco.\n\nTramite la pressione del pulsante \nche raffigura il cestino \nin basso a destra, \nè possibile resettare la \nclassifica generale\ndel gioco dopo aver cliccato su “Yes”.\n\nInvece premendo il pulsante\nraffigurante\nil punto interrogativo, sempre in basso \na destra ma stavolta \na destra del cestino, \nè possibile visualizzare la finestra \ndella guida che spiega \nle istruzioni d’uso \ndi Jumping Ball.\n\nUna volta premuto il pulsante \"Start\"\nnella finestra iniziale, \nil gioco incomincia dopo un countdown \ndella durata di tre secondi. \nSubito dopo il conto alla rovescia, \nviene visualizzata \nla schermata di gioco.\n\nNel caso il giocatore fosse \ncosì scarso \nda perdere in tempi \nrelativamente brevi, \nsarebbe costretto a \ninserire un nickname per \nregistrare il suo \npunteggio in classifica.\nDopo tale inserimento e \nuna volta cliccato\nsu \"Conferma\",\nsi ritorna nella schermata iniziale.");
         scorrimentoGuida.setViewportView(areaGuida);
 
-        jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        jLabel1.setText("Guida");
+        etichettaGuida.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        etichettaGuida.setText("Guida");
 
         javax.swing.GroupLayout guidaLayout = new javax.swing.GroupLayout(guida);
         guida.setLayout(guidaLayout);
@@ -50,44 +57,76 @@ public class HelpFrame extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(guidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scorrimentoGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(etichettaGuida))
                 .addGap(24, 24, 24))
         );
         guidaLayout.setVerticalGroup(
             guidaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, guidaLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(etichettaGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 22, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scorrimentoGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
+
+        collegamentoGuida.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
+        collegamentoGuida.setText("<html><a style = \"color: rgb(204,153,255);\" href = \"https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf\" target = \"_blank\">Guida estesa<a/><html/>");
+        collegamentoGuida.setPreferredSize(new java.awt.Dimension(104, 28));
+        collegamentoGuida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(guida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(guida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(145, 145, 145)
+                        .addComponent(collegamentoGuida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(guida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(collegamentoGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void collegamentoGuidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseClicked
+        
+        /*
+        Creare un collegamento ipertestuale a "https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf"
+        per permettere la visualizzazione della guida estesa presente online
+        */
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf"));
+            } catch (IOException | URISyntaxException ex) {
+                JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura della/sulla guida estesa.", "Errore", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_collegamentoGuidaMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaGuida;
+    private javax.swing.JLabel collegamentoGuida;
+    private javax.swing.JLabel etichettaGuida;
     private javax.swing.JPanel guida;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane scorrimentoGuida;
     // End of variables declaration//GEN-END:variables
 }

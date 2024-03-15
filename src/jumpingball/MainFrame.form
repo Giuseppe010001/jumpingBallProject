@@ -125,11 +125,17 @@
     </Component>
     <Component class="javax.swing.JTextField" name="nomeGiocatore">
       <Properties>
+        <Property name="columns" type="int" value="3"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="AAA"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nomeGiocatoreKeyTyped"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="160" y="210" width="160" height="30"/>
+          <AbsoluteConstraints x="210" y="210" width="50" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -151,7 +157,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="330" y="210" width="120" height="30"/>
+          <AbsoluteConstraints x="310" y="200" width="120" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -164,7 +170,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="160" y="180" width="-1" height="-1"/>
+          <AbsoluteConstraints x="180" y="180" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

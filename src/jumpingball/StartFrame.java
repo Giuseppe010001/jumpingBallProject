@@ -5,22 +5,12 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
-import java.util.Random; // Importare la classe Random
 import java.io.File; // Importare la classe File
 import java.io.FileNotFoundException; // Importare la classe FileNotFoundException 
 import java.io.FileReader; // Importare la classe FileReader
 import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.IOException; // Importare la classe IOException 
 import java.io.PrintWriter; // Importare la classe PrintWriter
-import static java.lang.Thread.sleep;
-import java.util.logging.Level; // Importare la classe Level
-import java.util.logging.Logger; // Importare la classe Logger
-import javax.sound.sampled.AudioFormat; // Importare la classe AudioFormat
-import javax.sound.sampled.AudioInputStream; // Importare la classe AudioInputStream
-import javax.sound.sampled.AudioSystem; // Importare la classe AudioSystem
-import javax.sound.sampled.Clip; // Importare la classe Clip
-import javax.sound.sampled.LineUnavailableException; // Importare la classe LineUnavailableException
-import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe UnsupportedAudioFileException
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JTextArea; // Importare la classe JTextArea
@@ -183,6 +173,8 @@ public class StartFrame extends javax.swing.JFrame {
         threadPartenza = new NewThread(this);
         // Risettaggio del nome di threadPartenza
         threadPartenza.setName("partenza");
+        // Rendere Daemon threadPartenza
+        threadPartenza.setDaemon(true);
         // Avvio di threadPartenza
         threadPartenza.start();
     }//GEN-LAST:event_startActionPerformed
@@ -198,6 +190,8 @@ public class StartFrame extends javax.swing.JFrame {
         threadClick = new NewThread();
         // Risettaggio del nome di threadClick
         threadClick.setName("click");
+        // Rendere Daemon threadClick
+        threadClick.setDaemon(true);
         // Avvio di threadClick
         threadClick.start();
         
@@ -211,13 +205,17 @@ public class StartFrame extends javax.swing.JFrame {
 
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
         
+        // Dichiarazione variabili
         int i, confermaReset = JOptionPane.showConfirmDialog(null, "Vuoi confermare il reset della classifica?", "Conferma", JOptionPane.YES_NO_OPTION);
         String nomeFile = "Classifica.csv", nomeGiocatore, punteggio, riga;
 
+        // Dichiarazione array
         String[] statoGiocatore;
         
+        // Dichiarazione degli oggetti scrittura, lettura, costruttoreStringa e threadClick
         PrintWriter scrittura;
         BufferedReader lettura;
+        StringBuilder costruttoreStringa;
         Thread threadClick;
         
         // Avviare un file audio per segnalare il click del pulsante help
@@ -225,37 +223,51 @@ public class StartFrame extends javax.swing.JFrame {
         threadClick = new NewThread();
         // Risettaggio del nome di threadClick
         threadClick.setName("click");
+        // Rendere Daemon threadClick
+        threadClick.setDaemon(true);
         // Avvio di threadClick
         threadClick.start();
         
+        // Se si clicca "Yes" nel pop up aperto
         if (confermaReset == JOptionPane.YES_OPTION) {
+            
+            // Effettuare il reset della classifica a come quando viene visualizzata alla prima apertura del gioco
             try {
+                
+                // Inizializzare la variabile scrittura
                 scrittura = new PrintWriter(new File(nomeFile));
 
-                StringBuilder sb = new StringBuilder(); // ti permette di costruire una stringa
-                sb.append("Giocatore");
-                sb.append(';');
-                sb.append("Punteggio");
-                sb.append('\n');
+                // Inizializzare l'oggetto costruttoreStringa
+                costruttoreStringa = new StringBuilder(); // Ti permette di costruire una stringa
                 
+                // Scrivere quindi ciò che giace inizialmente in "Classifica.csv"
+                costruttoreStringa.append("Giocatore");
+                costruttoreStringa.append(';');
+                costruttoreStringa.append("Punteggio");
+                costruttoreStringa.append('\n');
                 for (i = 0; i < 17; i++){
-                    sb.append("AAA");
-                    sb.append(';');
-                    sb.append("0");
+                    costruttoreStringa.append("AAA");
+                    costruttoreStringa.append(';');
+                    costruttoreStringa.append("0");
                     if(i < 17)  
-                        sb.append('\n');
+                        costruttoreStringa.append('\n');
                 }
+                scrittura.write(costruttoreStringa.toString());
                 
-                scrittura.write(sb.toString());
+                // Chiudere il file "Classifica.csv" aperto prima in scrittura
                 scrittura.close();
 
             }
+            
+            // Gestire l'assenza del file richiamato
             catch (FileNotFoundException e){
                 JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
             
+            // Settare "" in areaClassifica
             areaClassifica.setText("");
             
+            // Leggere quindi il contenuto del file "Classifica.csv" e inserirlo in areaClassifica
             try {
             
                 // Inizializzare l'oggetto Lettore
@@ -280,11 +292,12 @@ public class StartFrame extends javax.swing.JFrame {
                     areaClassifica.append(nomeGiocatore + "\t   ");
                     areaClassifica.append(punteggio + '\n');
                 }
-                // Gestire l'assenza del file richiamato    
+                
+            // Gestire l'assenza del file richiamato    
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
 
-                // Gestire l'errore di lettura/scrittura del file richiamato    
+            // Gestire l'errore di lettura/scrittura del file richiamato    
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
             } 
@@ -324,7 +337,7 @@ public class StartFrame extends javax.swing.JFrame {
         // Dichiarazione array
         String[] statoGiocatore;
         
-        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto lettore della classe BufferedReader
+        // Dichiarazione (e implementazione) degli oggetti frameInizio e lettore
         StartFrame frameInizio = new StartFrame();
         BufferedReader lettore;
 

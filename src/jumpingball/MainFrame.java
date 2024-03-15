@@ -200,8 +200,16 @@ public class MainFrame extends javax.swing.JFrame {
         terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/terrenoDiGioco.jpg"))); // NOI18N
         getContentPane().add(terrenoGioco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
 
+        nomeGiocatore.setColumns(3);
+        nomeGiocatore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nomeGiocatore.setText("AAA");
-        getContentPane().add(nomeGiocatore, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 160, 30));
+        nomeGiocatore.setToolTipText("");
+        nomeGiocatore.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nomeGiocatoreKeyTyped(evt);
+            }
+        });
+        getContentPane().add(nomeGiocatore, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 50, 30));
 
         confirm.setBackground(new java.awt.Color(0, 153, 255));
         confirm.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
@@ -212,11 +220,11 @@ public class MainFrame extends javax.swing.JFrame {
                 confirmActionPerformed(evt);
             }
         });
-        getContentPane().add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 120, 30));
+        getContentPane().add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 120, 30));
 
         etichettaInserimento.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         etichettaInserimento.setText("Inserisci nome");
-        getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+        getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
 
         gabbiano.setPreferredSize(new java.awt.Dimension(98, 32));
         getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-98, 216, -1, -1));
@@ -237,7 +245,10 @@ public class MainFrame extends javax.swing.JFrame {
         // Dichiarazione array
         String[] statoGiocatore;
         
-        // Dichiarazione e implementazione dell'oggetto frameInizio della classe StartFrame e sola dichiarazione dell'oggetto lettore della classe BufferedReader
+        /* 
+        Dichiarazione (e implementazione) dell'oggetto frameInizio e
+        dell'oggetto lettore
+        */
         StartFrame frameInizio = new StartFrame();
         PrintWriter scrittura;
         StringBuilder costruttoreStringa;
@@ -298,18 +309,41 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmActionPerformed
 
     private void pallinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pallinaMouseClicked
+        
+        // Se la pallina si trova a terra
         if (pallina.getY() == 280) {
+            
+            // Dichiarazione degli oggetti threadPallina e threadSalto
             NewThread threadPallina, threadSalto;
 
+            // Permettere alla pallina di saltare
+            // Inizializzazione di threadPallina
             threadPallina = new NewThread(this);
+            // Risettaggio del nome di threadPallina
             threadPallina.setName("pallina");
+            // Rendere Daemon threadPallina
+            threadPallina.setDaemon(true);
+            // Avvio di threadPallina
             threadPallina.start();
 
+            // Emettere un suono in grado di imitare il rimbalzo di una pallina
+            // Inizializzazione di threadPallina
             threadSalto = new NewThread();
+            // Risettaggio del nome di threadSalto
             threadSalto.setName("salto");
+            // Rendere Daemon threadSalto
+            threadSalto.setDaemon(true);
+            // Avvio di threadSalto
             threadSalto.start();
         }
     }//GEN-LAST:event_pallinaMouseClicked
+
+    private void nomeGiocatoreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeGiocatoreKeyTyped
+        
+        // Inserire un massimo di tre caratteri per l'inserimento del nome
+        if (nomeGiocatore.getText().length() == 3)
+            evt.consume();
+    }//GEN-LAST:event_nomeGiocatoreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;

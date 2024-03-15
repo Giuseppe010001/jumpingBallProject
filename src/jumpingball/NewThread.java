@@ -258,7 +258,7 @@ public class NewThread extends Thread {
                 framePrincipale.getPunteggio().setText("Punti: " + framePrincipale.getNPunti());
                 framePrincipale.getVite().setText("Vite: " + framePrincipale.getNVite());
                 framePrincipale.getRecordMassimo().setText("Record: " + framePrincipale.getPuntiRecord());
-
+                
                 // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
                 framePrincipale.getEtichettaInserimento().setVisible(false);
                 framePrincipale.getNomeGiocatore().setVisible(false);
@@ -365,7 +365,8 @@ public class NewThread extends Thread {
                 // Dichiarazione variabili
                 long durataCanzone, controlloCanzone;
                 
-                while (frameP.getNVite() > 0) {
+                // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                     try {
 
                         // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati
@@ -431,10 +432,12 @@ public class NewThread extends Thread {
                     }
                 }
                 
+                // Fermare l'esecuzione della canzone di sottofondo
                 canzone.stop();
             } case "incrementoPunti" -> {
                 
-                while (frameP.getNVite() > 0) {
+                // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                     
                     // Mostrare graficamente il punteggio in tempo reale
                     frameP.getPunteggio().setText("Punti: " + (frameP.getNPunti()));
@@ -479,7 +482,7 @@ public class NewThread extends Thread {
                 frameP.incrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
                 
-                //
+                // Colorare di rosso la pallina per rappresentare in maniera più intuitiva il fatto di aver guadagnato una vita
                 frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita+1.png"))));
                 
                 try {
@@ -532,24 +535,35 @@ public class NewThread extends Thread {
                     }
                 }
                 
+                // Ricolorare la pallina come in origine
                 frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
                 
+                // Aumentare di 1 il livello di velocità
                 if (frameP.getVelocita() > 5)
                     frameP.decrementoVelocita();
                 
+                // Riornare a incrementare il numero di punti
                 this.setName("incrementoPunti");
-                
                 run();
             } case "conflitto" -> {
-                while (frameP.getNVite() > 0) {
+                
+                // Fin quando il numero di vite è maggiore di 0 e il numero di punti è minore di 100000
+                while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                     
+                    // Se la pallina collide o con il granchio o con il gabbiano
                     if ((frameP.getGranchio().getX() >= frameP.getPallina().getX() - 32 && frameP.getGranchio().getX() <= frameP.getPallina().getX() + 32 && frameP.getGranchio().getY() == frameP.getYPallina()) || 
                         (frameP.getGabbiano().getX() >= frameP.getPallina().getX() - 32 && frameP.getGabbiano().getX() <= frameP.getPallina().getX() + 32 && frameP.getGabbiano().getY() == frameP.getYPallina())) {
+                        
+                        // Decrementare di 1 il numero di vite
                         this.setName("decrementoVita");
                         run();
                     } else {
+                        
+                        // Altrimenti sospendere il thread per un tempo pari alla velocità della pallina e degli ostacoli
                         try {
                             sleep(frameP.getVelocita());
+                        
+                        // Eccezione nel caso di errori nell'esecuzione di sleep    
                         } catch (InterruptedException ex) {
                             Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -573,7 +587,8 @@ public class NewThread extends Thread {
                 frameP.decrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
                 
-                if (frameP.getNVite() == 0) {
+                // Se il numero di vite è maggiore di 0 o il numero di punti è minore di 100000
+                if (frameP.getNVite() == 0 || frameP.getNPunti() < 100000) {
                     
                     // Settare come invisibili la pallina, il granchio e il gabbiano
                     frameP.getPallina().setVisible(false);
@@ -585,55 +600,59 @@ public class NewThread extends Thread {
                     // framePrincipale.getConfirm().setVisible(true);
                     frameP.getConfirm().setVisible(true);
                     
-                    try {
-
-                        // Assegnazione del file audio "Partenza.wav" a srcSalto
-                        srcSconfitta = AudioSystem.getAudioInputStream(new File("sconfitta.wav"));
-
+                    if (frameP.getNVite() == 0) {
                         try {
 
-                            // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
-                            sconfitta = AudioSystem.getClip();
-                            // Apertura del file assegnato a srcPartenza
-                            sconfitta.open(srcSconfitta);
-                            // Inizio dell'esecuzione di tale file
-                            sconfitta.start();
-                            // Esecuzione di tale file fino alla sua terminazione
-                            sconfitta.drain();
+                            // Assegnazione del file audio "Partenza.wav" a srcSalto
+                            srcSconfitta = AudioSystem.getAudioInputStream(new File("sconfitta.wav"));
 
                             try {
 
-                                // Calcolare la durata di ascolto del file riprodotto in millisecondi
-                                formatoSconfitta = srcSconfitta.getFormat();
-                                durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
+                                // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                                sconfitta = AudioSystem.getClip();
+                                // Apertura del file assegnato a srcPartenza
+                                sconfitta.open(srcSconfitta);
+                                // Inizio dell'esecuzione di tale file
+                                sconfitta.start();
+                                // Esecuzione di tale file fino alla sua terminazione
+                                sconfitta.drain();
 
-                                // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
-                                sleep(durataSconfitta);
+                                try {
+
+                                    // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                                    formatoSconfitta = srcSconfitta.getFormat();
+                                    durataSconfitta = (long) (sconfitta.getFrameLength() / formatoSconfitta.getFrameRate() * 1000);
+
+                                    // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                                    sleep(durataSconfitta);
 
 
-                            // Eccezione nel caso di errori nell'esecuzione di sleep
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                                // Eccezione nel caso di errori nell'esecuzione di sleep
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+
+                            // Eccezione nel caso di assenza del file audio indicato
+                            } catch (LineUnavailableException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
-                        // Eccezione nel caso di assenza del file audio indicato
-                        } catch (LineUnavailableException ex) {
+                        // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                        } catch (UnsupportedAudioFileException | IOException ex) {
                             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            try {
+
+                                // Chiusura del file utilizzato
+                                srcSconfitta.close();
+
+                            // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                            } catch (IOException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
-
-                    // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                    } catch (UnsupportedAudioFileException | IOException ex) {
-                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                        try {
-
-                            // Chiusura del file utilizzato
-                            srcSconfitta.close();
-
-                        // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
-                        } catch (IOException ex) {
-                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                    } else {
+                        
                     }
                 } else {
                     
