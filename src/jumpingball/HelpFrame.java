@@ -27,7 +27,6 @@ public class HelpFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jumping Ball");
-        setPreferredSize(new java.awt.Dimension(400, 431));
         setResizable(false);
 
         guida.setBackground(new java.awt.Color(153, 255, 255));
@@ -37,6 +36,7 @@ public class HelpFrame extends javax.swing.JFrame {
         areaGuida.setColumns(22);
         areaGuida.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         areaGuida.setRows(100);
+        areaGuida.setText("Non appena si avvia il gioco, \nquest’ultimo si presenta in tale modo, \ncon una finestra rappresentante \nuna classifica in posizione centrale \nche contiene i migliori 17 giocatori. \nSotto questa classifica \ngiace il tasto Start che, una volta cliccato,\npermette di avviare il gioco.\n\nTramite la pressione del pulsante \nche raffigura il cestino in basso a destra, \nè possibile resettare la classifica generale\ndel gioco dopo aver cliccato su “Yes”.\n\nInvece premendo il pulsante raffigurante\nil punto interrogativo, sempre in basso \na destra ma stavolta a destra del cestino, \nè possibile visualizzare la finestra \ndella guida che spiega le istruzioni d’uso \ndel videogioco.\n\nUna volta premuto il pulsante Start\nnella finestra iniziale, \nil gioco incomincia dopo un countdown \ndella durata di circa tre secondi. \nSubito dopo il conto alla rovescia, \nviene visualizzata la schermata di gioco.\n\nNel caso il giocatore fosse così scarso \nda perdere in tempi relativamente brevi, \nsarebbe costretto a inserire un nickname \nper registrare il suo punteggio in classifica.\nDopo tale inserimento e una volta cliccato\nsu Conferma, si ritorna nella schermata\niniziale.");
         scorrimentoGuida.setViewportView(areaGuida);
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N

@@ -23,13 +23,19 @@ import javax.sound.sampled.UnsupportedAudioFileException; // Importare la classe
 public class NewThread extends Thread {
     
     // Dichiarazione attributi
+    private StartFrame frameS;
     private MainFrame frameP;
     
     // Metodi costruttori
     public NewThread() {
         super();
     }
+    public NewThread(StartFrame frameS) {
+        super();
+        this.frameS = frameS;
+    }
     public NewThread(MainFrame frameP) {
+        super();
         this.frameP = frameP;
     }
     
@@ -37,9 +43,320 @@ public class NewThread extends Thread {
     @Override
     public void run() {
         switch (this.getName()) {
-            case "musica" -> {
+            case "partenza" -> {
                 
-                // Dichiarazione degli oggetti srcCanzone, formatoMusica, formatoSconfitta, canzone e genRand appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, Clip e Random e implementazione di srcCanzone e genRand
+                /* 
+                Dichiarazione (e implementazione) degli oggetti framePrincipale,
+                threadClick, threadMusica, threadPunti, threadConflitto, threadOstacoli,
+                srcPartenza1, srcPartenza2, srcPartenza3, srcPartenza4,
+                formatoPartenza1, formatoPartenza2, formatoPartenza3, formatoPartenza4,
+                partenza1, partenza2, partenza3, partenza4 e
+                genRand
+                */
+                MainFrame framePrincipale = new MainFrame();
+                NewThread threadClick, threadMusica, threadPunti, threadConflitto, threadOstacoli;
+                AudioInputStream srcPartenza1 = null, srcPartenza2 = null, srcPartenza3 = null, srcPartenza4 = null;
+                AudioFormat formatoPartenza1, formatoPartenza2, formatoPartenza3, formatoPartenza4;
+                Clip partenza1 = null, partenza2 = null, partenza3 = null, partenza4 = null;
+                Random genRand = new Random();
+                
+                // Dichiarazione variabili
+                long durataPartenza1, durataPartenza2, durataPartenza3, durataPartenza4;
+                
+                // Avviare un file audio per segnalare il click del pulsante help
+                // Inizializzazione di threadClick
+                threadClick = new NewThread();
+                // Risettaggio del nome di threadClick
+                threadClick.setName("click");
+                // Avvio di threadClick
+                threadClick.start();
+                // Attendere la fine dell'esecuzione di threadClick
+                try {
+                    threadClick.join();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                // Settare come invisibili tutti i tool riguardanti la classsifica
+                frameS.getEtichettaGiocatori().setVisible(false);
+                frameS.getEtichettaPunteggi().setVisible(false);
+                frameS.getAreaClassifica().setVisible(false);
+                frameS.getClassifica().setVisible(false);
+                
+                // Disabilitare tutti i pulsanti del frame
+                frameS.getStart().setEnabled(false);
+                frameS.getHelp().setEnabled(false);
+                frameS.getReset().setEnabled(false);
+
+                // Settare "3..." in etichettaPartenza
+                frameS.getEtichettaPartenza().setText("3...");
+
+                // Avviare 4 file audio di introduzione al gioco
+                try {
+
+                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    srcPartenza1 = AudioSystem.getAudioInputStream(new File("3.wav"));
+
+                    try {
+
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        partenza1 = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcPartenza
+                        partenza1.open(srcPartenza1);
+                        // Inizio dell'esecuzione di tale file
+                        partenza1.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        partenza1.drain();
+
+                        try {
+
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoPartenza1 = srcPartenza1.getFormat();
+                            durataPartenza1 = (long) (partenza1.getFrameLength() / formatoPartenza1.getFrameRate() * 1000);
+
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            Thread.sleep(durataPartenza1);
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+
+                        // Chiusura del file utilizzato
+                        srcPartenza1.close();
+
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                // Settare "2..." in etichettaPartenza
+                frameS.getEtichettaPartenza().setText("2...");
+
+                try {
+
+                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    srcPartenza2 = AudioSystem.getAudioInputStream(new File("2.wav"));
+
+                    try {
+
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        partenza2 = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcPartenza
+                        partenza2.open(srcPartenza2);
+                        // Inizio dell'esecuzione di tale file
+                        partenza2.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        partenza2.drain();
+
+                        try {
+
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoPartenza2 = srcPartenza2.getFormat();
+                            durataPartenza2 = (long) (partenza2.getFrameLength() / formatoPartenza2.getFrameRate() * 1000);
+
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            Thread.sleep(durataPartenza2);
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+
+                        // Chiusura del file utilizzato
+                        srcPartenza2.close();
+
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                // Settare "1..." in etichettaPartenza
+                frameS.getEtichettaPartenza().setText("1...");
+
+                try {
+
+                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    srcPartenza3 = AudioSystem.getAudioInputStream(new File("1.wav"));
+
+                    try {
+
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        partenza3 = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcPartenza
+                        partenza3.open(srcPartenza3);
+                        // Inizio dell'esecuzione di tale file
+                        partenza3.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        partenza3.drain();
+
+                        try {
+
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoPartenza3 = srcPartenza3.getFormat();
+                            durataPartenza3 = (long) (partenza3.getFrameLength() / formatoPartenza3.getFrameRate() * 1000);
+
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            Thread.sleep(durataPartenza3);
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+
+                        // Chiusura del file utilizzato
+                        srcPartenza3.close();
+
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
+                // Rendere visibile framePrincipale
+                framePrincipale.setVisible(true);
+
+                // Chiudere l'oggetto StartFrame creato
+                frameS.dispose();
+                
+                // Settaggio iniziale dei valori delle etichette del punteggio, delle vite e del record massimo
+                framePrincipale.getPunteggio().setText("Punti: " + framePrincipale.getNPunti());
+                framePrincipale.getVite().setText("Vite: " + framePrincipale.getNVite());
+                framePrincipale.getRecordMassimo().setText("Record: " + framePrincipale.getPuntiRecord());
+
+                // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
+                framePrincipale.getEtichettaInserimento().setVisible(false);
+                framePrincipale.getNomeGiocatore().setVisible(false);
+                // framePrincipale.getConfirm().setVisible(true);
+                framePrincipale.getConfirm().setVisible(false);
+
+                // Avviare una musica di background mentre si sta giocando
+                // Inizializzazione di threadMusica
+                threadMusica = new NewThread(framePrincipale);
+                // Risettaggio del nome di threadMusica
+                threadMusica.setName("musica");
+                // Avvio di threadMusica
+                threadMusica.start();
+
+                // Avviare un controllore di conflitto pallina-granchio o pallina-gabbiano
+                // Inizializzazione di threadConflitto
+                threadConflitto = new NewThread(framePrincipale);
+                // Risettaggio del nome di threadConflitto
+                threadConflitto.setName("conflitto");
+                // Avvio di threadConflitto
+                threadConflitto.start();
+
+                // Avviare un contatore di punti
+                // Inizializzazione di threadPunti
+                threadPunti = new NewThread(framePrincipale);
+                // Risettaggio del nome di threadPunti
+                threadPunti.setName("incrementoPunti");
+                // Avvio di threadPunti
+                threadPunti.start();
+
+                // Avviare il movimento del granchio
+                // Inizializzazione di threadOstacoli
+                threadOstacoli = new NewThread(framePrincipale);
+                // Risettaggio del nome di threadOstacoli, a seconda del valore assunto da threadOstacoli
+                switch (genRand.nextInt(2)) {
+                    case 0 -> threadOstacoli.setName("granchio");
+                    case 1 -> threadOstacoli.setName("gabbiano");
+                }
+                // Avvio di threadOstacoli
+                threadOstacoli.start();
+
+                try {
+
+                    // Assegnazione del file audio "Partenza.wav" a srcSalto
+                    srcPartenza4 = AudioSystem.getAudioInputStream(new File("via!.wav"));
+
+                    try {
+
+                        // Ottenimento del canale da utilizzare per l'esecuzione del file audio aperto
+                        partenza4 = AudioSystem.getClip();
+                        // Apertura del file assegnato a srcPartenza
+                        partenza4.open(srcPartenza4);
+                        // Inizio dell'esecuzione di tale file
+                        partenza4.start();
+                        // Esecuzione di tale file fino alla sua terminazione
+                        partenza4.drain();
+
+                        try {
+
+                            // Calcolare la durata di ascolto del file riprodotto in millisecondi
+                            formatoPartenza4 = srcPartenza4.getFormat();
+                            durataPartenza4 = (long) (partenza4.getFrameLength() / formatoPartenza4.getFrameRate() * 1000);
+
+                            // Mettere in pausa il thread per un tempo pari a quello del file audio riprodotto
+                            Thread.sleep(durataPartenza4);
+
+                        // Eccezione nel caso di errori nell'esecuzione di sleep
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    // Eccezione nel caso di assenza del file audio indicato
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                // Eccezione nel caso di mancato supporto di un determinato formato audio o nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+
+                        // Chiusura del file utilizzato
+                        srcPartenza4.close();
+
+                    // Eccezione nel caso di errore nello scambio di dati dal e al file audio utilizzato
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } case "musica" -> {
+                
+                /* 
+                Dichiarazione (e implementazione) degli oggetti srcCanzone, 
+                formatoMusica, formatoSconfitta, 
+                canzone e 
+                genRand
+                */
                 AudioInputStream srcCanzone = null;
                 AudioFormat formatoMusica;
                 Clip canzone = null;
@@ -146,7 +463,11 @@ public class NewThread extends Thread {
                 }    
             } case "incrementoVita" -> {
                 
-                // Dichiarazione degli oggetti srcIncremento, formatoIncremento, e incremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcIncremento
+                /* 
+                Dichiarazione (e implementazione) degli oggetti srcIncremento, 
+                formatoIncremento, e
+                incremento
+                */
                 AudioInputStream srcIncremento = null;
                 AudioFormat formatoIncremento;
                 Clip incremento;
@@ -157,6 +478,8 @@ public class NewThread extends Thread {
                 // Incrementare il numero di vite
                 frameP.incrementoNVite();
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
+                
+                //
                 frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita+1.png"))));
                 
                 try {
@@ -234,7 +557,11 @@ public class NewThread extends Thread {
                 }
             } case "decrementoVita" -> {
                 
-                // Dichiarazione degli oggetti srcDecremento, formatoDecremento, e decremento appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcDecremento
+                /* 
+                Dichiarazione (e implementazione) degli oggetti srcDecremento, 
+                formatoDecremento, e 
+                decremento
+                */
                 AudioInputStream srcDecremento = null, srcSconfitta = null;
                 AudioFormat formatoDecremento, formatoSconfitta;
                 Clip decremento, sconfitta;
@@ -247,6 +574,8 @@ public class NewThread extends Thread {
                 frameP.getVite().setText("Vite: " + (frameP.getNVite()));
                 
                 if (frameP.getNVite() == 0) {
+                    
+                    // Settare come invisibili la pallina, il granchio e il gabbiano
                     frameP.getPallina().setVisible(false);
                     frameP.getGranchio().setVisible(false);
                     frameP.getGabbiano().setVisible(false);
@@ -255,6 +584,7 @@ public class NewThread extends Thread {
                     frameP.getNomeGiocatore().setVisible(true);
                     // framePrincipale.getConfirm().setVisible(true);
                     frameP.getConfirm().setVisible(true);
+                    
                     try {
 
                         // Assegnazione del file audio "Partenza.wav" a srcSalto
@@ -306,6 +636,8 @@ public class NewThread extends Thread {
                         }
                     }
                 } else {
+                    
+                    // Settare "vita-1.png" come icona sostitutiva della pallina
                     frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/vita-1.png"))));
                     
                     try {
@@ -358,6 +690,7 @@ public class NewThread extends Thread {
                         }
                     }
                     
+                    // Risettare l'icona della pallina
                     frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
                 }
             } case "pallina" -> {
@@ -398,7 +731,11 @@ public class NewThread extends Thread {
                 frameP.decrementoYPallina(G);                
             } case "salto" -> {
                 
-                // Dichiarazione degli oggetti srcSalto, formato, e salto appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
+                /* 
+                Dichiarazione (e implementazione) degli oggetti srcSalto, 
+                formato, e 
+                salto
+                */
                 AudioInputStream srcSalto = null;
                 AudioFormat formatoSalto;
                 Clip salto;
@@ -567,7 +904,11 @@ public class NewThread extends Thread {
                 }
             } case "click" -> {
                 
-                // Dichiarazione degli oggetti srcClick, formatoClick, e click appartenenti rispettivamente alle classi AudioInputStream, AudioFormat, e Clip e implementazione di srcSalto
+                /* 
+                Dichiarazione (e implementazione) degli oggetti srcClick, 
+                formatoClick, e 
+                click
+                */
                 AudioInputStream srcClick = null;
                 AudioFormat formatoClick;
                 Clip click;
