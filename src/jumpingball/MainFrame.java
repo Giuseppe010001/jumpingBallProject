@@ -153,6 +153,9 @@ public class MainFrame extends javax.swing.JFrame {
     public void incrementoNPunti() {
         nPunti += 20;
     }
+    public void decrementoNPunti() {
+        nPunti -= 20;
+    }
     public void incrementoNVite() {
         nVite++;
     }
@@ -281,19 +284,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         
-        // Dichiarazione variabili
-        String nomeGiocatoreLetto, riga, punteggioLetto, punteggioCambio, nomeFile = "Classifica.csv";
-        int i = 0;
+        // Dichiarazione (e implementazione) variabili
+        String nomeGiocatoreLetto = "", riga, punteggioLetto = "0", nomeGiocatoreCambio = "", punteggioCambio = "0", nomeFile = "Classifica.csv";
         
         // Dichiarazione array
         String[] statoGiocatore;
         
         /* 
-        Dichiarazione (e implementazione) dell'oggetto frameInizio e
-        dell'oggetto lettore
+        Dichiarazione (e implementazione) degli oggetti frameInizio, scrittura, costruttoreStringa e lettura
         */
         StartFrame frameInizio = new StartFrame();
-        PrintWriter scrittura;
+        PrintWriter scrittura = null;
         StringBuilder costruttoreStringa;
         BufferedReader lettura;
         
@@ -301,38 +302,97 @@ public class MainFrame extends javax.swing.JFrame {
             
             // Inizializzare l'oggetto Lettore
             lettura = new BufferedReader(new FileReader(nomeFile));
+
+            // Inizializzare l'oggetto costruttoreStringa
+            costruttoreStringa = new StringBuilder();
             
-            // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
+            // Aggiornare la classifica con la solita prima riga di testo indicativa dei dati che si vanno a leggere
+            costruttoreStringa.append("Giocatore");
+            costruttoreStringa.append(';');
+            costruttoreStringa.append("Punteggio");
+            costruttoreStringa.append('\n');
+            
+            // Saltare la prima riga del file "Classifica.csv"
             lettura.readLine();
             
+            // Cancellare la vecchia classifica
+            frameInizio.getAreaClassifica().setText("");
+            
             // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
-            while((riga = lettura.readLine()) != null) {
+            while((riga = lettura.readLine()) != null && nPunti < Integer.parseInt(punteggioLetto)) {
                 
                 // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
                 statoGiocatore = riga.split(";");
                 
-                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
+                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatoreLetto
                 nomeGiocatoreLetto = statoGiocatore[0];
                 
-                // Assegnare l'elemento contenuto nel secondo campo a punteggio
+                // Assegnare l'elemento contenuto nel secondo campo a punteggioLetto
                 punteggioLetto = statoGiocatore[1];
+                    
+                // Aggiungere il prossimo risultato alla classifica aggiornata
+                costruttoreStringa.append(nomeGiocatoreLetto);
+                costruttoreStringa.append(';');
+                costruttoreStringa.append(punteggioLetto);
+                costruttoreStringa.append('\n');
                 
-                if (nPunti > Integer.parseInt(punteggioLetto)) {
-                    punteggioCambio = punteggioLetto;
-                }
-                
-                i++;
-                
-                /*scrittura = new PrintWriter(new File(nomeFile));
-
-                costruttoreStringa = new StringBuilder();
-
-                scrittura.write(costruttoreStringa.toString());
-                scrittura.close();*/
-                
-                // Inserire i valori di nomeGiocatore e punteggio nelle apposite aree della classifica
+                // Inserire i valori di nomeGiocatoreLetto e punteggioLetto nell'area apposita della classifica aggiornata
                 frameInizio.getAreaClassifica().append(nomeGiocatoreLetto + "\t   ");
                 frameInizio.getAreaClassifica().append(punteggioLetto + '\n');
+            }
+            
+            
+            if (nPunti > Integer.parseInt(punteggioLetto)) {
+                
+                // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
+                statoGiocatore = riga.split(";");
+                
+                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatoreLetto
+                nomeGiocatoreLetto = statoGiocatore[0];
+                
+                // Assegnare l'elemento contenuto nel secondo campo a punteggioLetto
+                punteggioLetto = statoGiocatore[1];
+                
+                // Aggiungere il nuovo risultato alla classifica aggiornata
+                costruttoreStringa.append(nomeGiocatore.getText());
+                costruttoreStringa.append(';');
+                costruttoreStringa.append(nPunti);
+                costruttoreStringa.append('\n');
+                
+                // Inizializzare l'oggetto scrittura
+                scrittura = new PrintWriter(new File(nomeFile));
+                
+                // Adattare la classifica in base al nuovo risultato aggiunto
+                while ((riga = lettura.readLine()) != null) {
+                    System.out.println(costruttoreStringa);
+
+                    // Dividere la riga nei campi corrispondneti separandoli rispettivamente con un punto e virgola
+                    statoGiocatore = riga.split(";");
+                    
+                    // Memorizzare il giocatore da spostare di una posizione in basso
+                    // Memorizzare il nome da spostare di una posizione in basso
+                    nomeGiocatoreCambio = nomeGiocatoreLetto;
+                    // Memorizzare il punteggio da spostare di una posizione in basso
+                    punteggioCambio = punteggioLetto;
+
+                    // Effettuare la sostituzione
+                    costruttoreStringa.append(nomeGiocatoreCambio);
+                    costruttoreStringa.append(';');
+                    costruttoreStringa.append(punteggioCambio);
+                    costruttoreStringa.append('\n');
+                    
+                    // Assegnare l'elemento contenuto nel primo campo a nomeGiocatoreLetto
+                    nomeGiocatoreLetto = statoGiocatore[0];
+
+                    // Assegnare l'elemento contenuto nel secondo campo a punteggioLetto
+                    punteggioLetto = statoGiocatore[1];
+                }
+                
+                // Scrivere in "Classifica.csv" la nuova classifica
+                scrittura.write(costruttoreStringa.toString());
+                
+                // Chiudere "Classifica.csv" aperto prima in scrittura
+                scrittura.close();
             }
         
         // Gestire l'assenza del file richiamato    
@@ -342,7 +402,10 @@ public class MainFrame extends javax.swing.JFrame {
         // Gestire l'errore di lettura/scrittura del file richiamato    
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
+        
+        // Aggiornamento della classifica
+        frameInizio.letturaClassifica();
 
         // Rendere visibile frameInizio
         frameInizio.setVisible(true);

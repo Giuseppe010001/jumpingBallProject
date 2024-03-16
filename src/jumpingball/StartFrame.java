@@ -304,6 +304,53 @@ public class StartFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_resetMouseClicked
 
+    public void letturaClassifica() {
+        // Dichiarazione variabili
+        String nomeGiocatore, punteggio, nomeFile = "Classifica.csv", riga;
+        
+        // Dichiarazione array
+        String[] statoGiocatore;
+        
+        // Dichiarazione (e implementazione) dell'oggetto Lettore
+        BufferedReader lettore;
+
+        // Rendere visibile frameInizio
+        this.setVisible(true);
+        
+        try {
+            
+            // Inizializzare l'oggetto Lettore
+            lettore = new BufferedReader(new FileReader(nomeFile));
+            
+            // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
+            lettore.readLine();
+            
+            // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
+            while((riga = lettore.readLine()) != null) {
+                
+                // Dividere la riga nei campi corrispondenti separandoli rispettivamente con un punto e virgola
+                statoGiocatore = riga.split(";");
+                
+                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
+                nomeGiocatore = statoGiocatore[0];
+                
+                // Assegnare l'elemento contenuto nel secondo campo a punteggio
+                punteggio = statoGiocatore[1];
+                
+                // Inserire i valori di nomeGiocatore e punteggio nell'area apposita della classifica
+                this.getAreaClassifica().append(nomeGiocatore + "\t   ");
+                this.getAreaClassifica().append(punteggio + '\n');
+            }
+        
+        // Gestire l'assenza del file richiamato    
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
+            
+        // Gestire l'errore di lettura/scrittura del file richiamato    
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
+        } 
+    }
     /**
      * @param args the command line arguments
      */
@@ -331,52 +378,11 @@ public class StartFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        // Dichiarazione variabili
-        String nomeGiocatore, punteggio, nomeFile = "Classifica.csv", riga;
-        
-        // Dichiarazione array
-        String[] statoGiocatore;
-        
-        // Dichiarazione (e implementazione) degli oggetti frameInizio e lettore
+        // Dichiarazione e implementazione dell'oggetto frameInizio
         StartFrame frameInizio = new StartFrame();
-        BufferedReader lettore;
-
-        // Rendere visibile frameInizio
-        frameInizio.setVisible(true);
         
-        try {
-            
-            // Inizializzare l'oggetto Lettore
-            lettore = new BufferedReader(new FileReader(nomeFile));
-            
-            // Saltare la prima riga della tabella in "Classifica.csv" per evitare la lettura dei valori indesiderati presenti in questa
-            lettore.readLine();
-            
-            // Leggere tante righe della tabella in "Classifica.csv" quante ce ne sono
-            while((riga = lettore.readLine()) != null) {
-                
-                // Dividere la riga nei campi corrispondenti separandoli rispettivamente con un punto e virgola
-                statoGiocatore = riga.split(";");
-                
-                // Assegnare l'elemento contenuto nel primo campo a nomeGiocatore
-                nomeGiocatore = statoGiocatore[0];
-                
-                // Assegnare l'elemento contenuto nel secondo campo a punteggio
-                punteggio = statoGiocatore[1];
-                
-                // Inserire i valori di nomeGiocatore e punteggio nell'area apposita della classifica
-                frameInizio.getAreaClassifica().append(nomeGiocatore + "\t   ");
-                frameInizio.getAreaClassifica().append(punteggio + '\n');
-            }
-        
-        // Gestire l'assenza del file richiamato    
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, "File \"Classifica.csv\" assente.", "Errore", JOptionPane.ERROR_MESSAGE);
-            
-        // Gestire l'errore di lettura/scrittura del file richiamato    
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
-        } 
+        // Aggiornamento della classifica di gioco
+        frameInizio.letturaClassifica(); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
