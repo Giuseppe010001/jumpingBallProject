@@ -335,10 +335,6 @@ public class MainFrame extends javax.swing.JFrame {
                 costruttoreStringa.append(';');
                 costruttoreStringa.append(punteggioLetto);
                 costruttoreStringa.append('\n');
-                
-                // Inserire i valori di nomeGiocatoreLetto e punteggioLetto nell'area apposita della classifica aggiornata
-                frameInizio.getAreaClassifica().append(nomeGiocatoreLetto + "\t   ");
-                frameInizio.getAreaClassifica().append(punteggioLetto + '\n');
             }
             
             
