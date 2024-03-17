@@ -207,15 +207,14 @@ public class StartFrame extends javax.swing.JFrame {
         
         // Dichiarazione variabili
         int i, confermaReset = JOptionPane.showConfirmDialog(null, "Vuoi confermare il reset della classifica?", "Conferma", JOptionPane.YES_NO_OPTION);
-        String nomeFile = "Classifica.csv", nomeGiocatore, punteggio, riga;
+        String nomeGiocatore, punteggio, costruttoreRiga = "", riga, nomeFile = "Classifica.csv";
 
         // Dichiarazione array
         String[] statoGiocatore;
         
-        // Dichiarazione degli oggetti scrittura, lettura, costruttoreStringa e threadClick
+        // Dichiarazione degli oggetti scrittura, lettura e threadClick
         PrintWriter scrittura;
         BufferedReader lettura;
-        StringBuilder costruttoreStringa;
         Thread threadClick;
         
         // Avviare un file audio per segnalare il click del pulsante help
@@ -236,23 +235,13 @@ public class StartFrame extends javax.swing.JFrame {
                 
                 // Inizializzare la variabile scrittura
                 scrittura = new PrintWriter(new File(nomeFile));
-
-                // Inizializzare l'oggetto costruttoreStringa
-                costruttoreStringa = new StringBuilder(); // Ti permette di costruire una stringa
                 
                 // Scrivere quindi ciò che giace inizialmente in "Classifica.csv"
-                costruttoreStringa.append("Giocatore");
-                costruttoreStringa.append(';');
-                costruttoreStringa.append("Punteggio");
-                costruttoreStringa.append('\n');
+                costruttoreRiga += "Giocatore;Punteggio\n";
                 for (i = 0; i < 17; i++){
-                    costruttoreStringa.append("AAA");
-                    costruttoreStringa.append(';');
-                    costruttoreStringa.append("0");
-                    if(i < 17)  
-                        costruttoreStringa.append('\n');
+                    costruttoreRiga += "AAA;0\n";
                 }
-                scrittura.write(costruttoreStringa.toString());
+                scrittura.write(costruttoreRiga);
                 
                 // Chiudere il file "Classifica.csv" aperto prima in scrittura
                 scrittura.close();
@@ -305,17 +294,15 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_resetMouseClicked
 
     public void letturaClassifica() {
+        
         // Dichiarazione variabili
-        String nomeGiocatore, punteggio, nomeFile = "Classifica.csv", riga;
+        String nomeGiocatore, punteggio, riga, nomeFile = "Classifica.csv";
         
         // Dichiarazione array
         String[] statoGiocatore;
         
         // Dichiarazione (e implementazione) dell'oggetto Lettore
         BufferedReader lettore;
-
-        // Rendere visibile frameInizio
-        this.setVisible(true);
         
         try {
             
@@ -349,7 +336,10 @@ public class StartFrame extends javax.swing.JFrame {
         // Gestire l'errore di lettura/scrittura del file richiamato    
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
-        } 
+        }
+        
+        // Rendere visibile frameInizio
+        this.setVisible(true);
     }
     /**
      * @param args the command line arguments
