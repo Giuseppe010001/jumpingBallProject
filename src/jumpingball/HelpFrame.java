@@ -4,6 +4,8 @@
  */
 package jumpingball;
 
+import java.awt.Color; // Importare la classe Color
+import java.awt.Cursor; // Importare
 import java.awt.Desktop; // Importare la classe Desktop
 import java.io.IOException; // Importare la classe IOException
 import java.net.URI; // Importare la classe URI
@@ -15,8 +17,11 @@ import javax.swing.JOptionPane; // Importare la classe JOptionPane
  * @author 39327
  */
 public class HelpFrame extends javax.swing.JFrame {
+    
+    // Dichiarazione attributi
+    private Color coloreLink;
 
-    // Metodo costruttore di default
+    // Metodi costruttori
     public HelpFrame() {
         initComponents();
     }
@@ -71,11 +76,24 @@ public class HelpFrame extends javax.swing.JFrame {
         );
 
         collegamentoGuida.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        collegamentoGuida.setText("<html><a style = \"color: rgb(204,153,255);\" href = \"https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf\" target = \"_blank\">Guida estesa<a/><html/>");
+        collegamentoGuida.setForeground(new java.awt.Color(204, 153, 255));
+        collegamentoGuida.setText("<html><span style = \"text-decoration: underline\">Guida estesa<span/><html/>");
         collegamentoGuida.setPreferredSize(new java.awt.Dimension(104, 28));
         collegamentoGuida.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 collegamentoGuidaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMouseReleased(evt);
             }
         });
 
@@ -110,17 +128,47 @@ public class HelpFrame extends javax.swing.JFrame {
     private void collegamentoGuidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseClicked
         
         /*
-        Creare un collegamento ipertestuale a "https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf"
+        Creare un collegamento ipertestuale a "https://github.com/Giuseppe010001/jumpingBallProject/blob/master/JumpingBall%20-%20Guida.pdf"
         per permettere la visualizzazione della guida estesa presente online
         */
         if (Desktop.isDesktopSupported()) {
             try {
-                Desktop.getDesktop().browse(new URI("https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf"));
+                Desktop.getDesktop().browse(new URI("https://github.com/Giuseppe010001/jumpingBallProject/blob/master/JumpingBall%20-%20Guida.pdf"));
             } catch (IOException | URISyntaxException ex) {
                 JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura della/sulla guida estesa.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_collegamentoGuidaMouseClicked
+
+    private void collegamentoGuidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseEntered
+        
+        // Memorizzare il colore appartenente al testo
+        coloreLink = collegamentoGuida.getForeground();
+        
+        // Settare il testo di colore blu
+        collegamentoGuida.setForeground(Color.BLUE);
+        
+        // Settare la manina come fantasia del cursore
+        collegamentoGuida.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_collegamentoGuidaMouseEntered
+
+    private void collegamentoGuidaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseExited
+        
+        // Settare il testo del colore di coloreLink
+        collegamentoGuida.setForeground(coloreLink);
+    }//GEN-LAST:event_collegamentoGuidaMouseExited
+
+    private void collegamentoGuidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMousePressed
+        
+        // Settare il testo di colore bianco
+        collegamentoGuida.setForeground(Color.WHITE);
+    }//GEN-LAST:event_collegamentoGuidaMousePressed
+
+    private void collegamentoGuidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseReleased
+        
+        // Settare il testo del colore di coloreLink
+        collegamentoGuida.setForeground(coloreLink);
+    }//GEN-LAST:event_collegamentoGuidaMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaGuida;

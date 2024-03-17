@@ -23,7 +23,7 @@ import javax.swing.JPanel; // Importare la classe JPanel
  */
 public class StartFrame extends javax.swing.JFrame {
 
-    // Metodo costruttore di default
+    // Metodi costruttori
     public StartFrame() {
         initComponents();
     }

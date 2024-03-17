@@ -25,7 +25,7 @@ public class MainFrame extends javax.swing.JFrame {
     private int yPallina, xOstacoli, nPunti, nVite, puntiRecord;
     private long velocita;
     
-    // Metodo costruttore di default
+    // Metodi costruttori
     public MainFrame() {
         
         // Dichiarazione variabili

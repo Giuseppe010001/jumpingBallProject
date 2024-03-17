@@ -124,13 +124,20 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Bauhaus 93" size="18" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;a style = &quot;color: rgb(204,153,255);&quot; href = &quot;https://github.com/Giuseppe010001/jumpingBallProject/blob/master/Jumping%20Ball%20-%20Guida.pdf&quot; target = &quot;_blank&quot;&gt;Guida estesa&lt;a/&gt;&lt;html/&gt;"/>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="cc" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style = &quot;text-decoration: underline&quot;&gt;Guida estesa&lt;span/&gt;&lt;html/&gt;"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[104, 28]"/>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="collegamentoGuidaMouseClicked"/>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="collegamentoGuidaMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="collegamentoGuidaMouseExited"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="collegamentoGuidaMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="collegamentoGuidaMouseReleased"/>
       </Events>
     </Component>
   </SubComponents>
