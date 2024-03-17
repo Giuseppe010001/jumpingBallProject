@@ -127,6 +127,19 @@ public class HelpFrame extends javax.swing.JFrame {
 
     private void collegamentoGuidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseClicked
         
+        // Dichiarazione dell'oggetto threadClick
+        NewThread threadClick;
+        
+        // Avviare un file audio per segnalare il click del pulsante help
+        // Inizializzazione di threadClick
+        threadClick = new NewThread();
+        // Risettaggio del nome di threadClick
+        threadClick.setName("click");
+        // Rendere Daemon threadClick
+        threadClick.setDaemon(true);
+        // Avvio di threadClick
+        threadClick.start();
+        
         /*
         Creare un collegamento ipertestuale a "https://github.com/Giuseppe010001/jumpingBallProject/blob/master/JumpingBall%20-%20Guida.pdf"
         per permettere la visualizzazione della guida estesa presente online
