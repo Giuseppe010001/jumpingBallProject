@@ -22,7 +22,7 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
-    private int yPallina, xOstacoli, nPunti, nVite, puntiRecord;
+    private int yPallina, xOstacoli, nPunti, nVite, nPuntiRecord;
     private long velocita;
     
     // Metodi costruttori
@@ -55,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
             statoGiocatore = riga.split(";");
                 
             // Assegnare l'elemento contenuto nel secondo campo della riga a puntiRecord
-            puntiRecord = Integer.parseInt(statoGiocatore[1]);
+            nPuntiRecord = Integer.parseInt(statoGiocatore[1]);
             
         // Gestire l'assenza del file richiamato    
         } catch (FileNotFoundException ex) {
@@ -100,8 +100,8 @@ public class MainFrame extends javax.swing.JFrame {
     public int getNPunti() {
         return nPunti;
     }
-    public int getPuntiRecord() {
-        return puntiRecord;
+    public int getNPuntiRecord() {
+        return nPuntiRecord;
     }
     public int getNVite() {
         return nVite;
@@ -155,6 +155,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
     public void decrementoNPunti() {
         nPunti -= 20;
+    }
+    public void incrementoNPuntiRecord() {
+        nPuntiRecord += 20;
     }
     public void incrementoNVite() {
         nVite++;
@@ -231,17 +234,17 @@ public class MainFrame extends javax.swing.JFrame {
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         recordMassimo.setForeground(new java.awt.Color(0, 153, 255));
         recordMassimo.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 370, 210, 20));
+        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 140, 20));
 
         punteggio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         punteggio.setForeground(new java.awt.Color(0, 153, 255));
         punteggio.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(punteggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 200, 20));
+        getContentPane().add(punteggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 140, 20));
 
         vite.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         vite.setForeground(new java.awt.Color(0, 153, 255));
         vite.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 180, 20));
+        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 110, 20));
 
         terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/terrenoDiGioco.jpg"))); // NOI18N
         getContentPane().add(terrenoGioco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
@@ -261,6 +264,7 @@ public class MainFrame extends javax.swing.JFrame {
         confirm.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         confirm.setText("Conferma");
         confirm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        confirm.setEnabled(false);
         confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmActionPerformed(evt);
