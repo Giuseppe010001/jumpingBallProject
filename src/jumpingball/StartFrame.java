@@ -130,7 +130,7 @@ public class StartFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
-        getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 180, 280));
+        getContentPane().add(classifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 180, 280));
 
         reset.setBackground(new java.awt.Color(0, 153, 255));
         reset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/reset.png"))); // NOI18N
@@ -156,7 +156,7 @@ public class StartFrame extends javax.swing.JFrame {
 
         etichettaPartenza.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         etichettaPartenza.setPreferredSize(new java.awt.Dimension(100, 100));
-        getContentPane().add(etichettaPartenza, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
+        getContentPane().add(etichettaPartenza, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, -1));
 
         sfondoStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/sfondoInizio.jpg"))); // NOI18N
         getContentPane().add(sfondoStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
