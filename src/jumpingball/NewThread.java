@@ -359,14 +359,13 @@ public class NewThread extends Thread {
                             Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        // Attivare la casella di inserimento del nome e il tasto di conferma di quest'ultimo
-                        frameP.getNomeGiocatore().setEnabled(true);
-                        frameP.getConfirm().setEnabled(true);
-                        
                         // Settare come visibili tutti i tool riguardanti l'inserimento del nome del giocatore
                         frameP.getEtichettaInserimento().setVisible(true);
                         frameP.getNomeGiocatore().setVisible(true);
                         frameP.getConfirm().setVisible(true);
+                        
+                        // Attivare la casella di inserimento del nome
+                        frameP.getNomeGiocatore().setEnabled(true);
 
                         // Scomparsa dei ringraziamenti da parte dello staff produttore
                         frameP.getFotoRingraziamenti().setVisible(false);
@@ -453,9 +452,8 @@ public class NewThread extends Thread {
                         // Riprodurre il file audio "sconfitta.wav"
                         riproduzioneAudio(srcDecremento, formatoSconfitta, sconfitta, durataSconfitta, "sconfitta.wav");
                         
-                        // Attivare la casella di inserimento del nome e il tasto di conferma di quest'ultimo
+                        // Attivare la casella di inserimento del nome
                         frameP.getNomeGiocatore().setEnabled(true);
-                        frameP.getConfirm().setEnabled(true);
                     } else {
 
                         // Settare "vita-1.png" come icona sostitutiva della pallina

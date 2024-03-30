@@ -218,7 +218,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(sousane, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, -1, -1));
 
         fotoRingraziamenti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/Ringraziamenti.jpg"))); // NOI18N
-        getContentPane().add(fotoRingraziamenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, -1));
+        getContentPane().add(fotoRingraziamenti, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
 
         pallina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))); // NOI18N
         pallina.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -251,7 +251,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         nomeGiocatore.setColumns(3);
         nomeGiocatore.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        nomeGiocatore.setText("AAA");
         nomeGiocatore.setToolTipText("");
         nomeGiocatore.setEnabled(false);
         nomeGiocatore.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -444,9 +443,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void nomeGiocatoreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeGiocatoreKeyTyped
         
-        // Inserire non più di tre caratteri per l'inserimento del nome
-        if (nomeGiocatore.getText().length() == 3) {
-            evt.consume();
+        // Inserire tre caratteri per la conferma del nome
+        if (nomeGiocatore.getText().length() == 2) {
+            nomeGiocatore.setText(nomeGiocatore.getText() + evt.getKeyChar());
+            nomeGiocatore.setEnabled(false);
+            confirm.setEnabled(true);
         }
     }//GEN-LAST:event_nomeGiocatoreKeyTyped
 

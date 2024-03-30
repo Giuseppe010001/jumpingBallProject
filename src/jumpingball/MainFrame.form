@@ -102,7 +102,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="40" width="-1" height="-1"/>
+          <AbsoluteConstraints x="100" y="50" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -203,7 +203,6 @@
       <Properties>
         <Property name="columns" type="int" value="3"/>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="AAA"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
