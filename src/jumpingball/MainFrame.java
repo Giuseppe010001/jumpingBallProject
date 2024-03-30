@@ -443,9 +443,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void nomeGiocatoreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeGiocatoreKeyTyped
         
-        // Inserire un massimo di tre caratteri per l'inserimento del nome
-        if (nomeGiocatore.getText().length() == 3)
+        // Inserire almeno tre caratteri per l'inserimento del nome
+        if (nomeGiocatore.getText().length() == 3) {
             evt.consume();
+            confirm.setEnabled(true);
+        } else {
+            confirm.setEnabled(false);
+        }    
     }//GEN-LAST:event_nomeGiocatoreKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
