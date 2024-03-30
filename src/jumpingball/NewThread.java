@@ -359,7 +359,8 @@ public class NewThread extends Thread {
                             Logger.getLogger(NewThread.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         
-                        // Attivare il tasto di conferma del nome inserito
+                        // Attivare la casella di inserimento del nome e il tasto di conferma di quest'ultimo
+                        frameP.getNomeGiocatore().setEnabled(true);
                         frameP.getConfirm().setEnabled(true);
                         
                         // Settare come visibili tutti i tool riguardanti l'inserimento del nome del giocatore
@@ -447,13 +448,13 @@ public class NewThread extends Thread {
                         // Settare inizialmente come invisibili tutti i tool riguardanti l'inserimento del nome del giocatore
                         frameP.getEtichettaInserimento().setVisible(true);
                         frameP.getNomeGiocatore().setVisible(true);
-                        // framePrincipale.getConfirm().setVisible(true);
                         frameP.getConfirm().setVisible(true);
 
                         // Riprodurre il file audio "sconfitta.wav"
                         riproduzioneAudio(srcDecremento, formatoSconfitta, sconfitta, durataSconfitta, "sconfitta.wav");
                         
-                        // Attivare il tasto di conferma del nome inserito
+                        // Attivare la casella di inserimento del nome e il tasto di conferma di quest'ultimo
+                        frameP.getNomeGiocatore().setEnabled(true);
                         frameP.getConfirm().setEnabled(true);
                     } else {
 
