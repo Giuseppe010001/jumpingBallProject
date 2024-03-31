@@ -40,6 +40,7 @@ public class NewThread extends Thread {
     }
     
     // Altri metodi
+    // Per eseguire un thread
     @Override
     public void run() {
         if (this.isDaemon()) {
@@ -672,6 +673,8 @@ public class NewThread extends Thread {
                 }
             }
         }
+    
+    // Per i file audio che condividono lo stesso codice necessario alla riproduzione
     } public void riproduzioneAudio(AudioInputStream srcAudio, AudioFormat formatoAudio, Clip audio, long durataAudio, String nomeAudio) {
         try {
 

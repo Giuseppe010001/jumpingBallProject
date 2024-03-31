@@ -203,8 +203,7 @@ public class StartFrame extends javax.swing.JFrame {
         // Rendere visibile frameAiuto
         frameAiuto.setVisible(true);
     }//GEN-LAST:event_helpActionPerformed
-                                 
-
+                   
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
         
         // Dichiarazione variabili

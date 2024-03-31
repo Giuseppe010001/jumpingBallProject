@@ -298,7 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
         Dichiarazione (e implementazione) degli oggetti frameInizio, scrittura e lettura
         */
         StartFrame frameInizio = new StartFrame();
-        PrintWriter scrittura = null;
+        PrintWriter scrittura;
         BufferedReader lettura;
         
         try {
