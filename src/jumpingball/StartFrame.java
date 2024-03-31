@@ -175,8 +175,6 @@ public class StartFrame extends javax.swing.JFrame {
         threadPartenza = new NewThread(this);
         // Risettaggio del nome di threadPartenza
         threadPartenza.setName("partenza");
-        // Rendere Daemon threadPartenza
-        threadPartenza.setDaemon(true);
         // Avvio di threadPartenza
         threadPartenza.start();
     }//GEN-LAST:event_startActionPerformed
@@ -192,8 +190,6 @@ public class StartFrame extends javax.swing.JFrame {
         threadClick = new NewThread();
         // Risettaggio del nome di threadClick
         threadClick.setName("click");
-        // Rendere Daemon threadClick
-        threadClick.setDaemon(true);
         // Avvio di threadClick
         threadClick.start();
         
@@ -223,8 +219,6 @@ public class StartFrame extends javax.swing.JFrame {
         threadClick = new NewThread();
         // Risettaggio del nome di threadClick
         threadClick.setName("click");
-        // Rendere Daemon threadClick
-        threadClick.setDaemon(true);
         // Avvio di threadClick
         threadClick.start();
         

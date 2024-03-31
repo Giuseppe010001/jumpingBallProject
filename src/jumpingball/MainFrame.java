@@ -295,11 +295,20 @@ public class MainFrame extends javax.swing.JFrame {
         String[] statoGiocatore;
         
         /* 
-        Dichiarazione (e implementazione) degli oggetti frameInizio, scrittura e lettura
+        Dichiarazione (e implementazione) degli oggetti frameInizio, scrittura, lettura e threadClick
         */
         StartFrame frameInizio = new StartFrame();
         PrintWriter scrittura;
         BufferedReader lettura;
+        NewThread threadClick;
+        
+        // Avviare un file audio per segnalare il click del pulsante help
+        // Inizializzazione di threadClick
+        threadClick = new NewThread();
+        // Risettaggio del nome di threadClick
+        threadClick.setName("click");
+        // Avvio di threadClick
+        threadClick.start();
         
         try {
             
@@ -424,8 +433,6 @@ public class MainFrame extends javax.swing.JFrame {
             threadPallina = new NewThread(this);
             // Risettaggio del nome di threadPallina
             threadPallina.setName("pallina");
-            // Rendere Daemon threadPallina
-            threadPallina.setDaemon(true);
             // Avvio di threadPallina
             threadPallina.start();
 
@@ -434,8 +441,6 @@ public class MainFrame extends javax.swing.JFrame {
             threadSalto = new NewThread();
             // Risettaggio del nome di threadSalto
             threadSalto.setName("salto");
-            // Rendere Daemon threadSalto
-            threadSalto.setDaemon(true);
             // Avvio di threadSalto
             threadSalto.start();
         }
