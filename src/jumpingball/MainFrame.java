@@ -448,7 +448,9 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void nomeGiocatoreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeGiocatoreKeyTyped
         
-        // Inserire tre caratteri per la conferma del nome
+        // Inserire tre caratteri (che non siano spazi) per la conferma del nome
+        if (evt.getKeyChar() == ' ')
+            evt.consume();
         if (nomeGiocatore.getText().length() == 2) {
             nomeGiocatore.setText(nomeGiocatore.getText() + evt.getKeyChar());
             nomeGiocatore.setEnabled(false);
