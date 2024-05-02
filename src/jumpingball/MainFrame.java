@@ -106,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
     public int getNVite() {
         return nVite;
     }
-    public long getVelocita() {
+    public synchronized long getVelocita() {
         return velocita;
     }
     public JTextField getNomeGiocatore() {
