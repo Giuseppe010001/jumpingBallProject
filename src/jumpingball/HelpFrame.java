@@ -5,7 +5,7 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
-import java.awt.Cursor; // Importare
+import java.awt.Cursor; // Importare la classe Cursor
 import java.awt.Desktop; // Importare la classe Desktop
 import java.io.IOException; // Importare la classe IOException
 import java.net.URI; // Importare la classe URI
@@ -17,9 +17,6 @@ import javax.swing.JOptionPane; // Importare la classe JOptionPane
  * @author 39327
  */
 public class HelpFrame extends javax.swing.JFrame {
-    
-    // Dichiarazione attributi
-    private Color coloreLink;
 
     // Metodi costruttori
     public HelpFrame() {
@@ -92,9 +89,6 @@ public class HelpFrame extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 collegamentoGuidaMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                collegamentoGuidaMouseReleased(evt);
-            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,11 +148,6 @@ public class HelpFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_collegamentoGuidaMouseClicked
 
     private void collegamentoGuidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseEntered
-        
-        // Memorizzare il colore appartenente al testo
-        coloreLink = collegamentoGuida.getForeground();
-        
-        // Settare il testo di colore blu
         collegamentoGuida.setForeground(Color.BLUE);
         
         // Settare la manina come fantasia del cursore
@@ -166,22 +155,12 @@ public class HelpFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_collegamentoGuidaMouseEntered
 
     private void collegamentoGuidaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseExited
-        
-        // Settare il testo del colore di coloreLink
-        collegamentoGuida.setForeground(coloreLink);
+        collegamentoGuida.setForeground(new Color(204, 153, 255));
     }//GEN-LAST:event_collegamentoGuidaMouseExited
 
     private void collegamentoGuidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMousePressed
-        
-        // Settare il testo di colore bianco
         collegamentoGuida.setForeground(Color.WHITE);
     }//GEN-LAST:event_collegamentoGuidaMousePressed
-
-    private void collegamentoGuidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseReleased
-        
-        // Settare il testo del colore di coloreLink
-        collegamentoGuida.setForeground(coloreLink);
-    }//GEN-LAST:event_collegamentoGuidaMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaGuida;

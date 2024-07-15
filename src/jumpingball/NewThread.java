@@ -47,7 +47,7 @@ public class NewThread extends Thread {
             case "partenza" -> {
 
                 /* 
-                Dichiarazione (e implementazione) degli oggetti framePrincipale,
+                Dichiarazione (ed implementazione) degli oggetti framePrincipale,
                 threadClick, threadMusica, threadPunti, threadConflitto, threadOstacoli,
                 srcPartenza1, srcPartenza2, srcPartenza3, srcPartenza4,
                 formatoPartenza1, formatoPartenza2, formatoPartenza3, formatoPartenza4,
@@ -162,7 +162,7 @@ public class NewThread extends Thread {
             } case "musica" -> {
 
                 /* 
-                Dichiarazione (e implementazione) degli oggetti srcCanzone, 
+                Dichiarazione (ed implementazione) degli oggetti srcCanzone, 
                 formatoMusica, formatoSconfitta, 
                 canzone e 
                 genRand
@@ -303,7 +303,7 @@ public class NewThread extends Thread {
             } case "incrementoVita" -> {
 
                 /*
-                Dichiarazione (e implementazione) degli oggetti srcIncremento, 
+                Dichiarazione ed implementazione degli oggetti srcIncremento, 
                 formatoIncremento, e
                 incremento
                 */
@@ -377,8 +377,8 @@ public class NewThread extends Thread {
                     frameP.getPallina().setIcon((new javax.swing.ImageIcon(getClass().getResource("/jumpingball/pallina.png"))));
 
                     // Aumentare di 1 il livello di velocità
-                    if (frameP.getVelocita() > 5)
-                        frameP.decrementoVelocita();
+                    if (frameP.getVelocitaMax() > 5)
+                        frameP.decrementoVelocitaMax();
 
                     // Ritornare a incrementare il numero di punti
                     this.setName("incrementoPunti");
@@ -398,9 +398,9 @@ public class NewThread extends Thread {
                         run();
                     } else {
 
-                        // Altrimenti sospendere il thread per un tempo pari alla velocità della pallina e degli ostacoli
+                        // Altrimenti sospendere il thread per un tempo pari alla a velocitaMax
                         try {
-                            sleep(frameP.getVelocita());
+                            sleep(frameP.getVelocitaMax());
 
                         // Eccezione nel caso di errori nell'esecuzione di sleep    
                         } catch (InterruptedException ex) {
@@ -411,7 +411,7 @@ public class NewThread extends Thread {
             } case "decrementoVita" -> {
 
                 /* 
-                Dichiarazione (e implementazione) degli oggetti srcDecremento, 
+                Dichiarazione ed implementazione degli oggetti srcDecremento, 
                 formatoDecremento, e 
                 decremento
                 */
@@ -458,13 +458,13 @@ public class NewThread extends Thread {
                 }
             } case "pallina" -> {
 
-                // Dichiarazione (e implementazione) variabili
+                // Dichiarazione ed implementazione variabili
                 int G = 4;
 
                 // Ciclo di gestione della pallina in salita
                 while (frameP.getYPallina() >= 216) {
                     try {
-                        sleep(frameP.getVelocita());
+                        sleep(frameP.getVelocitaMax());
                         
                     // Eccezione nel caso di errori nell'esecuzione di sleep    
                     } catch (InterruptedException ex) {
@@ -485,7 +485,7 @@ public class NewThread extends Thread {
                 // Ciclo di gestione della pallina in discesa
                 while (frameP.getYPallina() <= 280) {
                     try {
-                        sleep(frameP.getVelocita());
+                        sleep(frameP.getVelocitaMax());
                         
                     // Eccezione nel caso di errori nell'esecuzione di sleep    
                     } catch (InterruptedException ex) {
@@ -519,7 +519,12 @@ public class NewThread extends Thread {
                 // Riprodurre il file audio "salto.wav"
                 riproduzioneAudio(srcSalto, formatoSalto, salto, durataSalto, "salto.wav");
             } case "granchio" -> {
+                
+                // Dichiarazione ed implementazione dell'oggetto genRand
                 Random genRand = new Random();
+                
+                // Dichiarazione ed implementazione variabili
+                long v = frameP.getVelocita(frameP.getVelocitaMax());
 
                 switch (genRand.nextInt(2)) {
 
@@ -545,7 +550,7 @@ public class NewThread extends Thread {
                             frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
 
                             try {
-                                sleep(frameP.getVelocita());
+                                sleep(v);
                                 
                             // Eccezione nel caso di errori nell'esecuzione di sleep    
                             } catch (InterruptedException ex) {
@@ -575,7 +580,7 @@ public class NewThread extends Thread {
                             frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
 
                             try {
-                                sleep(frameP.getVelocita());
+                                sleep(v);
                                 
                             // Eccezione nel caso di errori nell'esecuzione di sleep    
                             } catch (InterruptedException ex) {
@@ -585,7 +590,12 @@ public class NewThread extends Thread {
                     }
                 }
             } case "gabbiano" -> {
+                
+                // Dichiarazione ed implementazione dell'oggetto genRand
                 Random genRand = new Random();
+                
+                // Dichiarazione ed implementazione variabili
+                long v = frameP.getVelocita(frameP.getVelocitaMax());
 
                 switch (genRand.nextInt(2)) {
 
@@ -614,7 +624,7 @@ public class NewThread extends Thread {
                             frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocita());
+                                sleep(v);
                                 
                             // Eccezione nel caso di errori nell'esecuzione di sleep    
                             } catch (InterruptedException ex) {
@@ -647,7 +657,7 @@ public class NewThread extends Thread {
                             frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
 
                             try {
-                                sleep(frameP.getVelocita());
+                                sleep(v);
                                 
                             // Eccezione nel caso di errori nell'esecuzione di sleep    
                             } catch (InterruptedException ex) {

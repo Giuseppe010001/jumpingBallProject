@@ -4,12 +4,14 @@
  */
 package jumpingball;
 
+import java.awt.Color; // Importare la classe Color
 import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.File; // Importare la classe File
 import java.io.FileNotFoundException; // Importare la classe FileNotFoundException
 import java.io.FileReader; // Importare la classe FileReader
 import java.io.IOException; // Importare la classe IOException
 import java.io.PrintWriter; // Importare la classe PrintWriter
+import java.util.Random; // Importare la classe Random
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JOptionPane; // Importare la classe JOptionPane
@@ -22,8 +24,9 @@ import javax.swing.JTextField; // Importare la classe JTextField
 public class MainFrame extends javax.swing.JFrame {
     
     // Dichiarazione attributi
+    Random genRand = new Random();
     private int yPallina, xOstacoli, nPunti, nVite, nPuntiRecord;
-    private long velocita;
+    private long velocita, velocitaMax;
     
     // Metodi costruttori
     public MainFrame() {
@@ -66,7 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Errore durante la lettura/scrittura del/sul file \"Classifica.csv\".", "Errore", JOptionPane.ERROR_MESSAGE);
         } 
         nVite = 3;
-        velocita = 10;
+        velocitaMax = 10;
     }
     
     // Metodi getters
@@ -106,7 +109,12 @@ public class MainFrame extends javax.swing.JFrame {
     public int getNVite() {
         return nVite;
     }
-    public long getVelocita() {
+    public long getVelocitaMax() {
+        return velocitaMax;
+    }
+    public long getVelocita(long velocitaMax) {
+        velocita = genRand.nextLong(velocitaMax, 11);
+        
         return velocita;
     }
     public JTextField getNomeGiocatore() {
@@ -165,8 +173,8 @@ public class MainFrame extends javax.swing.JFrame {
     public void decrementoNVite() {
         nVite--;
     }
-    public void decrementoVelocita() {
-        velocita--;
+    public void decrementoVelocitaMax() {
+        velocitaMax--;
     }
 
     // Altri metodi
@@ -232,17 +240,14 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(granchio, new org.netbeans.lib.awtextra.AbsoluteConstraints(-64, 280, -1, -1));
 
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        recordMassimo.setForeground(new java.awt.Color(0, 153, 255));
         recordMassimo.setPreferredSize(new java.awt.Dimension(120, 50));
         getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 140, 20));
 
         punteggio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        punteggio.setForeground(new java.awt.Color(0, 153, 255));
         punteggio.setPreferredSize(new java.awt.Dimension(120, 50));
         getContentPane().add(punteggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 140, 20));
 
         vite.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
-        vite.setForeground(new java.awt.Color(0, 153, 255));
         vite.setPreferredSize(new java.awt.Dimension(120, 50));
         getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 110, 20));
 
@@ -258,23 +263,34 @@ public class MainFrame extends javax.swing.JFrame {
                 nomeGiocatoreKeyTyped(evt);
             }
         });
-        getContentPane().add(nomeGiocatore, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 50, 30));
+        getContentPane().add(nomeGiocatore, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 50, 30));
 
         confirm.setBackground(new java.awt.Color(0, 153, 255));
         confirm.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         confirm.setText("Conferma");
         confirm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirm.setEnabled(false);
+        confirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                confirmMousePressed(evt);
+            }
+        });
         confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmActionPerformed(evt);
             }
         });
-        getContentPane().add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 200, 120, 30));
+        getContentPane().add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 120, 30));
 
         etichettaInserimento.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         etichettaInserimento.setText("Inserisci nome");
-        getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
+        getContentPane().add(etichettaInserimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, -1, -1));
 
         gabbiano.setPreferredSize(new java.awt.Dimension(98, 32));
         getContentPane().add(gabbiano, new org.netbeans.lib.awtextra.AbsoluteConstraints(-98, 216, -1, -1));
@@ -457,6 +473,18 @@ public class MainFrame extends javax.swing.JFrame {
             confirm.setEnabled(true);
         }
     }//GEN-LAST:event_nomeGiocatoreKeyTyped
+
+    private void confirmMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmMouseEntered
+        confirm.setBackground(new Color(0, 255, 255));
+    }//GEN-LAST:event_confirmMouseEntered
+
+    private void confirmMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmMouseExited
+        confirm.setBackground(new Color(0, 153, 255));
+    }//GEN-LAST:event_confirmMouseExited
+
+    private void confirmMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmMousePressed
+        confirm.setBackground(new Color(0, 51, 255));
+    }//GEN-LAST:event_confirmMousePressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton confirm;

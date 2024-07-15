@@ -83,6 +83,17 @@ public class StartFrame extends javax.swing.JFrame {
         start.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         start.setText("Start");
         start.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        start.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                startMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                startMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                startMousePressed(evt);
+            }
+        });
         start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startActionPerformed(evt);
@@ -145,6 +156,15 @@ public class StartFrame extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 resetMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resetMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resetMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resetMousePressed(evt);
+            }
         });
         getContentPane().add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 387, -1, -1));
 
@@ -152,6 +172,17 @@ public class StartFrame extends javax.swing.JFrame {
         help.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/help.png"))); // NOI18N
         help.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         help.setPreferredSize(new java.awt.Dimension(38, 38));
+        help.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                helpMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                helpMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                helpMousePressed(evt);
+            }
+        });
         help.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 helpActionPerformed(evt);
@@ -296,6 +327,42 @@ public class StartFrame extends javax.swing.JFrame {
             } 
         }
     }//GEN-LAST:event_resetMouseClicked
+
+    private void startMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseEntered
+        start.setBackground(new Color(0, 255, 255));
+    }//GEN-LAST:event_startMouseEntered
+
+    private void startMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseExited
+        start.setBackground(new Color(0, 153, 255));
+    }//GEN-LAST:event_startMouseExited
+
+    private void startMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMousePressed
+        start.setBackground(new Color(0, 51, 255));
+    }//GEN-LAST:event_startMousePressed
+
+    private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
+        reset.setBackground(new Color(0, 255, 255));
+    }//GEN-LAST:event_resetMouseEntered
+
+    private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
+        reset.setBackground(new Color(0, 153, 255));
+    }//GEN-LAST:event_resetMouseExited
+
+    private void resetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMousePressed
+        reset.setBackground(new Color(0, 51, 255));
+    }//GEN-LAST:event_resetMousePressed
+
+    private void helpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseEntered
+        help.setBackground(new Color(0, 255, 255));
+    }//GEN-LAST:event_helpMouseEntered
+
+    private void helpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseExited
+        help.setBackground(new Color(0, 153, 255));
+    }//GEN-LAST:event_helpMouseExited
+
+    private void helpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMousePressed
+        help.setBackground(new Color(0, 51, 255));
+    }//GEN-LAST:event_helpMousePressed
 
     public void letturaClassifica() {
         
