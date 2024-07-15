@@ -24,6 +24,9 @@ import javax.swing.JPanel; // Importare la classe JPanel
  * @author 39327
  */
 public class StartFrame extends javax.swing.JFrame {
+    
+    // Dichiarazione attributi
+    private static final Color pulsanteEntrata = new Color(0, 255, 255), pulsanteUscita = new Color(0, 153, 255), pulsantePremuto = new Color(0, 51, 255);
 
     // Metodi costruttori
     public StartFrame() {
@@ -329,39 +332,39 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_resetMouseClicked
 
     private void startMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseEntered
-        start.setBackground(new Color(0, 255, 255));
+        start.setBackground(pulsanteEntrata);
     }//GEN-LAST:event_startMouseEntered
 
     private void startMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseExited
-        start.setBackground(new Color(0, 153, 255));
+        start.setBackground(pulsanteUscita);
     }//GEN-LAST:event_startMouseExited
 
     private void startMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMousePressed
-        start.setBackground(new Color(0, 51, 255));
+        start.setBackground(pulsantePremuto);
     }//GEN-LAST:event_startMousePressed
 
     private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
-        reset.setBackground(new Color(0, 255, 255));
+        reset.setBackground(pulsanteEntrata);
     }//GEN-LAST:event_resetMouseEntered
 
     private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
-        reset.setBackground(new Color(0, 153, 255));
+        reset.setBackground(pulsanteUscita);
     }//GEN-LAST:event_resetMouseExited
 
     private void resetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMousePressed
-        reset.setBackground(new Color(0, 51, 255));
+        reset.setBackground(pulsantePremuto);
     }//GEN-LAST:event_resetMousePressed
 
     private void helpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseEntered
-        help.setBackground(new Color(0, 255, 255));
+        help.setBackground(pulsanteEntrata);
     }//GEN-LAST:event_helpMouseEntered
 
     private void helpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseExited
-        help.setBackground(new Color(0, 153, 255));
+        help.setBackground(pulsanteUscita);
     }//GEN-LAST:event_helpMouseExited
 
     private void helpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMousePressed
-        help.setBackground(new Color(0, 51, 255));
+        help.setBackground(pulsantePremuto);
     }//GEN-LAST:event_helpMousePressed
 
     public void letturaClassifica() {
