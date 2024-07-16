@@ -241,15 +241,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         recordMassimo.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         recordMassimo.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 140, 20));
+        getContentPane().add(recordMassimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 140, 20));
 
         punteggio.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         punteggio.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(punteggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 140, 20));
+        getContentPane().add(punteggio, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 140, 20));
 
         vite.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         vite.setPreferredSize(new java.awt.Dimension(120, 50));
-        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 110, 20));
+        getContentPane().add(vite, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, 110, 20));
 
         terrenoGioco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jumpingball/terrenoDiGioco.jpg"))); // NOI18N
         getContentPane().add(terrenoGioco, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
