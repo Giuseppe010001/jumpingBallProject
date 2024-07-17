@@ -7,9 +7,11 @@ package jumpingball;
 import java.awt.Color; // Importare la classe Color
 import java.awt.Cursor; // Importare la classe Cursor
 import java.awt.Desktop; // Importare la classe Desktop
+import java.awt.Image; // Importare la classe Image
 import java.io.IOException; // Importare la classe IOException
 import java.net.URI; // Importare la classe URI
 import java.net.URISyntaxException; // Importare la classe URISyntaxException
+import javax.swing.ImageIcon; // Importare la classe ImageIcon
 import javax.swing.JOptionPane; // Importare la classe JOptionPane
 
 /**
@@ -21,6 +23,12 @@ public class HelpFrame extends javax.swing.JFrame {
     // Metodi costruttori
     public HelpFrame() {
         initComponents();
+        
+        // Dichiarazione ed implementazione dell'oggetto icona della classe Image
+        Image icona = new ImageIcon(this.getClass().getResource("JumpingBall.png")).getImage();
+        
+        // Settaggio dell'icona di un qualsiasi oggetto StartFrame
+        this.setIconImage(icona);
     }
 
     // Altri metodi

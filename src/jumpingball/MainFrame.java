@@ -5,6 +5,7 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
+import java.awt.Image; // Importare la classe Image
 import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.File; // Importare la classe File
 import java.io.FileNotFoundException; // Importare la classe FileNotFoundException
@@ -12,6 +13,7 @@ import java.io.FileReader; // Importare la classe FileReader
 import java.io.IOException; // Importare la classe IOException
 import java.io.PrintWriter; // Importare la classe PrintWriter
 import java.util.Random; // Importare la classe Random
+import javax.swing.ImageIcon; // Importare la classe ImageIcon
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JOptionPane; // Importare la classe JOptionPane
@@ -37,10 +39,14 @@ public class MainFrame extends javax.swing.JFrame {
         // Dichiarazione array
         String[] statoGiocatore;
         
-        // Dichiarazione dell'oggetto lettura della classe BufferedReader
+        // Dichiarazione dell'oggetto lettura della classe BufferedReader e dell'oggetto icona della classe Image e sua implementazione
         BufferedReader lettura;
+        Image icona = new ImageIcon(this.getClass().getResource("JumpingBall.png")).getImage();
         
         initComponents();
+        
+        // Settaggio dell'icona di un qualsiasi oggetto MainFrame
+        this.setIconImage(icona);
         
         yPallina = pallina.getY();
         xOstacoli = granchio.getX();

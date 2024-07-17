@@ -7,12 +7,14 @@
 package jumpingball;
 
 import java.awt.Color; // Importare la classe Color
+import java.awt.Image; // Importare la classe Image
 import java.io.File; // Importare la classe File
 import java.io.FileNotFoundException; // Importare la classe FileNotFoundException 
 import java.io.FileReader; // Importare la classe FileReader
 import java.io.BufferedReader; // Importare la classe BufferedReader
 import java.io.IOException; // Importare la classe IOException 
 import java.io.PrintWriter; // Importare la classe PrintWriter
+import javax.swing.ImageIcon; // Importare la classe ImageIcon
 import javax.swing.JButton; // Importare la classe JButton
 import javax.swing.JLabel; // Importare la classe JLabel
 import javax.swing.JTextArea; // Importare la classe JTextArea
@@ -31,6 +33,12 @@ public class StartFrame extends javax.swing.JFrame {
     // Metodi costruttori
     public StartFrame() {
         initComponents();
+        
+        // Dichiarazione ed implementazione dell'oggetto icona della classe Image
+        Image icona = new ImageIcon(this.getClass().getResource("JumpingBall.png")).getImage();
+        
+        // Settaggio dell'icona di un qualsiasi oggetto StartFrame
+        this.setIconImage(icona);
     }
     
     // Metodi getters
