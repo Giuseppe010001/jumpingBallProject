@@ -375,6 +375,7 @@ public class StartFrame extends javax.swing.JFrame {
         help.setBackground(pulsantePremuto);
     }//GEN-LAST:event_helpMousePressed
 
+    // Metodo di tipo void finalizzato ad effettuare la lettura del file "classifica.csv"
     public void letturaClassifica() {
         
         // Dichiarazione variabili

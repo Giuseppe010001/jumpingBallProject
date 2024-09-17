@@ -538,6 +538,7 @@ public class NewThread extends Thread {
                                     case 0 -> {
                                         frameP.ripristinoXOstacoliAvanti();
                                         frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
+                                        v = frameP.getVelocita(frameP.getVelocitaMax());
                                     } case 1 -> {
                                         this.setName("gabbiano");
                                         run();
@@ -568,6 +569,7 @@ public class NewThread extends Thread {
                                     case 0 -> {
                                         frameP.ripristinoXOstacoliIndietro();
                                         frameP.getGranchio().setLocation(frameP.getXOstacoli(), frameP.getGranchio().getY());
+                                        v = frameP.getVelocita(frameP.getVelocitaMax());
                                     } case 1 -> {
                                         this.setName("gabbiano");
                                         run();
@@ -612,6 +614,7 @@ public class NewThread extends Thread {
                                     case 0 -> {
                                         frameP.ripristinoXOstacoliAvanti();
                                         frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
+                                        v = frameP.getVelocita(frameP.getVelocitaMax());
                                     } case 1 -> {
                                         this.setName("granchio");
                                         run();
@@ -645,6 +648,7 @@ public class NewThread extends Thread {
                                     case 0 -> {
                                         frameP.ripristinoXOstacoliIndietro();
                                         frameP.getGabbiano().setLocation(frameP.getXOstacoli(), frameP.getGabbiano().getY());
+                                        v = frameP.getVelocita(frameP.getVelocitaMax());
                                     } case 1 -> {
                                         this.setName("granchio");
                                         run();
