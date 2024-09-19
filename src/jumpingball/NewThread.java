@@ -162,12 +162,12 @@ public class NewThread extends Thread {
             } case "musica" -> {
 
                 /* 
-                Dichiarazione (ed implementazione) degli oggetti srcCanzone, 
+                Dichiarazione (ed implementazione) degli oggetti srcCanzone, srcCanzonePrecedente
                 formatoMusica, formatoSconfitta, 
                 canzone e 
                 genRand
                 */
-                AudioInputStream srcCanzone = null;
+                AudioInputStream srcCanzone = null, srcCanzonePrecedente = null;
                 AudioFormat formatoMusica;
                 Clip canzone = null;
                 Random genRand = new Random();
@@ -179,21 +179,26 @@ public class NewThread extends Thread {
                 while (frameP.getNVite() > 0 && frameP.getNPunti() < 100000) {
                     try {
 
-                        // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati
-                        switch (genRand.nextInt(12)) {
-                            case 0 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang – Casablanca (feat. Morad ) [Official Video].wav"));
-                            case 1 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang - Que Lo Ke [Official Lyric Video].wav"));
-                            case 2 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Fred De Palma feat. Ana Mena – D'estate non vale (feat. Ana Mena).wav"));
-                            case 3 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Giuni Russo – Unestate al mare.wav"));
-                            case 4 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Il Pagante - @NewMusicItaly – Portofino - @NewMusicItaly.wav"));
-                            case 5 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Kaoma – Lambada.wav"));
-                            case 6 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Bizarrap & Quevedo – Quevedo_ Bzrp Music Sessions, Vol. 52.wav"));
-                            case 7 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Cappella U Got 2 Let The Music.wav"));
-                            case 8 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Enrique Iglesias - Bailando ft. Descemer Bueno, Gente De Zona (Letra).wav"));
-                            case 9 -> srcCanzone = AudioSystem.getAudioInputStream(new File("GIGI DAGOSTINO - LAMOUR TOUJOURS (ORIGINAL VERSION).wav"));
-                            case 10 -> srcCanzone = AudioSystem.getAudioInputStream(new File("MORAD, ELGRANDETOTO - OJOS SIN VER [LYRIC VIDEO]  REINSERTADO.wav"));
-                            case 11 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Gigi D'Alessio – Mon amour.wav"));
-                        }
+                        // Assegnazione di un file audio a srcCanzone scelto in modo randomico tra 12 file preimpostati, a condizione che tale valore non sia uguale al precedente
+                        do {
+                            switch (genRand.nextInt(12)) {
+                                case 0 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang – Casablanca (feat. Morad ) [Official Video].wav"));
+                                case 1 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Baby Gang - Que Lo Ke [Official Lyric Video].wav"));
+                                case 2 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Fred De Palma feat. Ana Mena – D'estate non vale (feat. Ana Mena).wav"));
+                                case 3 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Giuni Russo – Unestate al mare.wav"));
+                                case 4 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Il Pagante - @NewMusicItaly – Portofino - @NewMusicItaly.wav"));
+                                case 5 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Kaoma – Lambada.wav"));
+                                case 6 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Bizarrap & Quevedo – Quevedo_ Bzrp Music Sessions, Vol. 52.wav"));
+                                case 7 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Cappella U Got 2 Let The Music.wav"));
+                                case 8 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Enrique Iglesias - Bailando ft. Descemer Bueno, Gente De Zona (Letra).wav"));
+                                case 9 -> srcCanzone = AudioSystem.getAudioInputStream(new File("GIGI DAGOSTINO - LAMOUR TOUJOURS (ORIGINAL VERSION).wav"));
+                                case 10 -> srcCanzone = AudioSystem.getAudioInputStream(new File("MORAD, ELGRANDETOTO - OJOS SIN VER [LYRIC VIDEO]  REINSERTADO.wav"));
+                                case 11 -> srcCanzone = AudioSystem.getAudioInputStream(new File("Gigi D'Alessio – Mon amour.wav"));
+                            }
+                        } while (srcCanzone == srcCanzonePrecedente);
+                        
+                        // Assegnazione di srcCanzone a srcCanzonePrecedente
+                        srcCanzonePrecedente = srcCanzone;
 
                         try {
 
