@@ -372,7 +372,7 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_helpMouseExited
 
     private void helpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMousePressed
-        start.setBackground(pulsanteEntrata);
+        help.setBackground(pulsantePremuto);
     }//GEN-LAST:event_helpMousePressed
 
     // Metodo di tipo void finalizzato ad effettuare la lettura del file "classifica.csv"
