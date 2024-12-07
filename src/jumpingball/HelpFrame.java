@@ -97,6 +97,9 @@ public class HelpFrame extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 collegamentoGuidaMousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                collegamentoGuidaMouseReleased(evt);
+            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,6 +172,10 @@ public class HelpFrame extends javax.swing.JFrame {
     private void collegamentoGuidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMousePressed
         collegamentoGuida.setForeground(Color.WHITE);
     }//GEN-LAST:event_collegamentoGuidaMousePressed
+
+    private void collegamentoGuidaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_collegamentoGuidaMouseReleased
+        collegamentoGuida.setForeground(Color.BLUE);
+    }//GEN-LAST:event_collegamentoGuidaMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaGuida;
