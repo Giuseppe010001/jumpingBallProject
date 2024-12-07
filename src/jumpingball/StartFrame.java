@@ -193,6 +193,9 @@ public class StartFrame extends javax.swing.JFrame {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 helpMousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                helpMouseReleased(evt);
+            }
         });
         help.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,6 +377,10 @@ public class StartFrame extends javax.swing.JFrame {
     private void helpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMousePressed
         help.setBackground(pulsantePremuto);
     }//GEN-LAST:event_helpMousePressed
+
+    private void helpMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpMouseReleased
+        help.setBackground(pulsanteEntrata);
+    }//GEN-LAST:event_helpMouseReleased
 
     // Metodo di tipo void finalizzato ad effettuare la lettura del file "classifica.csv"
     public void letturaClassifica() {
